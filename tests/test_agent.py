@@ -42,7 +42,7 @@ class ScriptedModel:
     def decide(self, conversation, remaining):
         self.inputs.append(copy.deepcopy(conversation))
         item = next(self.actions)
-        if isinstance(item, Exception):
+        if isinstance(item, BaseException):
             raise item
         return item
 

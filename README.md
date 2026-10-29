@@ -4,7 +4,7 @@
 
 采用 **Python CLI + BM25/可选DashScope向量RRF混合检索 + 模型工具调用循环**。生成模型优先使用DeepSeek官网API；向量模型按用户选择使用DashScope `text-embedding-v4`。全部实现使用Python标准库，无第三方运行依赖。
 
-> BM25基线已保存真实DeepSeek与离线Mock记录，最新完整通过轮次均为11/11；自动化测试54项通过。DashScope/RRF已验证接口与融合流程，真实向量召回效果待本机填写Key后验证，不将基线结果或人工向量算成混合检索效果证明。
+> BM25基线已保存真实DeepSeek与离线Mock记录，最新完整通过轮次均为11/11；自动化测试63项通过。已配置真实DashScope并跑通严格混合链路，完整混合结果见examples/deepseek-hybrid/report.json；不将小规模用例通过解释为检索质量必然提高。
 
 ## 评审入口
 
@@ -17,6 +17,7 @@
 7. [GitHub 配置与提交步骤](docs/06-setup-and-delivery.md) · [提交信息](SUBMISSION.md)
 8. [真实模型答案与路径复核](examples/manual-review.md)
 9. [DashScope配置、RRF原理与题目范围说明](docs/07-hybrid-retrieval.md)
+10. [等待、超时与Ctrl+C排查](docs/08-timeout-and-cancellation.md)
 
 ## 环境与安装
 
@@ -91,7 +92,9 @@ python scripts/demo_hybrid.py
 
 两路独立排名后按 `Σ1/(60+rank)` 融合。Trace记录BM25/余弦原分、各路排名、RRF分及降级状态。向量失败默认明确降级为BM25，`--require-vector`禁止降级；评估不会把降级算作hybrid通过。文档向量缓存位于被Git忽略的 `.cache/embeddings/`，知识内容、版本或模型配置变化后重建。
 
-混合验收默认写入 `examples/deepseek-hybrid/`，保留BM25历史记录。当前无真实向量Key，未测语义质量和阈值适用性；默认余弦阈值0.5可调，RRF分数不是答案置信度。
+混合验收默认写入 `examples/deepseek-hybrid/`，保留BM25历史记录。本机真实向量Key已配置并已实际调用；默认余弦阈值0.5仍需在独立问题集校准，RRF分数不是答案置信度。
+
+真实模式默认向stderr显示当前阶段和耗时，stdout保持JSON。`--timeout 20`将每次模型HTTP等待限制为20秒总时限，连续空行保活不会延长期限；`DASHSCOPE_TIMEOUT`独立控制每次向量HTTP请求。`--quiet`可关闭进度，Ctrl+C返回cancelled及退出码130。详见[等待排查](docs/08-timeout-and-cancellation.md)。
 
 ## 上下文、故障与上限
 
@@ -117,7 +120,7 @@ python run.py ask "报销期限多久？" --provider mock --max-steps 1
 | `decision_round` | 一次模型请求；同轮多个调用不表示模型已观察前一个调用 |
 | `corpus_sha256` | 本次知识快照指纹，方便比对替换文档后的结果 |
 
-状态还包括 `needs_clarification`、`insufficient_evidence`、`tool_error`、`step_limit`、`model_error`。退出码：正常答复/追问/资料不足为 0；工具失败、模型失败、上限或输入错误为 2；批量评估有不通过用例时为 1。
+状态还包括 `needs_clarification`、`insufficient_evidence`、`tool_error`、`step_limit`、`model_error`、`cancelled`。退出码：正常答复/追问/资料不足为0；工具失败、模型失败、上限或输入错误为2；批量评估有不通过用例时为1；用户取消为130，保留已有Trace。
 
 ## 项目结构
 
@@ -137,4 +140,4 @@ scripts/check.py      测试及结果归档
 
 ## 已知限制
 
-默认BM25基线使用中文二元字符/英文词项；可选DashScope向量/RRF已实现，但真实向量效果待配置Key后测量。引用校验能验证“原文存在且本轮读过”，不能自动保证“原文在语义上支持答案”。冲突发现与相关性判断仍需真实记录和人工复核。权限系统、持久对话服务、UI、线上部署均非题目必需项；现有CLI与可选history覆盖要求，所有资料为合成数据。
+默认BM25基线使用中文二元字符/英文词项；可选DashScope向量/RRF已进行小规模真实调用，未完成独立检索质量基准。引用校验能验证“原文存在且本轮读过”，不能自动保证“原文在语义上支持答案”。冲突发现与相关性判断仍需真实记录和人工复核。权限系统、持久对话服务、UI、线上部署均非题目必需项；现有CLI与可选history覆盖要求，所有资料为合成数据。

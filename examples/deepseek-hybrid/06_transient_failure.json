@@ -1,0 +1,262 @@
+{
+  "run_id": "ad58fd7dcf534e248f02792ea6eb4901",
+  "started_at_utc": "2026-10-29T12:49:53.001789+00:00",
+  "elapsed_seconds": 10.578,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 12
+  },
+  "retrieval_mode": "hybrid",
+  "steps_used": 4,
+  "result": {
+    "status": "answered",
+    "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。",
+    "citations": [
+      {
+        "doc_id": "D01",
+        "chunk_id": "C01",
+        "version_date": "2026-01-10",
+        "quote": "报销期限为 30 天，自费用发生之日起计算。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "用户询问报销期限，直接检索相关制度条款。",
+      "model_request_seconds": 1.656,
+      "model_metadata": {
+        "response_id": "001564a8-4e71-40c5-a3d2-4074d795f8b6",
+        "usage": {
+          "input_tokens": 1563,
+          "output_tokens": 76,
+          "total_tokens": 1639
+        }
+      },
+      "next_action": "search_docs",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "search_docs: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "工具返回可重试故障，按retryable重试同一检索。",
+      "model_request_seconds": 1.719,
+      "model_metadata": {
+        "response_id": "d51125e9-884d-4388-97c8-59140f10a867",
+        "usage": {
+          "input_tokens": 1697,
+          "output_tokens": 81,
+          "total_tokens": 1778
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.03278689,
+            "score_type": "rrf",
+            "bm25_score": 2.123214,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "vector_score": 0.6364,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.01612903,
+            "score_type": "rrf",
+            "bm25_score": 0.275741,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "hybrid",
+          "used_mode": "hybrid",
+          "degraded": false,
+          "score_type": "rrf",
+          "bm25_matches": 2,
+          "rrf_k": 60,
+          "candidate_k": 20,
+          "vector_min_score": 0.5,
+          "vector_matches": 1,
+          "embedding": {
+            "provider": "dashscope",
+            "model": "text-embedding-v4",
+            "dimensions": 1024,
+            "evidence_kind": "remote_embedding_api",
+            "index_fingerprint": "de746a9c9b013e858e4d02e84163d74b9e58c55cf1edcf1df0e7bc64e43eea9e",
+            "document_cache": "disk_hit",
+            "requests": [
+              {
+                "request_id": "07c71726-f2e2-9364-a778-63dbc22caa19",
+                "text_type": "query",
+                "batch_size": 1,
+                "total_tokens": 3
+              }
+            ]
+          },
+          "candidate_pool_truncated": false
+        }
+      },
+      "tool_elapsed_seconds": 1.015,
+      "observation_summary": "命中 2 个片段；本次返回 2 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取报销期限制度原文以确认期限与适用范围。",
+      "model_request_seconds": 3.0,
+      "model_metadata": {
+        "response_id": "011c30df-d598-4018-bd19-ee5e69bfe38e",
+        "usage": {
+          "input_tokens": 2324,
+          "output_tokens": 79,
+          "total_tokens": 2403
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D01",
+          "title": "费用报销期限制度",
+          "version_date": "2026-01-10",
+          "scope": null,
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "读取 D01/C01，版本 2026-01-10",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 4,
+      "decision_round": 4,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "chunk_id": "C01",
+            "version_date": "2026-01-10",
+            "quote": "报销期限为 30 天，自费用发生之日起计算。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "检索到唯一相关规定并读取原文，据此回答期限并说明来源范围限制。",
+      "model_request_seconds": 3.188,
+      "model_metadata": {
+        "response_id": "d7c3bd33-5b80-4bac-8d44-c16d804ef58b",
+        "usage": {
+          "input_tokens": 2503,
+          "output_tokens": 229,
+          "total_tokens": 2732
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/single_policy.json",
+    "faults": {
+      "search_docs": 1
+    }
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "30"
+      ],
+      "citations": [
+        "D01"
+      ],
+      "tool_error_observed": true,
+      "min_tools": {
+        "search_docs": 2
+      }
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "tool_count_search_docs": true,
+      "fault_was_observed": true,
+      "hybrid_not_degraded": true
+    },
+    "passed": true
+  }
+}

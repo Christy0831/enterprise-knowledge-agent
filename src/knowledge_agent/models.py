@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import json
+from http.client import HTTPException
+import math
 import os
 import re
 import socket
@@ -11,6 +13,7 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from .prompts import SYSTEM_PROMPT
 from .schema import Action, ModelError, TOOLS
+from .http_json import read_json, RequestDeadlineExceeded
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -35,7 +38,7 @@ class ResponsesModel:
             raise ValueError("OPENAI_BASE_URL 必须为 HTTPS；仅本机调试允许 HTTP")
         if parsed.username or parsed.password or parsed.query or parsed.fragment:
             raise ValueError("OPENAI_BASE_URL 不允许内嵌凭证、查询参数或 fragment")
-        if timeout <= 0:
+        if not math.isfinite(timeout) or timeout <= 0:
             raise ValueError("timeout must be positive")
         self.api_key, self.model = api_key, model
         self.url, self.timeout = base_url.rstrip("/") + "/responses", timeout
@@ -51,12 +54,13 @@ class ResponsesModel:
                           headers={"Authorization": "Bearer " + self.api_key,
                                    "Content-Type": "application/json"}, method="POST")
         try:
-            with build_opener(NoRedirect()).open(request, timeout=self.timeout) as response:
-                return json.loads(response.read().decode("utf-8"))
+            return read_json(request, build_opener(NoRedirect()), self.timeout)
         except HTTPError as exc:
             # Provider error bodies may echo the key, request or sensitive source text.
             raise ModelError(f"模型 HTTP {exc.code}；请检查模型权限、额度及 API 配置") from None
-        except (URLError, TimeoutError, socket.timeout, OSError):
+        except RequestDeadlineExceeded:
+            raise ModelError(f"模型请求达到 {self.timeout:g} 秒总时限（含连接及完整响应）；服务可能排队，请稍后重试或调整 --timeout") from None
+        except (URLError, TimeoutError, socket.timeout, OSError, HTTPException):
             raise ModelError("模型网络错误或超时；未取得可用模型动作") from None
         except (ValueError, UnicodeError):
             raise ModelError("模型端点返回了无效 JSON") from None

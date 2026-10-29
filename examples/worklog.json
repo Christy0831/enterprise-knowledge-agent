@@ -23,6 +23,20 @@
       "bm25_live_deepseek_cases_passed": 11,
       "embedding_live_verified": false,
       "pending": "User will fill DashScope key later; real hybrid retrieval and quality evaluation are explicitly pending. Git push and CI verification follow this checkpoint."
+    },
+    {
+      "request": "Fix waiting on HTTP response and KeyboardInterrupt; validate real DashScope hybrid",
+      "started_at_first_record": "2026-10-29T20:41:39+08:00",
+      "local_verification_checkpoint": "2026-10-29T20:53:04.505171+08:00",
+      "elapsed_wall_minutes_to_checkpoint": 11.43,
+      "unit_tests": 63,
+      "hybrid_live_cases_passed": 11,
+      "manual_conflict_elapsed_seconds": 13.062,
+      "embedding_live_verified": true,
+      "remaining_at_checkpoint": [
+        "Git push and CI verification"
+      ],
+      "scope": "Local coding, tests, live hybrid evaluation and documentation; server-side cancellation not claimed."
     }
   ]
 }

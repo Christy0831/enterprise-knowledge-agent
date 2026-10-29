@@ -1,6 +1,6 @@
 {
-  "run_id": "e164b2c1b2e2413e91811ae17306343e",
-  "started_at_utc": "2026-10-29T12:35:11.459393+00:00",
+  "run_id": "6f16f1691ee64b0f98ba43f231aa1860",
+  "started_at_utc": "2026-10-29T12:51:58.206920+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -40,6 +40,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "read_chunk",
       "observation": {
@@ -98,6 +99,7 @@
           }
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 2 个片段；本次返回 2 个；向量检索不可用，已明确降级为BM25",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -110,6 +112,7 @@
         "chunk_id": "C01"
       },
       "decision_summary": "离线规则：候选仅是线索，需要读取原文。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "finish",
       "observation": {
@@ -124,6 +127,7 @@
           "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "读取 D01/C01，版本 2026-01-10",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -146,12 +150,14 @@
         "conflicts": []
       },
       "decision_summary": "离线规则：已读取原文，按原文作答。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:answered",
       "observation": {
         "ok": true,
         "status": "answered"
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "最终结果通过结构与引用校验"
     }
   ],

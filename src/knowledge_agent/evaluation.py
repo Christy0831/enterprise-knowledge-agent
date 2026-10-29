@@ -63,14 +63,15 @@ def grade(record: dict, expected: dict, knowledge: KnowledgeBase) -> dict[str, b
     return checks
 
 
-def evaluate(model, out_dir: Path, cases_path: Path | None = None, *, retrieval_options: dict | None = None) -> dict:
+def evaluate(model, out_dir: Path, cases_path: Path | None = None, *, retrieval_options: dict | None = None,
+             progress=None) -> dict:
     manifest = json.loads((cases_path or ROOT / "data/cases.json").read_text(encoding="utf-8-sig"))
     rows = []
     successful_model_steps = 0
     # Separate provider dirs so offline results never overwrite real-model evidence.
     for case in manifest["cases"]:
         knowledge = KnowledgeBase.from_path(ROOT / case["corpus"], case.get("faults"), **(retrieval_options or {}))
-        record = Agent(model, knowledge, case.get("max_steps", 12)).run(case["question"], case.get("history"))
+        record = Agent(model, knowledge, case.get("max_steps", 12), progress=progress).run(case["question"], case.get("history"))
         record["fixture"] = {"corpus": case["corpus"], "faults": case.get("faults", {})}
         successful_model_steps += sum(bool(t.get("model_metadata", {}).get("response_id"))
                                       for t in record["trace"])
@@ -82,12 +83,16 @@ def evaluate(model, out_dir: Path, cases_path: Path | None = None, *, retrieval_
                      "status": record["result"]["status"], "passed": all(checks.values()),
                      "failed_checks": [k for k, v in checks.items() if not v], "record": filename,
                      "path": [t["tool"] for t in record["trace"]]})
+        if record["result"]["status"] == "cancelled":
+            break
     report = {"generated_at_utc": datetime.now(timezone.utc).isoformat(),
               "provider": model.provider, "model": model.model, "evidence_kind": model.evidence_kind,
               "retrieval_mode": knowledge.retrieval,
               "embedding_evidence_kind": knowledge.embedder.evidence_kind if knowledge.embedder else None,
               "real_model_execution_recorded": model.evidence_kind == "real_model" and successful_model_steps > 0,
               "successful_model_steps": successful_model_steps,
+              "requested_total": len(manifest["cases"]),
+              "cancelled": any(row["status"] == "cancelled" for row in rows),
               "total": len(rows), "passed": sum(r["passed"] for r in rows), "cases": rows,
               "limitation": "自动断言只验证状态、关键事实、引用与动作特征；需人工复核答案蕴含与决策质量。"
                             if model.provider != "mock" else

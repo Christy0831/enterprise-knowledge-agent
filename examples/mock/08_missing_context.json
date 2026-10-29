@@ -1,6 +1,6 @@
 {
-  "run_id": "612a305f24524d3090d0892e4ea3baea",
-  "started_at_utc": "2026-10-29T12:28:59.664869+00:00",
+  "run_id": "68362d1a9e25486cb965bbf8c72ad496",
+  "started_at_utc": "2026-10-29T12:51:58.042622+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -40,12 +40,14 @@
         "conflicts": []
       },
       "decision_summary": "离线规则：代词没有可用对话上下文。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:needs_clarification",
       "observation": {
         "ok": true,
         "status": "needs_clarification"
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "最终结果通过结构与引用校验"
     }
   ],

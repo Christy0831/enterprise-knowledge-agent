@@ -1,6 +1,6 @@
 {
-  "run_id": "a623e493a8734fd5a6669845a634828e",
-  "started_at_utc": "2026-10-29T12:28:59.667439+00:00",
+  "run_id": "c7c93589b9fd422883269ff83cb5bca6",
+  "started_at_utc": "2026-10-29T12:51:58.045134+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -35,6 +35,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:step_limit",
       "observation": {
@@ -82,6 +83,7 @@
           "bm25_matches": 2
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 2 个片段；本次返回 2 个"
     }
   ],

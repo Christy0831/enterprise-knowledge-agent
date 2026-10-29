@@ -1,7 +1,7 @@
 {
-  "run_id": "d2d748c08cac4184ad109eb352df31bb",
-  "started_at_utc": "2026-10-29T12:28:59.663293+00:00",
-  "elapsed_seconds": 0.0,
+  "run_id": "0065a90643b5422d902c18993092e25e",
+  "started_at_utc": "2026-10-29T12:51:58.040624+00:00",
+  "elapsed_seconds": 0.016,
   "provider": "mock",
   "model": "offline-rules-v1",
   "evidence_kind": "mock_flow_only",
@@ -35,6 +35,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "read_chunk",
       "observation": {
@@ -82,6 +83,7 @@
           "bm25_matches": 2
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 2 个片段；本次返回 2 个",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -94,6 +96,7 @@
         "chunk_id": "C01"
       },
       "decision_summary": "离线规则：候选仅是线索，需要读取原文。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "read_chunk",
       "observation": {
@@ -104,6 +107,7 @@
           "retryable": true
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "失败：UNAVAILABLE",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -116,6 +120,7 @@
         "chunk_id": "C01"
       },
       "decision_summary": "离线规则：观察到一次可恢复工具故障，选择再试一次。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "finish",
       "observation": {
@@ -126,6 +131,7 @@
           "retryable": true
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "失败：UNAVAILABLE",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -143,12 +149,14 @@
         "conflicts": []
       },
       "decision_summary": "离线规则：工具仍失败，停止并保留已有记录。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:tool_error",
       "observation": {
         "ok": true,
         "status": "tool_error"
       },
+      "tool_elapsed_seconds": 0.016,
       "observation_summary": "最终结果通过结构与引用校验"
     }
   ],

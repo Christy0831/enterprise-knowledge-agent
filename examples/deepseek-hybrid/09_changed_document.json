@@ -1,0 +1,217 @@
+{
+  "run_id": "b7b9138e856e4b1b81a80a00aede8f79",
+  "started_at_utc": "2026-10-29T12:50:20.729472+00:00",
+  "elapsed_seconds": 8.766,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "ecee8e5b612f1025bfe0fd71dcf5428a1643701562751e9c21148bebc7f83833",
+  "limits": {
+    "max_steps": 12
+  },
+  "retrieval_mode": "hybrid",
+  "steps_used": 3,
+  "result": {
+    "status": "answered",
+    "answer": "根据《费用报销期限制度》，报销期限为 45 天，自费用发生之日起计算[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。",
+    "citations": [
+      {
+        "doc_id": "D01",
+        "chunk_id": "C01",
+        "version_date": "2026-05-01",
+        "quote": "报销期限为 45 天，自费用发生之日起计算。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "检索报销期限相关制度原文",
+      "model_request_seconds": 1.891,
+      "model_metadata": {
+        "response_id": "b3e0afa4-20fe-438c-8fa7-da1537ef3a3d",
+        "usage": {
+          "input_tokens": 1563,
+          "output_tokens": 72,
+          "total_tokens": 1635
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-05-01",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.03278689,
+            "score_type": "rrf",
+            "bm25_score": 1.232923,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "vector_score": 0.637717,
+            "preview": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        ],
+        "total_matches": 1,
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "hybrid",
+          "used_mode": "hybrid",
+          "degraded": false,
+          "score_type": "rrf",
+          "bm25_matches": 1,
+          "rrf_k": 60,
+          "candidate_k": 20,
+          "vector_min_score": 0.5,
+          "vector_matches": 1,
+          "embedding": {
+            "provider": "dashscope",
+            "model": "text-embedding-v4",
+            "dimensions": 1024,
+            "evidence_kind": "remote_embedding_api",
+            "index_fingerprint": "40f22b5cbf57036b2b5e8823362787780cd92e473e6d5a52a0832205277925b6",
+            "document_cache": "built",
+            "requests": [
+              {
+                "request_id": "6106f6cc-7f44-990b-b17f-5f5421b7f996",
+                "text_type": "document",
+                "batch_size": 1,
+                "total_tokens": 31
+              },
+              {
+                "request_id": "7396cb06-7ae9-9ece-8ee6-0d9a7f8ae2a3",
+                "text_type": "query",
+                "batch_size": 1,
+                "total_tokens": 3
+              }
+            ]
+          },
+          "candidate_pool_truncated": false
+        }
+      },
+      "tool_elapsed_seconds": 2.406,
+      "observation_summary": "命中 1 个片段；本次返回 1 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取唯一命中片段原文以确认期限表述",
+      "model_request_seconds": 1.922,
+      "model_metadata": {
+        "response_id": "7a43a75c-dac1-4ac8-9bdf-c260cf5977e3",
+        "usage": {
+          "input_tokens": 2114,
+          "output_tokens": 78,
+          "total_tokens": 2192
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D01",
+          "title": "费用报销期限制度",
+          "version_date": "2026-05-01",
+          "scope": null,
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "读取 D01/C01，版本 2026-05-01",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "根据《费用报销期限制度》，报销期限为 45 天，自费用发生之日起计算[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "chunk_id": "C01",
+            "version_date": "2026-05-01",
+            "quote": "报销期限为 45 天，自费用发生之日起计算。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "仅一份相关规定且无冲突，依据已读取原文回答并限定来源",
+      "model_request_seconds": 2.547,
+      "model_metadata": {
+        "response_id": "77e99e7d-0770-445a-9a12-75fe42963a09",
+        "usage": {
+          "input_tokens": 2292,
+          "output_tokens": 228,
+          "total_tokens": 2520
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/changed_policy.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "45"
+      ],
+      "not_contains": [
+        "30"
+      ],
+      "citations": [
+        "D01"
+      ]
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "hybrid_not_degraded": true
+    },
+    "passed": true
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "run_id": "cb714d12ca0e440f8b67860b4350bb3e",
+  "started_at_utc": "2026-10-29T12:50:29.498327+00:00",
+  "elapsed_seconds": 3.203,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 1
+  },
+  "retrieval_mode": "hybrid",
+  "steps_used": 1,
+  "result": {
+    "status": "step_limit",
+    "completed": false,
+    "answer": "达到执行步数上限，任务未完成。",
+    "citations": [],
+    "gaps": [
+      "需要更多工具预算或缩小问题范围，不能把中间证据作为完整答案。"
+    ],
+    "conflicts": []
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "检索报销期限相关制度原文",
+      "model_request_seconds": 1.875,
+      "model_metadata": {
+        "response_id": "4869d163-224c-4460-8549-1b51cd7a2a55",
+        "usage": {
+          "input_tokens": 1563,
+          "output_tokens": 72,
+          "total_tokens": 1635
+        }
+      },
+      "next_action": "stop:step_limit",
+      "observation": {
+        "ok": true,
+        "query": "报销期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.03278689,
+            "score_type": "rrf",
+            "bm25_score": 2.123214,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "vector_score": 0.6364,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.01612903,
+            "score_type": "rrf",
+            "bm25_score": 0.275741,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "hybrid",
+          "used_mode": "hybrid",
+          "degraded": false,
+          "score_type": "rrf",
+          "bm25_matches": 2,
+          "rrf_k": 60,
+          "candidate_k": 20,
+          "vector_min_score": 0.5,
+          "vector_matches": 1,
+          "embedding": {
+            "provider": "dashscope",
+            "model": "text-embedding-v4",
+            "dimensions": 1024,
+            "evidence_kind": "remote_embedding_api",
+            "index_fingerprint": "de746a9c9b013e858e4d02e84163d74b9e58c55cf1edcf1df0e7bc64e43eea9e",
+            "document_cache": "disk_hit",
+            "requests": [
+              {
+                "request_id": "281efe9d-f76a-90a4-8308-aa9c6b99c022",
+                "text_type": "query",
+                "batch_size": 1,
+                "total_tokens": 3
+              }
+            ]
+          },
+          "candidate_pool_truncated": false
+        }
+      },
+      "tool_elapsed_seconds": 1.328,
+      "observation_summary": "命中 2 个片段；本次返回 2 个"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/single_policy.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "step_limit",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true,
+      "hybrid_not_degraded": true
+    },
+    "passed": true
+  }
+}

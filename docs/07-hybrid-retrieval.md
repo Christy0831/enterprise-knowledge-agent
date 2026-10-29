@@ -4,11 +4,11 @@
 
 按用户要求增加可选混合检索：**BM25 + DashScope `text-embedding-v4` + RRF**。默认仍为BM25，保持无密钥的离线复现入口。全部实现使用Python标准库，无需安装DashScope SDK、NumPy、本地embedding模型或向量数据库。
 
-当前已验证HTTP合同、向量合法性、融合、缓存、降级及严格失败路径。用户计划后续配置向量API，因此**尚未真实调用DashScope，也未验证其召回率、延迟或语义质量提升**。此前及当前 `examples/deepseek/` 的真实模型记录属于BM25基线，不是混合检索效果证据。
+已验证HTTP合同、向量合法性、融合、缓存、降级及严格失败路径。用户配置本机向量Key后，真实DeepSeek + DashScope严格混合验收11/11通过，原始记录见 [report.json](../examples/deepseek-hybrid/report.json)。`examples/deepseek/`仍是BM25基线。小规模任务通过不等于已经证明独立问题集的召回率或语义质量提升，当前未报告此类未测指标。
 
 ## 填写本机配置
 
-现有.env已预留以下字段，不覆盖DeepSeek配置。后续只在本机填入Key：
+现有.env包含以下字段，Key仅保留本机，不覆盖DeepSeek配置：
 
 ```dotenv
 DASHSCOPE_API_KEY=在本机填写你的Key
@@ -90,7 +90,7 @@ rank从1开始，只对实际出现的渠道求和，不把未命中项当作第
 
 混合批量评估额外检查 `hybrid_not_degraded`，避免仅BM25回答正确就宣称混合检索通过。一次搜索成功使用hybrid不证明质量提升；严格模式失败记录也不会被算成真实向量能力证据。
 
-已保存的4组流程记录位于 [examples/hybrid/](../examples/hybrid/)。前两组是显式标记的人工向量；后两组模拟未配置Key，分别验证降级和严格失败。API合同测试仅调用本机假服务，不是真实DashScope。待填写Key后，应运行真实混合验收，并在独立问题集上比较BM25、向量、RRF的Recall@k/MRR和资料外误召回率；当前不报告未测得的指标。
+4组离线流程记录位于 [examples/hybrid/](../examples/hybrid/)。前两组是显式标记的人工向量；后两组模拟未配置Key，分别验证降级和严格失败。API合同测试使用本机假服务；真实混合记录另外保存在 [examples/deepseek-hybrid/](../examples/deepseek-hybrid/)，严格模式11/11通过。未来应在独立问题集上比较BM25、向量、RRF的Recall@k/MRR和资料外误召回率；当前不报告未测指标。请求等待、总时限与取消处理见 [08](08-timeout-and-cancellation.md)。
 
 ## 题目是否要求权限、持久对话、UI或部署
 

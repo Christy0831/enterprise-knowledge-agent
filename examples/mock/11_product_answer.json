@@ -1,6 +1,6 @@
 {
-  "run_id": "e17f60bd95874e3ea6c4c1eb3a0c2e87",
-  "started_at_utc": "2026-10-29T12:28:59.668441+00:00",
+  "run_id": "6aedc58e3ec946d2bf3d175f971e3054",
+  "started_at_utc": "2026-10-29T12:51:58.047135+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -40,6 +40,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "read_chunk",
       "observation": {
@@ -72,6 +73,7 @@
           "bm25_matches": 1
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 1 个片段；本次返回 1 个",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -84,6 +86,7 @@
         "chunk_id": "C01"
       },
       "decision_summary": "离线规则：候选仅是线索，需要读取原文。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "finish",
       "observation": {
@@ -98,6 +101,7 @@
           "text": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "读取 D04/C01，版本 2026-03-01",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -120,12 +124,14 @@
         "conflicts": []
       },
       "decision_summary": "离线规则：已读取原文，按原文作答。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:answered",
       "observation": {
         "ok": true,
         "status": "answered"
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "最终结果通过结构与引用校验"
     }
   ],

@@ -45,6 +45,12 @@
 
 文件：[06_transient_failure.json](deepseek/06_transient_failure.json)。第1轮检索返回真实注入错误，第2轮模型选择再次检索；获得结果后读取原文并完成。对照 [07](deepseek/07_persistent_failure.json)，持续读取失败后模型最终选择停止并返回tool_error。
 
+## 本次真实混合复核
+
+用户配置DashScope Key后，另行运行DeepSeek + DashScope/RRF严格模式，11/11通过，见 [真实混合报告](deepseek-hybrid/report.json)。逐项核对实际回答与原文：单制度30天、冲突30/15天后补查追问、资料外无数值、相似问法30天、历史追问三项材料、临时错误后恢复、持续读取错误不作确定答复、无上下文追问、替换后45天、上限未完成、字幕功能不编造指标，均与输入和来源相符。成功检索的used_mode均为hybrid且degraded=false。
+
+同问题 [manual-conflict.json](deepseek-hybrid/manual-conflict.json) 约13秒完成，可用于核对模型等待与检索的实际耗时。此为开发侧人工复核，不等于独立检索基准或提交者个人审阅。
+
 ## 保留的限制
 
 - 此处覆盖固定的小规模合成资料，不代表任何企业实际制度，也不证明大规模检索或长期稳定性。

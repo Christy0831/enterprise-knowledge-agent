@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+from http.client import HTTPException
 import json
 import math
 import os
@@ -10,6 +11,7 @@ from urllib.parse import urlsplit
 from urllib.request import Request, build_opener
 
 from .models import NoRedirect
+from .http_json import read_json, RequestDeadlineExceeded
 
 DEFAULT_URL = "https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding"
 DIMENSIONS = {64, 128, 256, 512, 768, 1024, 1536, 2048}
@@ -74,12 +76,13 @@ class DashScopeEmbedder:
                           headers={"Authorization": "Bearer " + self.api_key,
                                    "Content-Type": "application/json"}, method="POST")
         try:
-            with build_opener(NoRedirect()).open(request, timeout=self.timeout) as response:
-                return json.loads(response.read().decode("utf-8"))
+            return read_json(request, build_opener(NoRedirect()), self.timeout)
         except HTTPError as exc:
             raise EmbeddingError("HTTP_" + str(exc.code), f"DashScope HTTP {exc.code}；请检查地域、权限、额度及配置",
                                  exc.code == 429 or exc.code >= 500) from None
-        except (URLError, TimeoutError, OSError):
+        except RequestDeadlineExceeded:
+            raise EmbeddingError("REQUEST_DEADLINE", f"DashScope请求达到 {self.timeout:g} 秒总时限", True) from None
+        except (URLError, TimeoutError, OSError, HTTPException):
             raise EmbeddingError("NETWORK_ERROR", "DashScope网络错误或超时", True) from None
         except (ValueError, UnicodeError):
             raise EmbeddingError("PROTOCOL_ERROR", "DashScope返回无效JSON") from None

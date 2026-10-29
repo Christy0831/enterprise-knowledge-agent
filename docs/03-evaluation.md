@@ -10,9 +10,9 @@ python run.py evaluate --provider deepseek
 python scripts/check.py
 ```
 
-BM25离线验收 **11/11通过**，真实DeepSeek的BM25基线最新完整通过轮次 **11/11通过**，自动化测试 **54项通过，0失败、0错误**。原始记录见 [离线报告](../examples/mock/report.json)、[真实基线报告](../examples/deepseek/report.json)、[测试JSON](../examples/test-results.json) 和 [测试完整日志](../examples/test-results.txt)。时间戳和用时来自运行程序，不手写测试输出。
+BM25离线验收 **11/11通过**，真实DeepSeek的BM25基线最新完整通过轮次 **11/11通过**，自动化测试 **63项通过，0失败、0错误**。原始记录见 [离线报告](../examples/mock/report.json)、[真实基线报告](../examples/deepseek/report.json)、[测试JSON](../examples/test-results.json) 和 [测试完整日志](../examples/test-results.txt)。时间戳和用时来自运行程序，不手写测试输出。
 
-混合扩展尚未配置真实DashScope Key，**没有真实向量质量或hybrid端到端通过率**。新增18项测试及 [4组流程记录](../examples/hybrid/) 验证RRF、原生HTTP合同、批次/索引映射、向量合法性、缓存失效、降级及严格失败；人工向量与本机假服务均明确标记。真实验证命令与边界见 [07](07-hybrid-retrieval.md)。
+用户配置向量Key后，真实DeepSeek + DashScope/RRF严格混合验收 **11/11通过**，见 [真实混合报告](../examples/deepseek-hybrid/report.json)。此前新增18项混合测试及 [4组离线流程记录](../examples/hybrid/) 验证融合、合同、缓存和降级；本次再新增9项总时限/取消回归测试，合计63项通过。人工向量、本机假服务与真实API记录分别保存，未测独立检索质量指标。验证边界见 [07](07-hybrid-retrieval.md)，等待问题修正见 [08](08-timeout-and-cancellation.md)。
 
 API协议测试使用本机假服务或模拟返回，与真实DeepSeek验收分别报告。真实记录使用用户本机配置的官网API产生，包含模型响应ID、Token用量和实际工具反馈；正常、冲突、无结果、工具失败等路径已运行。答案语义和动态路径的开发侧人工复核见 [manual-review.md](../examples/manual-review.md)。提交者仍应亲自复核，一次完整通过不证明所有未来请求都正确。
 
@@ -79,7 +79,7 @@ API合同测试检查实际HTTP请求路径、Authorization仅发往本机假服
 ## 已知限制与未完成项
 
 - 真实模型已实际验证，但仅覆盖小规模合成场景；此前发生过一次协议错误，不能将最新通过率解释为长期稳定性保证。
-- 默认BM25与可选DashScope向量/RRF都可能误召回；真实向量Key待用户后续填写，阈值0.5尚未真实校准。知识库很小，未测大规模召回率、延迟、成本和并发。
+- 默认BM25与DashScope向量/RRF都可能误召回；已通过小规模真实混合验收，阈值0.5尚未在独立问题集校准。知识库很小，未测大规模召回率、成本和并发；运行用时记录不等同于延迟基准。
 - 引用校验不验证自然语言蕴含；prompt也不能保证抵抗所有资料中的恶意指令。
 - 未实现企业访问控制、数据更新服务、跨会话存储、部署或生产监控。
 - 基线GitHub Actions四种环境已实际通过；本次扩展的远端CI状态以交付消息和Actions页面为准。

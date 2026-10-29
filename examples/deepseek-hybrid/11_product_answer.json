@@ -1,0 +1,212 @@
+{
+  "run_id": "aa1063869ec74417a2274f9f1d14786c",
+  "started_at_utc": "2026-10-29T12:50:32.710357+00:00",
+  "elapsed_seconds": 7.125,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "影文桌面版支持添加和编辑字幕吗？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "retrieval_mode": "hybrid",
+  "steps_used": 3,
+  "result": {
+    "status": "answered",
+    "answer": "支持。根据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。该资料未提供效率提升比例或字幕识别准确率等数据。",
+    "citations": [
+      {
+        "doc_id": "D04",
+        "chunk_id": "C01",
+        "version_date": "2026-03-01",
+        "quote": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "影文桌面版 字幕 添加 编辑",
+        "top_k": 8
+      },
+      "decision_summary": "检索影文桌面版字幕功能相关制度或产品说明",
+      "model_request_seconds": 1.844,
+      "model_metadata": {
+        "response_id": "2f290f6c-6927-4f3e-ad8e-c028a6c811ef",
+        "usage": {
+          "input_tokens": 1569,
+          "output_tokens": 86,
+          "total_tokens": 1655
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "影文桌面版 字幕 添加 编辑",
+        "hits": [
+          {
+            "doc_id": "D04",
+            "title": "影文产品字幕功能说明",
+            "version_date": "2026-03-01",
+            "scope": "影文桌面版",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.03278689,
+            "score_type": "rrf",
+            "bm25_score": 11.542327,
+            "bm25_rank": 1,
+            "vector_rank": 1,
+            "vector_score": 0.781881,
+            "preview": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
+          }
+        ],
+        "total_matches": 1,
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "hybrid",
+          "used_mode": "hybrid",
+          "degraded": false,
+          "score_type": "rrf",
+          "bm25_matches": 1,
+          "rrf_k": 60,
+          "candidate_k": 20,
+          "vector_min_score": 0.5,
+          "vector_matches": 1,
+          "embedding": {
+            "provider": "dashscope",
+            "model": "text-embedding-v4",
+            "dimensions": 1024,
+            "evidence_kind": "remote_embedding_api",
+            "index_fingerprint": "e4244592df0a6069d37607a62c307d9bb715058bd8da92be6c4d0baf498ac144",
+            "document_cache": "disk_hit",
+            "requests": [
+              {
+                "request_id": "28525a36-111c-9d8e-9020-a015a9ab39ec",
+                "text_type": "query",
+                "batch_size": 1,
+                "total_tokens": 11
+              }
+            ]
+          },
+          "candidate_pool_truncated": false
+        }
+      },
+      "tool_elapsed_seconds": 0.953,
+      "observation_summary": "命中 1 个片段；本次返回 1 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D04",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取原文以确认字幕添加与编辑的支持情况",
+      "model_request_seconds": 1.922,
+      "model_metadata": {
+        "response_id": "9b968494-e119-4821-aef8-b48d1606eb86",
+        "usage": {
+          "input_tokens": 2099,
+          "output_tokens": 79,
+          "total_tokens": 2178
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D04",
+          "title": "影文产品字幕功能说明",
+          "version_date": "2026-03-01",
+          "scope": "影文桌面版",
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
+        }
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "读取 D04/C01，版本 2026-03-01",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "支持。根据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。该资料未提供效率提升比例或字幕识别准确率等数据。",
+        "citations": [
+          {
+            "doc_id": "D04",
+            "chunk_id": "C01",
+            "version_date": "2026-03-01",
+            "quote": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "检索到唯一相关文档并读取原文，原文明确说明支持添加与编辑字幕",
+      "model_request_seconds": 2.406,
+      "model_metadata": {
+        "response_id": "6af5a8ea-4275-4ad3-96ca-322f49c21641",
+        "usage": {
+          "input_tokens": 2291,
+          "output_tokens": 232,
+          "total_tokens": 2523
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "tool_elapsed_seconds": 0.0,
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "字幕"
+      ],
+      "citations": [
+        "D04"
+      ],
+      "min_tools": {
+        "read_chunk": 1
+      }
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "tool_count_read_chunk": true,
+      "hybrid_not_degraded": true
+    },
+    "passed": true
+  }
+}

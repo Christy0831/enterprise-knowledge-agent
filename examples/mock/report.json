@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-10-29T12:28:59.668441+00:00",
+  "generated_at_utc": "2026-10-29T12:51:58.048134+00:00",
   "provider": "mock",
   "model": "offline-rules-v1",
   "evidence_kind": "mock_flow_only",
@@ -7,6 +7,8 @@
   "embedding_evidence_kind": null,
   "real_model_execution_recorded": false,
   "successful_model_steps": 0,
+  "requested_total": 11,
+  "cancelled": false,
   "total": 11,
   "passed": 11,
   "cases": [

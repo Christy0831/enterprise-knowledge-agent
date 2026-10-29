@@ -1,6 +1,6 @@
 {
-  "run_id": "1e5ce891a75f4f2db2d971ca76eb00e6",
-  "started_at_utc": "2026-10-29T12:28:59.654369+00:00",
+  "run_id": "430febff9e2e43bc8227211223718b19",
+  "started_at_utc": "2026-10-29T12:51:58.032111+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -56,6 +56,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "read_chunk",
       "observation": {
@@ -118,6 +119,7 @@
           "bm25_matches": 3
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 3 个片段；本次返回 3 个",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -130,6 +132,7 @@
         "chunk_id": "C01"
       },
       "decision_summary": "离线规则：候选仅是线索，需要读取原文。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "read_chunk",
       "observation": {
@@ -144,6 +147,7 @@
           "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "读取 D01/C01，版本 2026-01-10",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -156,6 +160,7 @@
         "chunk_id": "C01"
       },
       "decision_summary": "离线规则：候选仅是线索，需要读取原文。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "search_docs",
       "observation": {
@@ -170,6 +175,7 @@
           "text": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "读取 D02/C01，版本 2026-02-20",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -182,6 +188,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：观察到期限冲突，补查适用范围及优先级。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "finish",
       "observation": {
@@ -244,6 +251,7 @@
           "bm25_matches": 3
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 3 个片段；本次返回 3 个",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -282,12 +290,14 @@
         ]
       },
       "decision_summary": "离线规则：补查没有找到有效裁决依据。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:needs_clarification",
       "observation": {
         "ok": true,
         "status": "needs_clarification"
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "最终结果通过结构与引用校验"
     }
   ],

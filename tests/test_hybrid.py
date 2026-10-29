@@ -282,7 +282,7 @@ class DashScopeTests(unittest.TestCase):
         for strict in (False, True):
             with self.subTest(strict=strict), patch.dict(os.environ, {}, clear=True), patch("knowledge_agent.cli.load_env"):
                 output = io.StringIO()
-                with patch("sys.stdout", output):
+                with patch("sys.stdout", output), patch("sys.stderr", io.StringIO()):
                     code = main(["ask", "报销期限多久？", "--provider", "mock", "--retrieval", "hybrid"]
                                 + (["--require-vector"] if strict else []))
                 record = json.loads(output.getvalue())

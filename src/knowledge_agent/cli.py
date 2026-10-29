@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 import sys
+import time
 
 from .agent import Agent
 from .config import load_env
@@ -28,7 +29,8 @@ def parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--out-dir", type=Path)
     for item in (ask, evaluation):
         item.add_argument("--provider", choices=["mock", "deepseek", "openai"], default="mock")
-        item.add_argument("--timeout", type=float, default=45, help="单次模型HTTP请求超时秒数")
+        item.add_argument("--timeout", type=float, default=45, help="单次模型HTTP总时限秒数（连接和完整响应合计）")
+        item.add_argument("--quiet", action="store_true", help="不向stderr输出进度；stdout始终为JSON")
         item.add_argument("--retrieval", choices=["bm25", "hybrid"], default="bm25",
                           help="hybrid=BM25+DashScope向量检索+RRF")
         item.add_argument("--rrf-k", type=int, default=60)
@@ -58,25 +60,48 @@ def main(argv: list[str] | None = None) -> int:
         model = (MockModel() if args.provider == "mock" else
                  DeepSeekModel.from_env(args.timeout) if args.provider == "deepseek" else
                  ResponsesModel.from_env(args.timeout))
+        started = time.monotonic()
+
+        def progress(event):
+            prefix = f"[{time.monotonic() - started:.1f}s] "
+            kind = event["event"]
+            if kind == "model_start":
+                message = f"第{event['decision_round']}轮：等待{model.provider}模型动作（单次请求总时限{args.timeout:g}s）"
+            elif kind == "model_done":
+                message = f"模型返回，耗时{event['elapsed_seconds']:.1f}s"
+            elif kind == "tool_start":
+                message = f"执行工具 {event['tool']}"
+            elif kind == "tool_done":
+                message = f"{event['tool']}：{event['summary']}（{event['elapsed_seconds']:.1f}s）"
+            else:
+                message = f"结束：{event['status']}"
+            print(prefix + message, file=sys.stderr, flush=True)
+
+        on_progress = progress if not args.quiet and (args.provider != "mock" or args.retrieval == "hybrid") else None
         if args.command == "evaluate":
             output = args.out_dir or ROOT / "examples" / (args.provider if args.retrieval == "bm25" else args.provider + "-hybrid")
-            report = evaluate(model, output, retrieval_options=retrieval_options)
+            report = evaluate(model, output, retrieval_options=retrieval_options, progress=on_progress)
             print(json.dumps({"provider": report["provider"], "passed": report["passed"],
                               "total": report["total"], "report": str(output / "report.json"),
                               "limitation": report["limitation"]}, ensure_ascii=False, indent=2))
-            return 0 if report["passed"] == report["total"] else 1
+            return 130 if report.get("cancelled") else (0 if report["passed"] == report["total"] else 1)
         history = json.loads(args.history.read_text(encoding="utf-8-sig")) if args.history else []
         if args.fail_count != -1 and args.fail_count < 1:
             raise ValueError("fail-count必须为正整数或-1")
         faults = {args.fail_tool: args.fail_count} if args.fail_tool else {}
         knowledge = KnowledgeBase.from_path(args.corpus, faults, **retrieval_options)
-        record = Agent(model, knowledge, args.max_steps).run(args.question, history)
+        record = Agent(model, knowledge, args.max_steps, progress=on_progress).run(args.question, history)
         record["fixture"] = {"corpus": str(args.corpus), "faults": faults}
         if args.output:
             write_json(args.output, record)
         print(json.dumps(record, ensure_ascii=False, indent=2))
         status = record["result"]["status"]
+        if status == "cancelled":
+            return 130
         return 2 if status in {"step_limit", "tool_error", "model_error"} else 0
+    except KeyboardInterrupt:
+        print("已取消，程序退出。", file=sys.stderr)
+        return 130
     except (ValueError, OSError, KeyError, TypeError) as exc:
         # CLI input/config errors; no provider response bodies are printed.
         print(f"配置或输入错误：{exc}", file=sys.stderr)

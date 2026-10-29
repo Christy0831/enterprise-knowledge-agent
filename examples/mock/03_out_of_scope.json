@@ -1,6 +1,6 @@
 {
-  "run_id": "a32bb366d6aa4dc384d48b8e71d45b6e",
-  "started_at_utc": "2026-10-29T12:28:59.657460+00:00",
+  "run_id": "7d4bac06e800414bbc306d10ef2c9a1b",
+  "started_at_utc": "2026-10-29T12:51:58.034621+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -35,6 +35,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "search_docs",
       "observation": {
@@ -51,6 +52,7 @@
           "bm25_matches": 0
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 0 个片段；本次返回 0 个",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -63,6 +65,7 @@
         "top_k": 8
       },
       "decision_summary": "离线规则：首轮无结果，尝试同义词或扩展查询。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "finish",
       "observation": {
@@ -79,6 +82,7 @@
           "bm25_matches": 0
         }
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "命中 0 个片段；本次返回 0 个",
       "next_action_source": "new_model_response_after_observation"
     },
@@ -96,12 +100,14 @@
         "conflicts": []
       },
       "decision_summary": "离线规则：补充检索仍无结果。",
+      "model_request_seconds": 0.0,
       "model_metadata": {},
       "next_action": "stop:insufficient_evidence",
       "observation": {
         "ok": true,
         "status": "insufficient_evidence"
       },
+      "tool_elapsed_seconds": 0.0,
       "observation_summary": "最终结果通过结构与引用校验"
     }
   ],
