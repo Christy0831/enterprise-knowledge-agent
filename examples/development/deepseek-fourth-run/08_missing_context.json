@@ -1,0 +1,112 @@
+{
+  "run_id": "7d9d3bfad7ca4522ac7d20a804eddf97",
+  "started_at_utc": "2026-10-29T11:59:33.632256+00:00",
+  "elapsed_seconds": 4.656,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "那要多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 2,
+  "result": {
+    "status": "needs_clarification",
+    "answer": "您的问题“那要多久？”缺少指代对象，且当前没有可用的对话历史，无法判断您问的是哪项事务的时限（例如请假审批、报销到账、权限开通、合同审批等）。请补充具体事项，我再检索对应制度中的时限规定。",
+    "citations": [],
+    "gaps": [
+      "用户追问中的“那”指代不明，且无历史对话可供补全",
+      "缺少需查询时限的具体业务事项（如审批、报销、账号开通等）"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "那要多久？",
+        "top_k": 5
+      },
+      "decision_summary": "用户问题仅为代词式追问且无对话历史，尝试检索以确认是否存在可对应的制度主题",
+      "model_metadata": {
+        "response_id": "41fa71b3-490d-4ca3-92ef-c2c2a2661dad",
+        "usage": {
+          "input_tokens": 1395,
+          "output_tokens": 88,
+          "total_tokens": 1483
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "query": "那要多久？",
+        "hits": [],
+        "total_matches": 0,
+        "has_more": false
+      },
+      "observation_summary": "命中 0 个片段；本次返回 0 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "finish",
+      "arguments": {
+        "status": "needs_clarification",
+        "answer": "您的问题“那要多久？”缺少指代对象，且当前没有可用的对话历史，无法判断您问的是哪项事务的时限（例如请假审批、报销到账、权限开通、合同审批等）。请补充具体事项，我再检索对应制度中的时限规定。",
+        "citations": [],
+        "gaps": [
+          "用户追问中的“那”指代不明，且无历史对话可供补全",
+          "缺少需查询时限的具体业务事项（如审批、报销、账号开通等）"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "追问无指代对象且检索无结果，需用户澄清具体事项",
+      "model_metadata": {
+        "response_id": "00834c34-63ba-48d0-81fe-dac4c2610259",
+        "usage": {
+          "input_tokens": 1533,
+          "output_tokens": 227,
+          "total_tokens": 1760
+        }
+      },
+      "next_action": "stop:needs_clarification",
+      "observation": {
+        "ok": true,
+        "status": "needs_clarification"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": true
+  }
+}

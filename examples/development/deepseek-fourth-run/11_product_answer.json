@@ -1,0 +1,171 @@
+{
+  "run_id": "da25d5dabe814e5fbe4655dd1cf0a2f4",
+  "started_at_utc": "2026-10-29T11:59:46.510861+00:00",
+  "elapsed_seconds": 7.594,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "影文桌面版支持添加和编辑字幕吗？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 3,
+  "result": {
+    "status": "answered",
+    "answer": "支持。依据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。需注意：该资料未提供字幕识别的效率提升比例或识别准确率数据，若有此类疑问需另行确认。",
+    "citations": [
+      {
+        "doc_id": "D04",
+        "chunk_id": "C01",
+        "version_date": "2026-03-01",
+        "quote": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "影文桌面版 字幕 添加 编辑",
+        "top_k": 8
+      },
+      "decision_summary": "检索影文桌面版字幕功能相关制度或产品说明",
+      "model_metadata": {
+        "response_id": "0e8f787c-e959-40cf-9126-9f23b35d9d69",
+        "usage": {
+          "input_tokens": 1402,
+          "output_tokens": 86,
+          "total_tokens": 1488
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "影文桌面版 字幕 添加 编辑",
+        "hits": [
+          {
+            "doc_id": "D04",
+            "title": "影文产品字幕功能说明",
+            "version_date": "2026-03-01",
+            "scope": "影文桌面版",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 11.5423,
+            "preview": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
+          }
+        ],
+        "total_matches": 1,
+        "has_more": false
+      },
+      "observation_summary": "命中 1 个片段；本次返回 1 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D04",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取唯一相关候选原文以确认字幕支持范围",
+      "model_metadata": {
+        "response_id": "ef245921-7766-42f7-a511-0480ca78910c",
+        "usage": {
+          "input_tokens": 1643,
+          "output_tokens": 79,
+          "total_tokens": 1722
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D04",
+          "title": "影文产品字幕功能说明",
+          "version_date": "2026-03-01",
+          "scope": "影文桌面版",
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
+        }
+      },
+      "observation_summary": "读取 D04/C01，版本 2026-03-01",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "支持。依据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。需注意：该资料未提供字幕识别的效率提升比例或识别准确率数据，若有此类疑问需另行确认。",
+        "citations": [
+          {
+            "doc_id": "D04",
+            "chunk_id": "C01",
+            "version_date": "2026-03-01",
+            "quote": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "检索到的唯一相关资料已读取原文，直接支持“支持添加和编辑字幕”的结论。",
+      "model_metadata": {
+        "response_id": "0af80200-4b4a-42a9-a732-9cb4c2e7b23c",
+        "usage": {
+          "input_tokens": 1835,
+          "output_tokens": 245,
+          "total_tokens": 2080
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "字幕"
+      ],
+      "citations": [
+        "D04"
+      ],
+      "min_tools": {
+        "read_chunk": 1
+      }
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "tool_count_read_chunk": true
+    },
+    "passed": true
+  }
+}

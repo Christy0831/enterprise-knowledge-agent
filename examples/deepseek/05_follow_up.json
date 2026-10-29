@@ -1,0 +1,188 @@
+{
+  "run_id": "6fdb2085952442ceaa9bef7b8ea31899",
+  "started_at_utc": "2026-10-29T12:07:06.776610+00:00",
+  "elapsed_seconds": 6.391,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "那需要准备哪些材料？",
+    "history": [
+      {
+        "role": "user",
+        "content": "报销期限是多久？"
+      },
+      {
+        "role": "assistant",
+        "content": "依据 D01，报销期限为30天。"
+      }
+    ]
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 3,
+  "result": {
+    "status": "answered",
+    "answer": "依据《费用报销材料清单》（D03，适用于全体员工），报销申请需提交三类材料：电子发票、费用明细和审批单[D03/C01]。该清单未提及不同费用类型（如差旅、招待）的额外材料要求，如需特殊场景材料建议向制度发布方确认。",
+    "citations": [
+      {
+        "doc_id": "D03",
+        "chunk_id": "C01",
+        "version_date": "2026-01-12",
+        "quote": "报销申请需提交电子发票、费用明细和审批单。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销需要准备哪些材料",
+        "top_k": 8
+      },
+      "decision_summary": "结合历史中报销期限问题，检索报销所需材料的制度规定",
+      "model_metadata": {
+        "response_id": "3d32a0f5-12e7-4f9e-b321-4accdc817cec",
+        "usage": {
+          "input_tokens": 1562,
+          "output_tokens": 82,
+          "total_tokens": 1644
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销需要准备哪些材料",
+        "hits": [
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 1.0272,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          },
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.2468,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false
+      },
+      "observation_summary": "命中 2 个片段；本次返回 2 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D03",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取报销材料清单原文以确认可引用内容",
+      "model_metadata": {
+        "response_id": "380cb49e-f31e-40cd-b88c-57a57e9d2d02",
+        "usage": {
+          "input_tokens": 1858,
+          "output_tokens": 79,
+          "total_tokens": 1937
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D03",
+          "title": "费用报销材料清单",
+          "version_date": "2026-01-12",
+          "scope": "全体员工",
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销申请需提交电子发票、费用明细和审批单。"
+        }
+      },
+      "observation_summary": "读取 D03/C01，版本 2026-01-12",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "依据《费用报销材料清单》（D03，适用于全体员工），报销申请需提交三类材料：电子发票、费用明细和审批单[D03/C01]。该清单未提及不同费用类型（如差旅、招待）的额外材料要求，如需特殊场景材料建议向制度发布方确认。",
+        "citations": [
+          {
+            "doc_id": "D03",
+            "chunk_id": "C01",
+            "version_date": "2026-01-12",
+            "quote": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "检索到唯一相关材料清单文档并读取原文，据此作答",
+      "model_metadata": {
+        "response_id": "13e82498-d6a1-474f-aa45-c45e03dbd0b2",
+        "usage": {
+          "input_tokens": 2029,
+          "output_tokens": 235,
+          "total_tokens": 2264
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/single_policy.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "电子发票",
+        "费用明细",
+        "审批单"
+      ],
+      "citations": [
+        "D03"
+      ]
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true
+    },
+    "passed": true
+  }
+}

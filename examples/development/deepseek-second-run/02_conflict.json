@@ -1,0 +1,319 @@
+{
+  "run_id": "1a5d27c82cd947d5be22d4fff1fb54c4",
+  "started_at_utc": "2026-10-29T11:50:43.055884+00:00",
+  "elapsed_seconds": 10.406,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 5,
+  "result": {
+    "status": "needs_clarification",
+    "answer": "知识库中存在两条相互冲突的报销期限规定，且均未标明适用范围和优先级，经两次检索也未找到任何独立的适用范围、替代关系或优先级裁决说明，因此无法确定适用哪一条：\n\n- 《费用报销期限制度》（D01，版本日期 2026-01-10）规定：报销期限为 30 天，自费用发生之日起计算。\n- 《费用报销期限补充说明》（D02，版本日期 2026-02-20）规定：报销期限为 15 天，自费用发生之日起计算。\n\n版本日期较新本身不能证明优先适用，故不擅自认定 15 天或 30 天。请告知您适用的制度/部门范围（例如是否属于总部、分支机构或特定费用类型），以便确定对应规定。另：报销材料要求见《费用报销材料清单》（全体员工范围），但与期限无关。",
+    "citations": [
+      {
+        "doc_id": "D01",
+        "chunk_id": "C01",
+        "version_date": "2026-01-10",
+        "quote": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+      },
+      {
+        "doc_id": "D02",
+        "chunk_id": "C01",
+        "version_date": "2026-02-20",
+        "quote": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+      }
+    ],
+    "gaps": [
+      "现有资料无法确定 D01（30 天）与 D02（15 天）的适用部门/制度范围与优先级，缺少独立的适用范围或替代废止说明",
+      "需用户说明其所适用的制度或部门，才能确定具体报销期限"
+    ],
+    "conflicts": [
+      {
+        "description": "报销期限规定冲突：D01 规定为 30 天，D02 规定为 15 天，均自费用发生之日起算，且两份资料均未标明适用范围和优先级",
+        "doc_ids": [
+          "D01",
+          "D02"
+        ]
+      }
+    ],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "问题无历史与上下文，按关键词直接检索报销期限相关制度",
+      "model_metadata": {
+        "response_id": "6baa8f6d-6641-440f-ae8a-85bfa48637a7",
+        "usage": {
+          "input_tokens": 1366,
+          "output_tokens": 80,
+          "total_tokens": 1446
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 4.1112,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D02",
+            "title": "费用报销期限补充说明",
+            "version_date": "2026-02-20",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 4.0421,
+            "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 1.1321,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 3,
+        "has_more": false
+      },
+      "observation_summary": "命中 3 个片段；本次返回 3 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取30天说法原文",
+      "model_metadata": {
+        "response_id": "9ef3fb3b-e23c-4a8b-94d7-0c316084033b",
+        "usage": {
+          "input_tokens": 1743,
+          "output_tokens": 147,
+          "total_tokens": 1890
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D01",
+          "title": "费用报销期限制度",
+          "version_date": "2026-01-10",
+          "scope": null,
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      },
+      "observation_summary": "读取 D01/C01，版本 2026-01-10",
+      "next_action_source": "same_model_response"
+    },
+    {
+      "step": 3,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D02",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取15天说法原文以比对冲突",
+      "model_metadata": {
+        "response_id": "9ef3fb3b-e23c-4a8b-94d7-0c316084033b",
+        "usage": {}
+      },
+      "next_action": "search_docs",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D02",
+          "title": "费用报销期限补充说明",
+          "version_date": "2026-02-20",
+          "scope": null,
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      },
+      "observation_summary": "读取 D02/C01，版本 2026-02-20",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 4,
+      "decision_round": 3,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限 适用范围 优先级 替代 废止 裁决",
+        "top_k": 8
+      },
+      "decision_summary": "两份资料期限冲突且均未标适用范围与优先级，需补查是否有独立的适用范围或优先级裁决说明",
+      "model_metadata": {
+        "response_id": "63cbe8af-a5ed-43d6-a1dc-32b296b47833",
+        "usage": {
+          "input_tokens": 2082,
+          "output_tokens": 98,
+          "total_tokens": 2180
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "query": "报销期限 适用范围 优先级 替代 废止 裁决",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 9.5938,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D02",
+            "title": "费用报销期限补充说明",
+            "version_date": "2026-02-20",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 9.3943,
+            "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 1.1321,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 3,
+        "has_more": false
+      },
+      "observation_summary": "命中 3 个片段；本次返回 3 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 5,
+      "decision_round": 4,
+      "tool": "finish",
+      "arguments": {
+        "status": "needs_clarification",
+        "answer": "知识库中存在两条相互冲突的报销期限规定，且均未标明适用范围和优先级，经两次检索也未找到任何独立的适用范围、替代关系或优先级裁决说明，因此无法确定适用哪一条：\n\n- 《费用报销期限制度》（D01，版本日期 2026-01-10）规定：报销期限为 30 天，自费用发生之日起计算。\n- 《费用报销期限补充说明》（D02，版本日期 2026-02-20）规定：报销期限为 15 天，自费用发生之日起计算。\n\n版本日期较新本身不能证明优先适用，故不擅自认定 15 天或 30 天。请告知您适用的制度/部门范围（例如是否属于总部、分支机构或特定费用类型），以便确定对应规定。另：报销材料要求见《费用报销材料清单》（全体员工范围），但与期限无关。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "chunk_id": "C01",
+            "version_date": "2026-01-10",
+            "quote": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D02",
+            "chunk_id": "C01",
+            "version_date": "2026-02-20",
+            "quote": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        ],
+        "gaps": [
+          "现有资料无法确定 D01（30 天）与 D02（15 天）的适用部门/制度范围与优先级，缺少独立的适用范围或替代废止说明",
+          "需用户说明其所适用的制度或部门，才能确定具体报销期限"
+        ],
+        "conflicts": [
+          {
+            "description": "报销期限规定冲突：D01 规定为 30 天，D02 规定为 15 天，均自费用发生之日起算，且两份资料均未标明适用范围和优先级",
+            "doc_ids": [
+              "D01",
+              "D02"
+            ]
+          }
+        ]
+      },
+      "decision_summary": "两份资料期限冲突且补查未找到适用范围或优先级裁决，按规则返回需澄清",
+      "model_metadata": {
+        "response_id": "0d6645b5-fb48-4cc4-861c-a720c72b74a2",
+        "usage": {
+          "input_tokens": 2487,
+          "output_tokens": 541,
+          "total_tokens": 3028
+        }
+      },
+      "next_action": "stop:needs_clarification",
+      "observation": {
+        "ok": true,
+        "status": "needs_clarification"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "contains": [
+        "30",
+        "15"
+      ],
+      "citations": [
+        "D01",
+        "D02"
+      ],
+      "conflict": true,
+      "min_tools": {
+        "search_docs": 2,
+        "read_chunk": 2
+      }
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "conflict_reported": true,
+      "tool_count_search_docs": true,
+      "tool_count_read_chunk": true
+    },
+    "passed": true
+  }
+}

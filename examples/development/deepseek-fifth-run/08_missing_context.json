@@ -1,0 +1,114 @@
+{
+  "run_id": "39faa0e4b91846c3bdcf096e3f6edf49",
+  "started_at_utc": "2026-10-29T12:04:15.097082+00:00",
+  "elapsed_seconds": 6.234,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "那要多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 2,
+  "result": {
+    "status": "needs_clarification",
+    "answer": "您好，无法确定“那”指的是哪件事，因此无法回答“要多久”。请补充说明具体事项与所属部门/地区，例如：报销审批、请假审批、权限开通、入职流程、工单处理等，我再据此检索对应的时限规定。",
+    "citations": [],
+    "gaps": [
+      "对话历史为空，无法确定用户所指的事项（如审批、报销、请假、权限开通等）",
+      "无法确定适用的部门或地区范围",
+      "以“那要多久”为查询未检索到任何制度资料"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "那要多久",
+        "top_k": 5
+      },
+      "decision_summary": "用户问题仅含代词与“多久”，缺少对话历史指向的事由，先检索确认是否存在可对应的制度条目。",
+      "model_metadata": {
+        "response_id": "edcb3772-3f43-4875-b3ff-628c09504265",
+        "usage": {
+          "input_tokens": 1422,
+          "output_tokens": 91,
+          "total_tokens": 1513
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "query": "那要多久",
+        "hits": [],
+        "total_matches": 0,
+        "has_more": false
+      },
+      "observation_summary": "命中 0 个片段；本次返回 0 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "finish",
+      "arguments": {
+        "status": "needs_clarification",
+        "answer": "您好，无法确定“那”指的是哪件事，因此无法回答“要多久”。请补充说明具体事项与所属部门/地区，例如：报销审批、请假审批、权限开通、入职流程、工单处理等，我再据此检索对应的时限规定。",
+        "citations": [],
+        "gaps": [
+          "对话历史为空，无法确定用户所指的事项（如审批、报销、请假、权限开通等）",
+          "无法确定适用的部门或地区范围",
+          "以“那要多久”为查询未检索到任何制度资料"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "问题为无指代的追问且无历史上下文，检索也无结果，需用户补充具体事由后再检索时限规定。",
+      "model_metadata": {
+        "response_id": "713bc293-bd03-4116-bb45-2cd09fbee359",
+        "usage": {
+          "input_tokens": 1562,
+          "output_tokens": 243,
+          "total_tokens": 1805
+        }
+      },
+      "next_action": "stop:needs_clarification",
+      "observation": {
+        "ok": true,
+        "status": "needs_clarification"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": true
+  }
+}

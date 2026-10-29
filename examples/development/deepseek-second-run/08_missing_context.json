@@ -1,0 +1,69 @@
+{
+  "run_id": "71b26cc560df417a9b09621bc9631c39",
+  "started_at_utc": "2026-10-29T11:51:37.116478+00:00",
+  "elapsed_seconds": 2.938,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "那要多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 1,
+  "result": {
+    "status": "model_error",
+    "completed": false,
+    "answer": "模型不可用，任务未完成。",
+    "citations": [],
+    "gaps": [
+      "模型协议错误：预期 completed 响应、有效工具调用和唯一 call_id"
+    ],
+    "conflicts": []
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": null,
+      "arguments": {},
+      "decision_summary": "未获得可执行模型动作。",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "MODEL_ERROR",
+          "message": "模型协议错误：预期 completed 响应、有效工具调用和唯一 call_id"
+        }
+      },
+      "observation_summary": "模型请求或协议失败",
+      "next_action": "stop:model_error"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": false,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": false
+  }
+}

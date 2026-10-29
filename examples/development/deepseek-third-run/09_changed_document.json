@@ -1,0 +1,205 @@
+{
+  "run_id": "018bb732f18a4bc48fdb4b9d1aff3217",
+  "started_at_utc": "2026-10-29T11:56:09.297474+00:00",
+  "elapsed_seconds": 7.093,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "ecee8e5b612f1025bfe0fd71dcf5428a1643701562751e9c21148bebc7f83833",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 4,
+  "result": {
+    "status": "answered",
+    "answer": "根据《费用报销期限制度》，报销期限为 45 天，自费用发生之日起计算（[D01/C01]，版本日期 2026-05-01）。需说明：该资料自身未标明适用范围和优先级，若贵部门另有专门规定，请以专门制度为准。",
+    "citations": [
+      {
+        "doc_id": "D01",
+        "chunk_id": "C01",
+        "version_date": "2026-05-01",
+        "quote": "报销期限为 45 天，自费用发生之日起计算。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "用户询问报销期限，直接检索相关制度条款。",
+      "model_metadata": {
+        "response_id": "b30e3ffe-8816-4568-bafd-a09e796582f5",
+        "usage": {
+          "input_tokens": 1367,
+          "output_tokens": 76,
+          "total_tokens": 1443
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-05-01",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 1.2329,
+            "preview": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        ],
+        "total_matches": 1,
+        "has_more": false
+      },
+      "observation_summary": "命中 1 个片段；本次返回 1 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取报销期限制度原文以获取可引用证据。",
+      "model_metadata": {
+        "response_id": "c32daca2-80e3-4c28-acc6-0ad266397ab2",
+        "usage": {
+          "input_tokens": 1577,
+          "output_tokens": 165,
+          "total_tokens": 1742
+        }
+      },
+      "next_action": "search_docs",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D01",
+          "title": "费用报销期限制度",
+          "version_date": "2026-05-01",
+          "scope": null,
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      },
+      "observation_summary": "读取 D01/C01，版本 2026-05-01",
+      "next_action_source": "same_model_response"
+    },
+    {
+      "step": 3,
+      "decision_round": 2,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "费用发生之日起 多少天内提交报销 差旅费 报销时限 逾期",
+        "top_k": 8
+      },
+      "decision_summary": "补充检索是否存在其他版本或不同时限规定。",
+      "model_metadata": {
+        "response_id": "c32daca2-80e3-4c28-acc6-0ad266397ab2",
+        "usage": {}
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "query": "费用发生之日起 多少天内提交报销 差旅费 报销时限 逾期",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-05-01",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 2.2604,
+            "preview": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        ],
+        "total_matches": 1,
+        "has_more": false
+      },
+      "observation_summary": "命中 1 个片段；本次返回 1 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 4,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "根据《费用报销期限制度》，报销期限为 45 天，自费用发生之日起计算（[D01/C01]，版本日期 2026-05-01）。需说明：该资料自身未标明适用范围和优先级，若贵部门另有专门规定，请以专门制度为准。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "chunk_id": "C01",
+            "version_date": "2026-05-01",
+            "quote": "报销期限为 45 天，自费用发生之日起计算。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "唯一命中且已读取原文，仅一条制度无冲突，据此作答并说明适用范围未标明的来源限制。",
+      "model_metadata": {
+        "response_id": "55c8ab71-92a0-48ef-af0a-3af34f07febc",
+        "usage": {
+          "input_tokens": 1982,
+          "output_tokens": 245,
+          "total_tokens": 2227
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/changed_policy.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "45"
+      ],
+      "not_contains": [
+        "30"
+      ],
+      "citations": [
+        "D01"
+      ]
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true
+    },
+    "passed": true
+  }
+}

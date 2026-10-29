@@ -1,0 +1,165 @@
+{
+  "run_id": "03d724ea7ca649eda70cb41bde2666c9",
+  "started_at_utc": "2026-10-29T12:04:23.956385+00:00",
+  "elapsed_seconds": 0.0,
+  "provider": "mock",
+  "model": "offline-rules-v1",
+  "evidence_kind": "mock_flow_only",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 4,
+  "result": {
+    "status": "tool_error",
+    "answer": "必要工具不可用，当前无法可靠回答。",
+    "citations": [],
+    "gaps": [
+      "需要恢复工具服务后重试。"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限是多久？",
+        "top_k": 8
+      },
+      "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_metadata": {},
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限是多久？",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 2.1232,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.2757,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false
+      },
+      "observation_summary": "命中 2 个片段；本次返回 2 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "离线规则：候选仅是线索，需要读取原文。",
+      "model_metadata": {},
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "read_chunk: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "离线规则：观察到一次可恢复工具故障，选择再试一次。",
+      "model_metadata": {},
+      "next_action": "finish",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "read_chunk: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 4,
+      "decision_round": 4,
+      "tool": "finish",
+      "arguments": {
+        "status": "tool_error",
+        "answer": "必要工具不可用，当前无法可靠回答。",
+        "citations": [],
+        "gaps": [
+          "需要恢复工具服务后重试。"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "离线规则：工具仍失败，停止并保留已有记录。",
+      "model_metadata": {},
+      "next_action": "stop:tool_error",
+      "observation": {
+        "ok": true,
+        "status": "tool_error"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/single_policy.json",
+    "faults": {
+      "read_chunk": -1
+    }
+  },
+  "evaluation": {
+    "expected": {
+      "status": "tool_error",
+      "citations": [],
+      "exact_citations": true,
+      "tool_error_observed": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true,
+      "fault_was_observed": true
+    },
+    "passed": true
+  }
+}

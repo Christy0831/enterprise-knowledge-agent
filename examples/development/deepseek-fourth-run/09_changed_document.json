@@ -1,0 +1,170 @@
+{
+  "run_id": "8180d2831a2e4f5381f1f6d19a32c309",
+  "started_at_utc": "2026-10-29T11:59:38.282556+00:00",
+  "elapsed_seconds": 6.453,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "ecee8e5b612f1025bfe0fd71dcf5428a1643701562751e9c21148bebc7f83833",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 3,
+  "result": {
+    "status": "answered",
+    "answer": "根据《费用报销期限制度》，报销期限为 45 天，自费用发生之日起计算[D01/C01]。需注意：该资料未标明适用范围和优先级，若您所属部门另有专门规定，建议向制度发布方确认适用口径。",
+    "citations": [
+      {
+        "doc_id": "D01",
+        "chunk_id": "C01",
+        "version_date": "2026-05-01",
+        "quote": "报销期限为 45 天，自费用发生之日起计算。"
+      }
+    ],
+    "gaps": [],
+    "conflicts": [],
+    "completed": true
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限 多久",
+        "top_k": 8
+      },
+      "decision_summary": "问题明确指向报销期限，先检索相关制度。",
+      "model_metadata": {
+        "response_id": "9c954150-4764-4c74-bd02-6bbe15745e7d",
+        "usage": {
+          "input_tokens": 1396,
+          "output_tokens": 78,
+          "total_tokens": 1474
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限 多久",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-05-01",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 1.2329,
+            "preview": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        ],
+        "total_matches": 1,
+        "has_more": false
+      },
+      "observation_summary": "命中 1 个片段；本次返回 1 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取唯一候选原文以确认报销期限表述。",
+      "model_metadata": {
+        "response_id": "fea075f2-f6ba-4861-900f-ca4119751a1e",
+        "usage": {
+          "input_tokens": 1610,
+          "output_tokens": 78,
+          "total_tokens": 1688
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "chunk": {
+          "doc_id": "D01",
+          "title": "费用报销期限制度",
+          "version_date": "2026-05-01",
+          "scope": null,
+          "priority": null,
+          "chunk_id": "C01",
+          "text": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      },
+      "observation_summary": "读取 D01/C01，版本 2026-05-01",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "answered",
+        "answer": "根据《费用报销期限制度》，报销期限为 45 天，自费用发生之日起计算[D01/C01]。需注意：该资料未标明适用范围和优先级，若您所属部门另有专门规定，建议向制度发布方确认适用口径。",
+        "citations": [
+          {
+            "doc_id": "D01",
+            "chunk_id": "C01",
+            "version_date": "2026-05-01",
+            "quote": "报销期限为 45 天，自费用发生之日起计算。"
+          }
+        ],
+        "gaps": [],
+        "conflicts": []
+      },
+      "decision_summary": "检索到唯一相关制度并读取原文，据此作答并说明来源范围限制。",
+      "model_metadata": {
+        "response_id": "8255bce1-2631-4785-9761-b71bca173829",
+        "usage": {
+          "input_tokens": 1788,
+          "output_tokens": 229,
+          "total_tokens": 2017
+        }
+      },
+      "next_action": "stop:answered",
+      "observation": {
+        "ok": true,
+        "status": "answered"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/changed_policy.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "answered",
+      "contains": [
+        "45"
+      ],
+      "not_contains": [
+        "30"
+      ],
+      "citations": [
+        "D01"
+      ]
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true
+    },
+    "passed": true
+  }
+}

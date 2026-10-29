@@ -1,0 +1,144 @@
+{
+  "run_id": "9fce665662bc45c4ba7df235e262dbfc",
+  "started_at_utc": "2026-10-29T11:47:09.096490+00:00",
+  "elapsed_seconds": 6.718,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "火星土壤里的氦含量是多少？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 3,
+  "result": {
+    "status": "insufficient_evidence",
+    "answer": "知识库中未检索到任何关于火星土壤成分或氦含量的资料，因此无法回答火星土壤氦含量的问题。该问题超出本次合成知识库的覆盖范围，不能依据常识或其他未提供的来源作答。",
+    "citations": [],
+    "gaps": [
+      "缺少火星土壤（或火星样品、行星科学）成分分析类文档，尤其是氦元素含量数据",
+      "若该问题应引用某份内部或外部研究报告，请提供文档名称或编号以便检索"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "火星土壤 氦 含量",
+        "top_k": 8
+      },
+      "decision_summary": "检索知识库中关于火星土壤氦含量的资料",
+      "model_metadata": {
+        "response_id": "4c4513b5-6b30-477f-b27c-f69220705cfb",
+        "usage": {
+          "input_tokens": 1307,
+          "output_tokens": 82,
+          "total_tokens": 1389
+        }
+      },
+      "next_action": "search_docs",
+      "observation": {
+        "ok": true,
+        "query": "火星土壤 氦 含量",
+        "hits": [],
+        "total_matches": 0,
+        "has_more": false
+      },
+      "observation_summary": "命中 0 个片段；本次返回 0 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "火星土壤成分 元素分析",
+        "top_k": 8
+      },
+      "decision_summary": "改写同义查询，确认是否有火星土壤成分相关资料",
+      "model_metadata": {
+        "response_id": "e7289562-de83-4a0a-b6d5-0ea7ef55a728",
+        "usage": {
+          "input_tokens": 1442,
+          "output_tokens": 81,
+          "total_tokens": 1523
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "query": "火星土壤成分 元素分析",
+        "hits": [],
+        "total_matches": 0,
+        "has_more": false
+      },
+      "observation_summary": "命中 0 个片段；本次返回 0 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 3,
+      "decision_round": 3,
+      "tool": "finish",
+      "arguments": {
+        "status": "insufficient_evidence",
+        "answer": "知识库中未检索到任何关于火星土壤成分或氦含量的资料，因此无法回答火星土壤氦含量的问题。该问题超出本次合成知识库的覆盖范围，不能依据常识或其他未提供的来源作答。",
+        "citations": [],
+        "gaps": [
+          "缺少火星土壤（或火星样品、行星科学）成分分析类文档，尤其是氦元素含量数据",
+          "若该问题应引用某份内部或外部研究报告，请提供文档名称或编号以便检索"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "两次不同关键词检索均无结果，无原文可读取，只能返回资料不足",
+      "model_metadata": {
+        "response_id": "b3ac8c09-f5d8-4b4b-af07-948b209d8809",
+        "usage": {
+          "input_tokens": 1575,
+          "output_tokens": 224,
+          "total_tokens": 1799
+        }
+      },
+      "next_action": "stop:insufficient_evidence",
+      "observation": {
+        "ok": true,
+        "status": "insufficient_evidence"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "insufficient_evidence",
+      "citations": [],
+      "exact_citations": true,
+      "min_tools": {
+        "search_docs": 1
+      }
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true,
+      "tool_count_search_docs": true
+    },
+    "passed": true
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "description": "无冲突测试快照：仅一份期限制度及一份材料清单。",
+  "documents": [
+    {
+      "doc_id": "D01", "title": "费用报销期限制度", "version_date": "2026-01-10",
+      "scope": null, "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"}]
+    },
+    {
+      "doc_id": "D03", "title": "费用报销材料清单", "version_date": "2026-01-12",
+      "scope": "全体员工", "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "报销申请需提交电子发票、费用明细和审批单。"}]
+    }
+  ]
+}

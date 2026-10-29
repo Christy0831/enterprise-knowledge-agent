@@ -1,0 +1,84 @@
+{
+  "run_id": "557d7e4306eb42fe96ff983987b32f8a",
+  "started_at_utc": "2026-10-29T11:56:06.805481+00:00",
+  "elapsed_seconds": 2.5,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "那要多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 1,
+  "result": {
+    "status": "needs_clarification",
+    "answer": "您的问题「那要多久？」缺少明确对象：当前会话没有历史记录，无法确定您询问的是哪项流程的时长（例如请假审批、报销到账、权限开通、合同用印等）。请补充说明具体事项，我会据此检索相应制度中的时限规定。",
+    "citations": [],
+    "gaps": [
+      "缺少对话历史，无法确定「那」所指的具体业务事项",
+      "需要用户提供具体流程或制度名称（如请假、报销、采购审批等）"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "finish",
+      "arguments": {
+        "status": "needs_clarification",
+        "answer": "您的问题「那要多久？」缺少明确对象：当前会话没有历史记录，无法确定您询问的是哪项流程的时长（例如请假审批、报销到账、权限开通、合同用印等）。请补充说明具体事项，我会据此检索相应制度中的时限规定。",
+        "citations": [],
+        "gaps": [
+          "缺少对话历史，无法确定「那」所指的具体业务事项",
+          "需要用户提供具体流程或制度名称（如请假、报销、采购审批等）"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "问题含代词且无历史可补全，先追问具体事项再检索。",
+      "model_metadata": {
+        "response_id": "976c9fba-3c8c-4494-b124-0b990001c71d",
+        "usage": {
+          "input_tokens": 1366,
+          "output_tokens": 225,
+          "total_tokens": 1591
+        }
+      },
+      "next_action": "stop:needs_clarification",
+      "observation": {
+        "ok": true,
+        "status": "needs_clarification"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": true
+  }
+}

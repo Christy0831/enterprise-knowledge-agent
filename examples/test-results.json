@@ -1,0 +1,13 @@
+{
+  "generated_at_utc": "2026-10-29T12:10:10.548680+00:00",
+  "python": "3.12.4",
+  "platform": "Windows",
+  "command": "python scripts/check.py",
+  "tests_run": 36,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "passed": true,
+  "elapsed_seconds": 3.484,
+  "api_test_boundary": "HTTP/API测试使用本机假服务或模拟返回，不是真实模型运行。"
+}

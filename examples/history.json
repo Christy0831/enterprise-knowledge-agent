@@ -1,0 +1,4 @@
+[
+  {"role": "user", "content": "报销期限是多久？"},
+  {"role": "assistant", "content": "依据 D01，报销期限为30天。"}
+]

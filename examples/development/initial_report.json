@@ -1,0 +1,192 @@
+{
+  "generated_at_utc": "2026-10-29T11:33:54.446482+00:00",
+  "provider": "mock",
+  "model": "offline-rules-v1",
+  "evidence_kind": "mock_flow_only",
+  "real_model_execution_recorded": false,
+  "total": 11,
+  "passed": 10,
+  "cases": [
+    {
+      "case_id": "01_clear_answer",
+      "acceptance": [
+        "明确答案",
+        "正常"
+      ],
+      "status": "answered",
+      "passed": true,
+      "failed_checks": [],
+      "record": "01_clear_answer.json",
+      "path": [
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "02_conflict",
+      "acceptance": [
+        "文档冲突",
+        "资料不足",
+        "动态查证"
+      ],
+      "status": "needs_clarification",
+      "passed": true,
+      "failed_checks": [],
+      "record": "02_conflict.json",
+      "path": [
+        "search_docs",
+        "read_chunk",
+        "read_chunk",
+        "search_docs",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "03_out_of_scope",
+      "acceptance": [
+        "资料外问题",
+        "资料不足"
+      ],
+      "status": "answered",
+      "passed": false,
+      "failed_checks": [
+        "status",
+        "exact_citation_set"
+      ],
+      "record": "03_out_of_scope.json",
+      "path": [
+        "search_docs",
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "04_paraphrase",
+      "acceptance": [
+        "改写后的相似问题",
+        "检索改进"
+      ],
+      "status": "answered",
+      "passed": true,
+      "failed_checks": [],
+      "record": "04_paraphrase.json",
+      "path": [
+        "search_docs",
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "05_follow_up",
+      "acceptance": [
+        "上下文追问"
+      ],
+      "status": "answered",
+      "passed": true,
+      "failed_checks": [],
+      "record": "05_follow_up.json",
+      "path": [
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "06_transient_failure",
+      "acceptance": [
+        "工具失败",
+        "恢复"
+      ],
+      "status": "answered",
+      "passed": true,
+      "failed_checks": [],
+      "record": "06_transient_failure.json",
+      "path": [
+        "search_docs",
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "07_persistent_failure",
+      "acceptance": [
+        "工具失败",
+        "明确失败"
+      ],
+      "status": "tool_error",
+      "passed": true,
+      "failed_checks": [],
+      "record": "07_persistent_failure.json",
+      "path": [
+        "search_docs",
+        "read_chunk",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "08_missing_context",
+      "acceptance": [
+        "缺少信息",
+        "追问"
+      ],
+      "status": "needs_clarification",
+      "passed": true,
+      "failed_checks": [],
+      "record": "08_missing_context.json",
+      "path": [
+        "finish"
+      ]
+    },
+    {
+      "case_id": "09_changed_document",
+      "acceptance": [
+        "替换文档",
+        "答案随证据改变"
+      ],
+      "status": "answered",
+      "passed": true,
+      "failed_checks": [],
+      "record": "09_changed_document.json",
+      "path": [
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    },
+    {
+      "case_id": "10_step_limit",
+      "acceptance": [
+        "执行上限"
+      ],
+      "status": "step_limit",
+      "passed": true,
+      "failed_checks": [],
+      "record": "10_step_limit.json",
+      "path": [
+        "search_docs"
+      ]
+    },
+    {
+      "case_id": "11_product_answer",
+      "acceptance": [
+        "产品问题",
+        "事实依据"
+      ],
+      "status": "answered",
+      "passed": true,
+      "failed_checks": [],
+      "record": "11_product_answer.json",
+      "path": [
+        "search_docs",
+        "read_chunk",
+        "finish"
+      ]
+    }
+  ],
+  "limitation": "仅证明离线流程；规则Mock不证明真实模型决策效果，不能据此认定ReAct验收达标。"
+}

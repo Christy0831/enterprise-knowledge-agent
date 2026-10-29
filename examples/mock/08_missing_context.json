@@ -1,0 +1,75 @@
+{
+  "run_id": "66434f40a26043019b74162f1048b06a",
+  "started_at_utc": "2026-10-29T12:04:23.957385+00:00",
+  "elapsed_seconds": 0.0,
+  "provider": "mock",
+  "model": "offline-rules-v1",
+  "evidence_kind": "mock_flow_only",
+  "input": {
+    "question": "那要多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 1,
+  "result": {
+    "status": "needs_clarification",
+    "answer": "请说明你询问的是哪项制度或产品。",
+    "citations": [],
+    "gaps": [
+      "缺少问题对象。"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "finish",
+      "arguments": {
+        "status": "needs_clarification",
+        "answer": "请说明你询问的是哪项制度或产品。",
+        "citations": [],
+        "gaps": [
+          "缺少问题对象。"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "离线规则：代词没有可用对话上下文。",
+      "model_metadata": {},
+      "next_action": "stop:needs_clarification",
+      "observation": {
+        "ok": true,
+        "status": "needs_clarification"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": true
+  }
+}

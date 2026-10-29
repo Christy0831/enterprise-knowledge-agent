@@ -1,0 +1,251 @@
+{
+  "run_id": "a69c0ef400b34988b1c67499add5f890",
+  "started_at_utc": "2026-10-29T11:51:26.526731+00:00",
+  "elapsed_seconds": 10.578,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 6,
+  "result": {
+    "status": "tool_error",
+    "answer": "无法给出结论：检索到《费用报销期限制度》(D01)，其预览显示\"报销期限为 30 天，自费用发生之日起计算\"，预览还提到未标明适用范围和优先级；但按要求必须读取原文才能作为可引用证据，而 read_chunk 工具连续三次返回\"合成故障注入，工具暂不可用\"（UNAVAILABLE，retryable=true），因此本次无法取得任何逐字原文证据。",
+    "citations": [],
+    "gaps": [
+      "read_chunk 工具持续不可用，无法读取 D01/C01 原文，30 天期限仅见于预览，不能作为制度依据",
+      "D01 未标明适用范围和优先级，若存在其他版本（如 15 天）需读取双方原文后再查证适用关系",
+      "D03《费用报销材料清单》原文同样未能读取，未能确认是否涉及期限"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限 多久",
+        "top_k": 8
+      },
+      "decision_summary": "用户直接询问报销期限，检索相关制度条目",
+      "model_metadata": {
+        "response_id": "a9cb749e-4bbd-485d-b5f9-83eeb1171cee",
+        "usage": {
+          "input_tokens": 1367,
+          "output_tokens": 78,
+          "total_tokens": 1445
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": true,
+        "query": "报销期限 多久",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 2.1232,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.2757,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false
+      },
+      "observation_summary": "命中 2 个片段；本次返回 2 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "读取报销期限制度原文以确认天数与适用范围说明",
+      "model_metadata": {
+        "response_id": "d85eece4-51b9-43b6-8114-ef43479799ba",
+        "usage": {
+          "input_tokens": 1658,
+          "output_tokens": 154,
+          "total_tokens": 1812
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "read_chunk: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "same_model_response"
+    },
+    {
+      "step": 3,
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D03",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "核对同主题候选材料清单是否涉及期限",
+      "model_metadata": {
+        "response_id": "d85eece4-51b9-43b6-8114-ef43479799ba",
+        "usage": {}
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "read_chunk: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 4,
+      "decision_round": 3,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "工具标注可重试，再次读取报销期限制度原文",
+      "model_metadata": {
+        "response_id": "7e3645d0-d580-436c-a9ca-64f6a78917c9",
+        "usage": {
+          "input_tokens": 1919,
+          "output_tokens": 81,
+          "total_tokens": 2000
+        }
+      },
+      "next_action": "read_chunk",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "read_chunk: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 5,
+      "decision_round": 4,
+      "tool": "read_chunk",
+      "arguments": {
+        "doc_id": "D01",
+        "chunk_id": "C01"
+      },
+      "decision_summary": "第三次尝试读取原文，以确认能否取得可引用证据",
+      "model_metadata": {
+        "response_id": "79782378-d8d4-4b1d-9d47-3e54d5432550",
+        "usage": {
+          "input_tokens": 2058,
+          "output_tokens": 81,
+          "total_tokens": 2139
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "UNAVAILABLE",
+          "message": "read_chunk: 合成故障注入，工具暂不可用",
+          "retryable": true
+        }
+      },
+      "observation_summary": "失败：UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 6,
+      "decision_round": 5,
+      "tool": "finish",
+      "arguments": {
+        "status": "tool_error",
+        "answer": "无法给出结论：检索到《费用报销期限制度》(D01)，其预览显示\"报销期限为 30 天，自费用发生之日起计算\"，预览还提到未标明适用范围和优先级；但按要求必须读取原文才能作为可引用证据，而 read_chunk 工具连续三次返回\"合成故障注入，工具暂不可用\"（UNAVAILABLE，retryable=true），因此本次无法取得任何逐字原文证据。",
+        "citations": [],
+        "gaps": [
+          "read_chunk 工具持续不可用，无法读取 D01/C01 原文，30 天期限仅见于预览，不能作为制度依据",
+          "D01 未标明适用范围和优先级，若存在其他版本（如 15 天）需读取双方原文后再查证适用关系",
+          "D03《费用报销材料清单》原文同样未能读取，未能确认是否涉及期限"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "检索有候选但原文读取工具连续失败，无法产出逐字引用证据，按规则返回 tool_error",
+      "model_metadata": {
+        "response_id": "8a6e1b90-7ac1-45a0-9464-6e41ded255fa",
+        "usage": {
+          "input_tokens": 2197,
+          "output_tokens": 310,
+          "total_tokens": 2507
+        }
+      },
+      "next_action": "stop:tool_error",
+      "observation": {
+        "ok": true,
+        "status": "tool_error"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/single_policy.json",
+    "faults": {
+      "read_chunk": -1
+    }
+  },
+  "evaluation": {
+    "expected": {
+      "status": "tool_error",
+      "citations": [],
+      "exact_citations": true,
+      "tool_error_observed": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true,
+      "fault_was_observed": true
+    },
+    "passed": true
+  }
+}

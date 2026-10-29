@@ -1,0 +1,62 @@
+{
+  "cases": [
+    {
+      "id": "01_clear_answer", "acceptance": ["明确答案", "正常"],
+      "question": "报销期限是多久？", "corpus": "data/fixtures/single_policy.json",
+      "expected": {"status": "answered", "contains": ["30"], "citations": ["D01"], "min_tools": {"search_docs": 1, "read_chunk": 1}}
+    },
+    {
+      "id": "02_conflict", "acceptance": ["文档冲突", "资料不足", "动态查证"],
+      "question": "报销期限多久？", "corpus": "data/knowledge.json",
+      "expected": {"status": "needs_clarification", "contains": ["30", "15"], "citations": ["D01", "D02"], "conflict": true, "min_tools": {"search_docs": 2, "read_chunk": 2}}
+    },
+    {
+      "id": "03_out_of_scope", "acceptance": ["资料外问题", "资料不足"],
+      "question": "火星土壤里的氦含量是多少？", "corpus": "data/knowledge.json",
+      "expected": {"status": "insufficient_evidence", "citations": [], "exact_citations": true, "min_tools": {"search_docs": 1}}
+    },
+    {
+      "id": "04_paraphrase", "acceptance": ["改写后的相似问题", "检索改进"],
+      "question": "垫的钱最迟啥时候能报账？", "corpus": "data/fixtures/single_policy.json",
+      "expected": {"status": "answered", "contains": ["30"], "citations": ["D01"], "query_reformulated": true, "min_tools": {"search_docs": 1}}
+    },
+    {
+      "id": "05_follow_up", "acceptance": ["上下文追问"],
+      "question": "那需要准备哪些材料？", "corpus": "data/fixtures/single_policy.json",
+      "history": [{"role": "user", "content": "报销期限是多久？"}, {"role": "assistant", "content": "依据 D01，报销期限为30天。"}],
+      "expected": {"status": "answered", "contains": ["电子发票", "费用明细", "审批单"], "citations": ["D03"]}
+    },
+    {
+      "id": "06_transient_failure", "acceptance": ["工具失败", "恢复"],
+      "question": "报销期限是多久？", "corpus": "data/fixtures/single_policy.json",
+      "faults": {"search_docs": 1},
+      "expected": {"status": "answered", "contains": ["30"], "citations": ["D01"], "tool_error_observed": true, "min_tools": {"search_docs": 2}}
+    },
+    {
+      "id": "07_persistent_failure", "acceptance": ["工具失败", "明确失败"],
+      "question": "报销期限是多久？", "corpus": "data/fixtures/single_policy.json",
+      "faults": {"read_chunk": -1},
+      "expected": {"status": "tool_error", "citations": [], "exact_citations": true, "tool_error_observed": true}
+    },
+    {
+      "id": "08_missing_context", "acceptance": ["缺少信息", "追问"],
+      "question": "那要多久？", "corpus": "data/knowledge.json",
+      "expected": {"status": "needs_clarification", "citations": [], "exact_citations": true}
+    },
+    {
+      "id": "09_changed_document", "acceptance": ["替换文档", "答案随证据改变"],
+      "question": "报销期限是多久？", "corpus": "data/fixtures/changed_policy.json",
+      "expected": {"status": "answered", "contains": ["45"], "not_contains": ["30"], "citations": ["D01"]}
+    },
+    {
+      "id": "10_step_limit", "acceptance": ["执行上限"],
+      "question": "报销期限是多久？", "corpus": "data/fixtures/single_policy.json", "max_steps": 1,
+      "expected": {"status": "step_limit", "citations": [], "exact_citations": true}
+    },
+    {
+      "id": "11_product_answer", "acceptance": ["产品问题", "事实依据"],
+      "question": "影文桌面版支持添加和编辑字幕吗？", "corpus": "data/knowledge.json",
+      "expected": {"status": "answered", "contains": ["字幕"], "citations": ["D04"], "min_tools": {"read_chunk": 1}}
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "run_id": "d98f1e915899450b9accb37e91ac7acd",
+  "started_at_utc": "2026-10-29T12:04:31.829980+00:00",
+  "elapsed_seconds": 2.172,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "报销期限是多久？",
+    "history": []
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 1
+  },
+  "steps_used": 1,
+  "result": {
+    "status": "step_limit",
+    "completed": false,
+    "answer": "达到执行步数上限，任务未完成。",
+    "citations": [],
+    "gaps": [
+      "需要更多工具预算或缩小问题范围，不能把中间证据作为完整答案。"
+    ],
+    "conflicts": []
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限",
+        "top_k": 8
+      },
+      "decision_summary": "检索报销期限相关制度条目",
+      "model_metadata": {
+        "response_id": "5f79aca5-f5a9-4158-95ca-35efe9aff2b4",
+        "usage": {
+          "input_tokens": 1423,
+          "output_tokens": 72,
+          "total_tokens": 1495
+        }
+      },
+      "next_action": "stop:step_limit",
+      "observation": {
+        "ok": true,
+        "query": "报销期限",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 2.1232,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.2757,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false
+      },
+      "observation_summary": "命中 2 个片段；本次返回 2 个"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/fixtures/single_policy.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "step_limit",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": true
+  }
+}

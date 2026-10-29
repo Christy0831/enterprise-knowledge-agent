@@ -1,0 +1,84 @@
+{
+  "run_id": "63f046cb6c9b46c6bd0b520d517e468e",
+  "started_at_utc": "2026-10-29T11:48:03.752251+00:00",
+  "elapsed_seconds": 2.859,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "evidence_kind": "real_model",
+  "input": {
+    "question": "那要多久？",
+    "history": []
+  },
+  "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+  "limits": {
+    "max_steps": 12
+  },
+  "steps_used": 1,
+  "result": {
+    "status": "needs_clarification",
+    "answer": "您好，您的问题“那要多久？”缺少上文说明具体指哪项事项（例如请假审批、报销到账、权限开通、合同用印等），因此我无法确定应检索哪项时限规定。请补充说明要询问的具体事项或制度名称，我再为您查证对应的办理时限。",
+    "citations": [],
+    "gaps": [
+      "缺少对话历史或上下文，无法确定“那要多久”所指的具体事项（如审批流程、报销到账、权限开通、用印等）",
+      "未说明涉及的业务类型、所属部门或制度名称，无法定位适用的时限条款"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "finish",
+      "arguments": {
+        "status": "needs_clarification",
+        "answer": "您好，您的问题“那要多久？”缺少上文说明具体指哪项事项（例如请假审批、报销到账、权限开通、合同用印等），因此我无法确定应检索哪项时限规定。请补充说明要询问的具体事项或制度名称，我再为您查证对应的办理时限。",
+        "citations": [],
+        "gaps": [
+          "缺少对话历史或上下文，无法确定“那要多久”所指的具体事项（如审批流程、报销到账、权限开通、用印等）",
+          "未说明涉及的业务类型、所属部门或制度名称，无法定位适用的时限条款"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "问题含代词且无历史可补全，意图不明确，需先追问具体事项。",
+      "model_metadata": {
+        "response_id": "840177d3-708f-4544-aacd-61d1fbf2451b",
+        "usage": {
+          "input_tokens": 1303,
+          "output_tokens": 251,
+          "total_tokens": 1554
+        }
+      },
+      "next_action": "stop:needs_clarification",
+      "observation": {
+        "ok": true,
+        "status": "needs_clarification"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "fixture": {
+    "corpus": "data/knowledge.json",
+    "faults": {}
+  },
+  "evaluation": {
+    "expected": {
+      "status": "needs_clarification",
+      "citations": [],
+      "exact_citations": true
+    },
+    "checks": {
+      "status": true,
+      "completed_flag": true,
+      "budget_respected": true,
+      "required_citations": true,
+      "answer_fragments": true,
+      "forbidden_fragments_absent": true,
+      "explicit_gaps_if_incomplete": true,
+      "exact_source_quotes": true,
+      "citations_actually_read": true,
+      "exact_citation_set": true
+    },
+    "passed": true
+  }
+}

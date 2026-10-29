@@ -1,0 +1,36 @@
+{
+  "synthetic": true,
+  "description": "虚构企业资料；D01/D02刻意冲突，日期不代表优先级。",
+  "documents": [
+    {
+      "doc_id": "D01", "title": "费用报销期限制度", "version_date": "2026-01-10",
+      "scope": null, "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"}]
+    },
+    {
+      "doc_id": "D02", "title": "费用报销期限补充说明", "version_date": "2026-02-20",
+      "scope": null, "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"}]
+    },
+    {
+      "doc_id": "D03", "title": "费用报销材料清单", "version_date": "2026-01-12",
+      "scope": "全体员工", "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "报销申请需提交电子发票、费用明细和审批单。"}]
+    },
+    {
+      "doc_id": "D04", "title": "影文产品字幕功能说明", "version_date": "2026-03-01",
+      "scope": "影文桌面版", "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"}]
+    },
+    {
+      "doc_id": "D05", "title": "办公账号密码重置指南", "version_date": "2026-03-08",
+      "scope": "办公账号", "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "忘记办公账号密码时，可在登录页选择重置密码，并使用已绑定的工作邮箱完成验证。无法接收邮件时联系内部 IT 服务台。"}]
+    },
+    {
+      "doc_id": "D06", "title": "年假申请流程", "version_date": "2026-04-01",
+      "scope": "全体员工", "priority": null,
+      "chunks": [{"chunk_id": "C01", "text": "年假申请需在办公系统提交，由直属主管审批。本资料未规定员工个人的可用年假天数。"}]
+    }
+  ]
+}
