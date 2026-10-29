@@ -1,6 +1,6 @@
 {
-  "run_id": "66434f40a26043019b74162f1048b06a",
-  "started_at_utc": "2026-10-29T12:04:23.957385+00:00",
+  "run_id": "612a305f24524d3090d0892e4ea3baea",
+  "started_at_utc": "2026-10-29T12:28:59.664869+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -13,6 +13,7 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 1,
   "result": {
     "status": "needs_clarification",

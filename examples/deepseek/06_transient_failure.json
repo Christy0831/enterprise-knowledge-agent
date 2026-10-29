@@ -1,7 +1,7 @@
 {
-  "run_id": "00f26d45cb3845329fb915738551baf2",
-  "started_at_utc": "2026-10-29T12:07:13.175356+00:00",
-  "elapsed_seconds": 8.75,
+  "run_id": "83c2edf91b704b69af19f5b799159f35",
+  "started_at_utc": "2026-10-29T12:28:22.312812+00:00",
+  "elapsed_seconds": 9.407,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,10 +13,11 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 5,
   "result": {
     "status": "answered",
-    "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算[D01/C01]。该资料未标明适用范围和优先级，因此上述期限仅代表该文档的规定，具体适用口径建议向制度发布方确认。另检索到的《费用报销材料清单》仅规定需提交电子发票、费用明细和审批单[D03/C01]，未涉及期限。",
+    "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算[D01/C01]。该资料未标明适用范围和优先级，因此上述期限仅代表该制度文本的规定，具体是否适用于您所在部门，建议向制度发布方确认。另检索到的《费用报销材料清单》仅规定报销需提交电子发票、费用明细和审批单[D03/C01]，未涉及期限。",
     "citations": [
       {
         "doc_id": "D01",
@@ -44,13 +45,13 @@
         "query": "报销期限",
         "top_k": 8
       },
-      "decision_summary": "检索报销期限相关制度原文",
+      "decision_summary": "用户询问报销期限，先检索相关制度条款。",
       "model_metadata": {
-        "response_id": "ddbfb9e6-f642-41ed-9bf4-91d86b569778",
+        "response_id": "d9daeffe-8b4d-44ca-8fe9-4c6c5a0a1e8c",
         "usage": {
-          "input_tokens": 1523,
-          "output_tokens": 72,
-          "total_tokens": 1595
+          "input_tokens": 1563,
+          "output_tokens": 76,
+          "total_tokens": 1639
         }
       },
       "next_action": "search_docs",
@@ -73,13 +74,13 @@
         "query": "报销期限",
         "top_k": 8
       },
-      "decision_summary": "工具返回可重试故障，重试同一检索以获取制度原文",
+      "decision_summary": "上次检索为可重试故障，按原查询重试一次。",
       "model_metadata": {
-        "response_id": "649c3f0a-03db-4070-b7cc-05ec7bdbfa37",
+        "response_id": "6b1db3b2-bdd5-4afe-b424-6e179ce785c5",
         "usage": {
-          "input_tokens": 1653,
-          "output_tokens": 81,
-          "total_tokens": 1734
+          "input_tokens": 1697,
+          "output_tokens": 80,
+          "total_tokens": 1777
         }
       },
       "next_action": "read_chunk",
@@ -94,7 +95,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 2.1232,
+            "score": 2.12321408,
+            "score_type": "bm25",
+            "bm25_score": 2.123214,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -104,12 +110,24 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 0.2757,
+            "score": 0.27574056,
+            "score_type": "bm25",
+            "bm25_score": 0.275741,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "total_matches": 2,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 2
+        }
       },
       "observation_summary": "命中 2 个片段；本次返回 2 个",
       "next_action_source": "new_model_response_after_observation"
@@ -122,13 +140,13 @@
         "doc_id": "D01",
         "chunk_id": "C01"
       },
-      "decision_summary": "读取报销期限制度原文以确认期限与适用范围",
+      "decision_summary": "读取报销期限制度原文以确认期限与适用范围。",
       "model_metadata": {
-        "response_id": "ca8f6ac0-a228-4178-a0b3-68b0d259cb4f",
+        "response_id": "b1794def-834c-4742-a41e-fd530b9ec0fb",
         "usage": {
-          "input_tokens": 1945,
-          "output_tokens": 156,
-          "total_tokens": 2101
+          "input_tokens": 2118,
+          "output_tokens": 154,
+          "total_tokens": 2272
         }
       },
       "next_action": "read_chunk",
@@ -155,9 +173,9 @@
         "doc_id": "D03",
         "chunk_id": "C01"
       },
-      "decision_summary": "读取同主题候选材料清单，确认是否涉及期限规定",
+      "decision_summary": "读取另一候选原文，确认是否涉及期限规定。",
       "model_metadata": {
-        "response_id": "ca8f6ac0-a228-4178-a0b3-68b0d259cb4f",
+        "response_id": "b1794def-834c-4742-a41e-fd530b9ec0fb",
         "usage": {}
       },
       "next_action": "finish",
@@ -182,7 +200,7 @@
       "tool": "finish",
       "arguments": {
         "status": "answered",
-        "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算[D01/C01]。该资料未标明适用范围和优先级，因此上述期限仅代表该文档的规定，具体适用口径建议向制度发布方确认。另检索到的《费用报销材料清单》仅规定需提交电子发票、费用明细和审批单[D03/C01]，未涉及期限。",
+        "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算[D01/C01]。该资料未标明适用范围和优先级，因此上述期限仅代表该制度文本的规定，具体是否适用于您所在部门，建议向制度发布方确认。另检索到的《费用报销材料清单》仅规定报销需提交电子发票、费用明细和审批单[D03/C01]，未涉及期限。",
         "citations": [
           {
             "doc_id": "D01",
@@ -200,13 +218,13 @@
         "gaps": [],
         "conflicts": []
       },
-      "decision_summary": "仅一份制度规定报销期限，已读取原文并限定来源作答",
+      "decision_summary": "检索到唯一一份规定报销期限的制度并已读取原文，另一候选不涉及期限，无冲突。",
       "model_metadata": {
-        "response_id": "8ee734d0-d2eb-419f-b0ba-7f95a96c9dbd",
+        "response_id": "2f616110-9eda-4230-bf8a-ec4fb272f769",
         "usage": {
-          "input_tokens": 2284,
-          "output_tokens": 303,
-          "total_tokens": 2587
+          "input_tokens": 2455,
+          "output_tokens": 316,
+          "total_tokens": 2771
         }
       },
       "next_action": "stop:answered",

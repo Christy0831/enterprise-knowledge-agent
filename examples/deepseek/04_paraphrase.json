@@ -1,7 +1,7 @@
 {
-  "run_id": "82ce997dac9b4ce4a1612732658202d9",
-  "started_at_utc": "2026-10-29T12:06:59.797566+00:00",
-  "elapsed_seconds": 6.968,
+  "run_id": "7c5d1672252e4274a0ab351532718de9",
+  "started_at_utc": "2026-10-29T12:28:07.991453+00:00",
+  "elapsed_seconds": 7.891,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,22 +13,17 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 4,
   "result": {
     "status": "answered",
-    "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算，即垫付的费用最迟应在费用发生之日起 30 天内报账[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。另据《费用报销材料清单》，报销申请需提交电子发票、费用明细和审批单[D03/C01]。",
+    "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算，即垫付的费用最迟应在费用发生之日起 30 天内提交报销[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。",
     "citations": [
       {
         "doc_id": "D01",
         "chunk_id": "C01",
         "version_date": "2026-01-10",
         "quote": "报销期限为 30 天，自费用发生之日起计算。"
-      },
-      {
-        "doc_id": "D03",
-        "chunk_id": "C01",
-        "version_date": "2026-01-12",
-        "quote": "报销申请需提交电子发票、费用明细和审批单。"
       }
     ],
     "gaps": [],
@@ -41,22 +36,22 @@
       "decision_round": 1,
       "tool": "search_docs",
       "arguments": {
-        "query": "报销期限 垫付费用 报账时间",
+        "query": "报销期限 垫付费用 最迟报账时间",
         "top_k": 8
       },
-      "decision_summary": "用户询问垫付费用最迟报账时间，检索报销期限相关规定。",
+      "decision_summary": "用户询问垫付费用报销的最迟期限，需检索报销期限相关制度。",
       "model_metadata": {
-        "response_id": "e7a1eb6b-0258-4c2c-91fc-2af8551f84fe",
+        "response_id": "042fae55-e61b-4493-bf9f-aa797993869a",
         "usage": {
-          "input_tokens": 1528,
-          "output_tokens": 89,
-          "total_tokens": 1617
+          "input_tokens": 1568,
+          "output_tokens": 92,
+          "total_tokens": 1660
         }
       },
       "next_action": "read_chunk",
       "observation": {
         "ok": true,
-        "query": "报销期限 垫付费用 报账时间",
+        "query": "报销期限 垫付费用 最迟报账时间",
         "hits": [
           {
             "doc_id": "D01",
@@ -65,7 +60,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 2.37,
+            "score": 2.36999705,
+            "score_type": "bm25",
+            "bm25_score": 2.369997,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -75,12 +75,24 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 0.5515,
+            "score": 0.55148111,
+            "score_type": "bm25",
+            "bm25_score": 0.551481,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "total_matches": 2,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 2
+        }
       },
       "observation_summary": "命中 2 个片段；本次返回 2 个",
       "next_action_source": "new_model_response_after_observation"
@@ -93,16 +105,16 @@
         "doc_id": "D01",
         "chunk_id": "C01"
       },
-      "decision_summary": "读取报销期限制度原文以确认期限及适用范围。",
+      "decision_summary": "读取报销期限制度原文以确认期限与适用范围。",
       "model_metadata": {
-        "response_id": "8f931d44-b403-499d-a083-629512d1fcef",
+        "response_id": "f039e539-530c-4e79-91cc-8ea58c1c9e14",
         "usage": {
-          "input_tokens": 1835,
-          "output_tokens": 153,
-          "total_tokens": 1988
+          "input_tokens": 2011,
+          "output_tokens": 161,
+          "total_tokens": 2172
         }
       },
-      "next_action": "read_chunk",
+      "next_action": "search_docs",
       "observation": {
         "ok": true,
         "chunk": {
@@ -121,30 +133,63 @@
     {
       "step": 3,
       "decision_round": 2,
-      "tool": "read_chunk",
+      "tool": "search_docs",
       "arguments": {
-        "doc_id": "D03",
-        "chunk_id": "C01"
+        "query": "报销 15 天 期限 规定",
+        "top_k": 8
       },
-      "decision_summary": "读取材料清单原文，确认是否涉及期限。",
+      "decision_summary": "检索是否存在其他期限版本（如15天）以排查冲突。",
       "model_metadata": {
-        "response_id": "8f931d44-b403-499d-a083-629512d1fcef",
+        "response_id": "f039e539-530c-4e79-91cc-8ea58c1c9e14",
         "usage": {}
       },
       "next_action": "finish",
       "observation": {
         "ok": true,
-        "chunk": {
-          "doc_id": "D03",
-          "title": "费用报销材料清单",
-          "version_date": "2026-01-12",
-          "scope": "全体员工",
-          "priority": null,
-          "chunk_id": "C01",
-          "text": "报销申请需提交电子发票、费用明细和审批单。"
+        "query": "报销 15 天 期限 规定",
+        "hits": [
+          {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 1.18499852,
+            "score_type": "bm25",
+            "bm25_score": 1.184999,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
+            "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          },
+          {
+            "doc_id": "D03",
+            "title": "费用报销材料清单",
+            "version_date": "2026-01-12",
+            "scope": "全体员工",
+            "priority": null,
+            "chunk_id": "C01",
+            "score": 0.27574056,
+            "score_type": "bm25",
+            "bm25_score": 0.275741,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
+            "preview": "报销申请需提交电子发票、费用明细和审批单。"
+          }
+        ],
+        "total_matches": 2,
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 2
         }
       },
-      "observation_summary": "读取 D03/C01，版本 2026-01-12",
+      "observation_summary": "命中 2 个片段；本次返回 2 个",
       "next_action_source": "new_model_response_after_observation"
     },
     {
@@ -153,31 +198,25 @@
       "tool": "finish",
       "arguments": {
         "status": "answered",
-        "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算，即垫付的费用最迟应在费用发生之日起 30 天内报账[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。另据《费用报销材料清单》，报销申请需提交电子发票、费用明细和审批单[D03/C01]。",
+        "answer": "根据《费用报销期限制度》，报销期限为 30 天，自费用发生之日起计算，即垫付的费用最迟应在费用发生之日起 30 天内提交报销[D01/C01]。需注意：该资料未标明适用范围和优先级，若你所在部门另有专门规定，建议向制度发布方确认适用口径。",
         "citations": [
           {
             "doc_id": "D01",
             "chunk_id": "C01",
             "version_date": "2026-01-10",
             "quote": "报销期限为 30 天，自费用发生之日起计算。"
-          },
-          {
-            "doc_id": "D03",
-            "chunk_id": "C01",
-            "version_date": "2026-01-12",
-            "quote": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "gaps": [],
         "conflicts": []
       },
-      "decision_summary": "检索到唯一一份报销期限规定并已读取原文，无冲突版本，据此回答并说明来源范围限制。",
+      "decision_summary": "仅检索到一份规定报销期限的制度，已读取原文，据此回答并说明来源范围限制。",
       "model_metadata": {
-        "response_id": "ccec48e1-eabf-407e-9430-e136329e4f13",
+        "response_id": "3017b6de-6689-47d1-8c97-aa20d01ce6da",
         "usage": {
-          "input_tokens": 2171,
-          "output_tokens": 326,
-          "total_tokens": 2497
+          "input_tokens": 2611,
+          "output_tokens": 250,
+          "total_tokens": 2861
         }
       },
       "next_action": "stop:answered",

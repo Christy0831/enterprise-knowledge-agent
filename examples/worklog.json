@@ -11,5 +11,18 @@
     "Git commit and push",
     "Remote SHA and GitHub Actions verification"
   ],
-  "human_independent_work_hours": "not claimed"
+  "human_independent_work_hours": "not claimed",
+  "extensions": [
+    {
+      "request": "DashScope text-embedding-v4 + BM25/RRF; requirements clarification",
+      "started_at_first_record": "2026-10-29T20:18:12+08:00",
+      "local_verification_checkpoint": "2026-10-29T20:36:41.745686+08:00",
+      "elapsed_wall_minutes_to_checkpoint": 18.5,
+      "unit_tests": 54,
+      "bm25_offline_cases_passed": 11,
+      "bm25_live_deepseek_cases_passed": 11,
+      "embedding_live_verified": false,
+      "pending": "User will fill DashScope key later; real hybrid retrieval and quality evaluation are explicitly pending. Git push and CI verification follow this checkpoint."
+    }
+  ]
 }

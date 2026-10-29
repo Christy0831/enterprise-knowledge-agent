@@ -1,7 +1,7 @@
 {
-  "run_id": "6fdb2085952442ceaa9bef7b8ea31899",
-  "started_at_utc": "2026-10-29T12:07:06.776610+00:00",
-  "elapsed_seconds": 6.391,
+  "run_id": "45438bcb791342b8b15767c35bc764db",
+  "started_at_utc": "2026-10-29T12:28:15.872494+00:00",
+  "elapsed_seconds": 6.437,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -22,10 +22,11 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 3,
   "result": {
     "status": "answered",
-    "answer": "依据《费用报销材料清单》（D03，适用于全体员工），报销申请需提交三类材料：电子发票、费用明细和审批单[D03/C01]。该清单未提及不同费用类型（如差旅、招待）的额外材料要求，如需特殊场景材料建议向制度发布方确认。",
+    "answer": "报销申请需提交的材料为：电子发票、费用明细和审批单。依据《费用报销材料清单》（适用于全体员工）[D03/C01]。该清单仅列明上述三项，如需其他特殊材料（如差旅、招待等专项要求），现有资料未涉及。",
     "citations": [
       {
         "doc_id": "D03",
@@ -47,13 +48,13 @@
         "query": "报销需要准备哪些材料",
         "top_k": 8
       },
-      "decision_summary": "结合历史中报销期限问题，检索报销所需材料的制度规定",
+      "decision_summary": "结合历史，用户问的是报销所需材料，先检索报销材料清单",
       "model_metadata": {
-        "response_id": "3d32a0f5-12e7-4f9e-b321-4accdc817cec",
+        "response_id": "f9e01a0d-a964-4669-87b1-57363595328c",
         "usage": {
-          "input_tokens": 1562,
-          "output_tokens": 82,
-          "total_tokens": 1644
+          "input_tokens": 1602,
+          "output_tokens": 84,
+          "total_tokens": 1686
         }
       },
       "next_action": "read_chunk",
@@ -68,7 +69,12 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 1.0272,
+            "score": 1.02718984,
+            "score_type": "bm25",
+            "bm25_score": 1.02719,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           },
           {
@@ -78,12 +84,24 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 0.2468,
+            "score": 0.24678297,
+            "score_type": "bm25",
+            "bm25_score": 0.246783,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           }
         ],
         "total_matches": 2,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 2
+        }
       },
       "observation_summary": "命中 2 个片段；本次返回 2 个",
       "next_action_source": "new_model_response_after_observation"
@@ -98,11 +116,11 @@
       },
       "decision_summary": "读取报销材料清单原文以确认可引用内容",
       "model_metadata": {
-        "response_id": "380cb49e-f31e-40cd-b88c-57a57e9d2d02",
+        "response_id": "feeb7419-642d-45c9-94c8-b5061f6db748",
         "usage": {
-          "input_tokens": 1858,
+          "input_tokens": 2030,
           "output_tokens": 79,
-          "total_tokens": 1937
+          "total_tokens": 2109
         }
       },
       "next_action": "finish",
@@ -127,7 +145,7 @@
       "tool": "finish",
       "arguments": {
         "status": "answered",
-        "answer": "依据《费用报销材料清单》（D03，适用于全体员工），报销申请需提交三类材料：电子发票、费用明细和审批单[D03/C01]。该清单未提及不同费用类型（如差旅、招待）的额外材料要求，如需特殊场景材料建议向制度发布方确认。",
+        "answer": "报销申请需提交的材料为：电子发票、费用明细和审批单。依据《费用报销材料清单》（适用于全体员工）[D03/C01]。该清单仅列明上述三项，如需其他特殊材料（如差旅、招待等专项要求），现有资料未涉及。",
         "citations": [
           {
             "doc_id": "D03",
@@ -139,13 +157,13 @@
         "gaps": [],
         "conflicts": []
       },
-      "decision_summary": "检索到唯一相关材料清单文档并读取原文，据此作答",
+      "decision_summary": "检索到唯一相关材料清单文档并已读取原文，据此作答",
       "model_metadata": {
-        "response_id": "13e82498-d6a1-474f-aa45-c45e03dbd0b2",
+        "response_id": "31883b92-d989-4935-bc50-e69115dfd2b3",
         "usage": {
-          "input_tokens": 2029,
-          "output_tokens": 235,
-          "total_tokens": 2264
+          "input_tokens": 2201,
+          "output_tokens": 232,
+          "total_tokens": 2433
         }
       },
       "next_action": "stop:answered",

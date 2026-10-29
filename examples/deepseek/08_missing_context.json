@@ -1,7 +1,7 @@
 {
-  "run_id": "3e6f0fbf7bf347b4b05d68b4cd04fcc5",
-  "started_at_utc": "2026-10-29T12:07:32.172412+00:00",
-  "elapsed_seconds": 2.531,
+  "run_id": "e05d79c1e3c94205b93e8c44af6b85b7",
+  "started_at_utc": "2026-10-29T12:28:42.346626+00:00",
+  "elapsed_seconds": 4.359,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,13 +13,15 @@
   "limits": {
     "max_steps": 12
   },
-  "steps_used": 1,
+  "retrieval_mode": "bm25",
+  "steps_used": 2,
   "result": {
     "status": "needs_clarification",
-    "answer": "您的问题“那要多久？”缺少上下文，我无法确定您指的是哪项事项的时限（例如报销期限、审批时长、借款归还期限等）。请补充说明具体事项，我再为您检索相应制度规定。",
+    "answer": "您的问题“那要多久？”缺少上下文，我无法判断指的是哪项事项的时限（例如报销期限、审批时长、借款归还期限等）。请补充具体事项，我再为您检索相应制度。",
     "citations": [],
     "gaps": [
-      "用户未说明“那要多久”所指的具体事项（如报销、审批、借款归还等），缺少检索所需的关键信息"
+      "用户未说明“那”指代的具体事项（如报销、审批、借款等），且无对话历史可补全",
+      "检索“那要多久？”无任何匹配结果，无法定位相关制度"
     ],
     "conflicts": [],
     "completed": false
@@ -28,23 +30,59 @@
     {
       "step": 1,
       "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "那要多久？",
+        "top_k": 5
+      },
+      "decision_summary": "用户问题仅有代词，无历史可补全，先检索确认是否有可对应的事项",
+      "model_metadata": {
+        "response_id": "cd256d32-deb5-430a-9750-6fad4747af3a",
+        "usage": {
+          "input_tokens": 1562,
+          "output_tokens": 86,
+          "total_tokens": 1648
+        }
+      },
+      "next_action": "finish",
+      "observation": {
+        "ok": true,
+        "query": "那要多久？",
+        "hits": [],
+        "total_matches": 0,
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 0
+        }
+      },
+      "observation_summary": "命中 0 个片段；本次返回 0 个",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
       "tool": "finish",
       "arguments": {
         "status": "needs_clarification",
-        "answer": "您的问题“那要多久？”缺少上下文，我无法确定您指的是哪项事项的时限（例如报销期限、审批时长、借款归还期限等）。请补充说明具体事项，我再为您检索相应制度规定。",
+        "answer": "您的问题“那要多久？”缺少上下文，我无法判断指的是哪项事项的时限（例如报销期限、审批时长、借款归还期限等）。请补充具体事项，我再为您检索相应制度。",
         "citations": [],
         "gaps": [
-          "用户未说明“那要多久”所指的具体事项（如报销、审批、借款归还等），缺少检索所需的关键信息"
+          "用户未说明“那”指代的具体事项（如报销、审批、借款等），且无对话历史可补全",
+          "检索“那要多久？”无任何匹配结果，无法定位相关制度"
         ],
         "conflicts": []
       },
-      "decision_summary": "问题含代词且无对话历史可补全，需先追问具体事项。",
+      "decision_summary": "问题含代词且无历史，检索无结果，需用户补充具体事项",
       "model_metadata": {
-        "response_id": "fa7279fa-7597-4ae2-9d53-84cdd980c754",
+        "response_id": "945e8c9d-d66b-4f27-b819-b3b61b8a9829",
         "usage": {
-          "input_tokens": 1522,
-          "output_tokens": 205,
-          "total_tokens": 1727
+          "input_tokens": 1744,
+          "output_tokens": 219,
+          "total_tokens": 1963
         }
       },
       "next_action": "stop:needs_clarification",

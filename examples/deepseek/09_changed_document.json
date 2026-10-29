@@ -1,7 +1,7 @@
 {
-  "run_id": "5dfb919810f9455e9a015332e9d723c7",
-  "started_at_utc": "2026-10-29T12:07:34.709680+00:00",
-  "elapsed_seconds": 5.922,
+  "run_id": "f451fa26082d41ec8035ddd06e0b5592",
+  "started_at_utc": "2026-10-29T12:28:46.711991+00:00",
+  "elapsed_seconds": 6.687,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,6 +13,7 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 3,
   "result": {
     "status": "answered",
@@ -38,13 +39,13 @@
         "query": "报销期限",
         "top_k": 8
       },
-      "decision_summary": "用户询问报销期限，先检索相关制度条款。",
+      "decision_summary": "检索报销期限相关制度原文",
       "model_metadata": {
-        "response_id": "87e6d9c5-91e5-4d53-affe-30944d7ae646",
+        "response_id": "bb25ff6a-bb5d-45f8-8454-46a90d62b6c3",
         "usage": {
-          "input_tokens": 1523,
-          "output_tokens": 76,
-          "total_tokens": 1599
+          "input_tokens": 1563,
+          "output_tokens": 72,
+          "total_tokens": 1635
         }
       },
       "next_action": "read_chunk",
@@ -59,12 +60,24 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 1.2329,
+            "score": 1.23292317,
+            "score_type": "bm25",
+            "bm25_score": 1.232923,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 45 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           }
         ],
         "total_matches": 1,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 1
+        }
       },
       "observation_summary": "命中 1 个片段；本次返回 1 个",
       "next_action_source": "new_model_response_after_observation"
@@ -77,13 +90,13 @@
         "doc_id": "D01",
         "chunk_id": "C01"
       },
-      "decision_summary": "读取唯一相关文档原文以确认期限表述。",
+      "decision_summary": "读取唯一相关文档原文以确认期限表述",
       "model_metadata": {
-        "response_id": "9e601780-6c3a-488b-9b93-13b7ab08ad29",
+        "response_id": "13a7d938-4135-4ad0-a004-5ac7b941deb5",
         "usage": {
-          "input_tokens": 1733,
+          "input_tokens": 1857,
           "output_tokens": 78,
-          "total_tokens": 1811
+          "total_tokens": 1935
         }
       },
       "next_action": "finish",
@@ -120,13 +133,13 @@
         "gaps": [],
         "conflicts": []
       },
-      "decision_summary": "仅检索到一份相关规定且无冲突，已读取原文并据此回答，同时说明来源范围限制。",
+      "decision_summary": "仅检索到一份相关规定，已读取原文并据此回答，同时说明来源未标明适用范围。",
       "model_metadata": {
-        "response_id": "f8a5e8a6-ab6d-4528-b8d8-4cb281e4cc57",
+        "response_id": "e73ca226-4892-47a2-8ece-81c3a449d09c",
         "usage": {
-          "input_tokens": 1911,
-          "output_tokens": 234,
-          "total_tokens": 2145
+          "input_tokens": 2035,
+          "output_tokens": 232,
+          "total_tokens": 2267
         }
       },
       "next_action": "stop:answered",

@@ -1,6 +1,6 @@
 {
-  "run_id": "69bb83c69d4c453e82599ac0038c16a7",
-  "started_at_utc": "2026-10-29T12:04:23.947982+00:00",
+  "run_id": "1e5ce891a75f4f2db2d971ca76eb00e6",
+  "started_at_utc": "2026-10-29T12:28:59.654369+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -13,6 +13,7 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 5,
   "result": {
     "status": "needs_clarification",
@@ -68,7 +69,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 4.1112,
+            "score": 4.11115886,
+            "score_type": "bm25",
+            "bm25_score": 4.111159,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -78,7 +84,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 4.0421,
+            "score": 4.04208525,
+            "score_type": "bm25",
+            "bm25_score": 4.042085,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -88,12 +99,24 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 1.1321,
+            "score": 1.13206045,
+            "score_type": "bm25",
+            "bm25_score": 1.13206,
+            "bm25_rank": 3,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "total_matches": 3,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 3
+        }
       },
       "observation_summary": "命中 3 个片段；本次返回 3 个",
       "next_action_source": "new_model_response_after_observation"
@@ -172,7 +195,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 9.5938,
+            "score": 9.59378933,
+            "score_type": "bm25",
+            "bm25_score": 9.593789,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -182,7 +210,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 9.3943,
+            "score": 9.39429191,
+            "score_type": "bm25",
+            "bm25_score": 9.394292,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -192,12 +225,24 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 1.1321,
+            "score": 1.13206045,
+            "score_type": "bm25",
+            "bm25_score": 1.13206,
+            "bm25_rank": 3,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "total_matches": 3,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 3
+        }
       },
       "observation_summary": "命中 3 个片段；本次返回 3 个",
       "next_action_source": "new_model_response_after_observation"

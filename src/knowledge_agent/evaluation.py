@@ -54,16 +54,22 @@ def grade(record: dict, expected: dict, knowledge: KnowledgeBase) -> dict[str, b
     if expected.get("tool_error_observed"):
         checks["fault_was_observed"] = any(
             t["observation"].get("error", {}).get("code") == "UNAVAILABLE" for t in record["trace"])
+    if knowledge.retrieval == "hybrid":
+        searches = [t["observation"] for t in record["trace"]
+                    if t["tool"] == "search_docs" and t["observation"].get("ok")]
+        checks["hybrid_not_degraded"] = all(
+            s.get("retrieval", {}).get("used_mode") == "hybrid" and not s["retrieval"].get("degraded")
+            for s in searches)
     return checks
 
 
-def evaluate(model, out_dir: Path, cases_path: Path | None = None) -> dict:
+def evaluate(model, out_dir: Path, cases_path: Path | None = None, *, retrieval_options: dict | None = None) -> dict:
     manifest = json.loads((cases_path or ROOT / "data/cases.json").read_text(encoding="utf-8-sig"))
     rows = []
     successful_model_steps = 0
     # Separate provider dirs so offline results never overwrite real-model evidence.
     for case in manifest["cases"]:
-        knowledge = KnowledgeBase.from_path(ROOT / case["corpus"], case.get("faults"))
+        knowledge = KnowledgeBase.from_path(ROOT / case["corpus"], case.get("faults"), **(retrieval_options or {}))
         record = Agent(model, knowledge, case.get("max_steps", 12)).run(case["question"], case.get("history"))
         record["fixture"] = {"corpus": case["corpus"], "faults": case.get("faults", {})}
         successful_model_steps += sum(bool(t.get("model_metadata", {}).get("response_id"))
@@ -78,6 +84,8 @@ def evaluate(model, out_dir: Path, cases_path: Path | None = None) -> dict:
                      "path": [t["tool"] for t in record["trace"]]})
     report = {"generated_at_utc": datetime.now(timezone.utc).isoformat(),
               "provider": model.provider, "model": model.model, "evidence_kind": model.evidence_kind,
+              "retrieval_mode": knowledge.retrieval,
+              "embedding_evidence_kind": knowledge.embedder.evidence_kind if knowledge.embedder else None,
               "real_model_execution_recorded": model.evidence_kind == "real_model" and successful_model_steps > 0,
               "successful_model_steps": successful_model_steps,
               "total": len(rows), "passed": sum(r["passed"] for r in rows), "cases": rows,

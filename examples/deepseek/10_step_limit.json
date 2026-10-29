@@ -1,7 +1,7 @@
 {
-  "run_id": "c7a6a67377954aa591de5f35413e49d2",
-  "started_at_utc": "2026-10-29T12:07:40.632377+00:00",
-  "elapsed_seconds": 2.078,
+  "run_id": "e3c0b29195a545a3839cd49c86d0065d",
+  "started_at_utc": "2026-10-29T12:28:53.401192+00:00",
+  "elapsed_seconds": 1.766,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,6 +13,7 @@
   "limits": {
     "max_steps": 1
   },
+  "retrieval_mode": "bm25",
   "steps_used": 1,
   "result": {
     "status": "step_limit",
@@ -30,22 +31,22 @@
       "decision_round": 1,
       "tool": "search_docs",
       "arguments": {
-        "query": "报销期限",
+        "query": "报销期限 多久",
         "top_k": 8
       },
-      "decision_summary": "检索报销期限相关制度原文",
+      "decision_summary": "用户询问报销期限，需检索相关制度条款",
       "model_metadata": {
-        "response_id": "eb848299-e452-4019-a923-d5cf16688e6f",
+        "response_id": "f95b4b81-e6a3-4c84-9dd8-5f35299af1ac",
         "usage": {
-          "input_tokens": 1523,
-          "output_tokens": 72,
-          "total_tokens": 1595
+          "input_tokens": 1563,
+          "output_tokens": 78,
+          "total_tokens": 1641
         }
       },
       "next_action": "stop:step_limit",
       "observation": {
         "ok": true,
-        "query": "报销期限",
+        "query": "报销期限 多久",
         "hits": [
           {
             "doc_id": "D01",
@@ -54,7 +55,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 2.1232,
+            "score": 2.12321408,
+            "score_type": "bm25",
+            "bm25_score": 2.123214,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -64,12 +70,24 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 0.2757,
+            "score": 0.27574056,
+            "score_type": "bm25",
+            "bm25_score": 0.275741,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "total_matches": 2,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 2
+        }
       },
       "observation_summary": "命中 2 个片段；本次返回 2 个"
     }

@@ -1,7 +1,7 @@
 {
-  "run_id": "e4cda7f5b2ca4e199ec164f817f2e0e7",
-  "started_at_utc": "2026-10-29T12:06:53.093069+00:00",
-  "elapsed_seconds": 6.703,
+  "run_id": "3d4155663cb54d66bf887c9317c8eb98",
+  "started_at_utc": "2026-10-29T12:28:00.353747+00:00",
+  "elapsed_seconds": 7.625,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,14 +13,15 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 3,
   "result": {
     "status": "insufficient_evidence",
-    "answer": "知识库中未检索到任何关于火星土壤成分或氦含量的资料，无法回答该问题。本 Agent 仅依据企业知识库资料作答，不提供外部或常识性数据。",
+    "answer": "知识库中未检索到任何关于火星土壤氦含量（或火星土壤成分）的资料，因此无法回答该问题。本知识库为企业制度类资料，该问题可能超出其收录范围。",
     "citations": [],
     "gaps": [
-      "知识库中没有火星土壤氦含量（或火星土壤成分）相关文档，两次检索（“火星土壤 氦含量”“火星 土壤 元素含量 检测”）均无结果。",
-      "若该问题属于某项内部研究或检测报告，请提供报告名称、编号或所属部门，以便进一步检索。"
+      "知识库中没有火星土壤氦含量相关的文档或数据",
+      "该问题属于行星科学领域，可能不在本企业知识库收录范围内，建议查阅相关科研文献或权威机构数据"
     ],
     "conflicts": [],
     "completed": false
@@ -36,11 +37,11 @@
       },
       "decision_summary": "检索知识库中是否有关于火星土壤氦含量的资料",
       "model_metadata": {
-        "response_id": "05ce7dca-1cc6-43f2-b364-defc28177288",
+        "response_id": "ea8881fc-a62d-4371-91cc-90a75a85bcc9",
         "usage": {
-          "input_tokens": 1526,
+          "input_tokens": 1566,
           "output_tokens": 82,
-          "total_tokens": 1608
+          "total_tokens": 1648
         }
       },
       "next_action": "search_docs",
@@ -49,7 +50,14 @@
         "query": "火星土壤 氦含量",
         "hits": [],
         "total_matches": 0,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 0
+        }
       },
       "observation_summary": "命中 0 个片段；本次返回 0 个",
       "next_action_source": "new_model_response_after_observation"
@@ -59,25 +67,32 @@
       "decision_round": 2,
       "tool": "search_docs",
       "arguments": {
-        "query": "火星 土壤 元素含量 检测",
+        "query": "火星 土壤 元素 成分 检测",
         "top_k": 8
       },
-      "decision_summary": "同义改写检索，确认知识库是否有火星土壤成分相关资料",
+      "decision_summary": "改写同义查询，确认知识库是否有火星土壤成分相关资料",
       "model_metadata": {
-        "response_id": "8bdd5f3c-b83d-4101-9aa4-af203ed1508b",
+        "response_id": "3629a742-45b2-4ec6-8657-60480bf668d8",
         "usage": {
-          "input_tokens": 1660,
-          "output_tokens": 85,
-          "total_tokens": 1745
+          "input_tokens": 1746,
+          "output_tokens": 86,
+          "total_tokens": 1832
         }
       },
       "next_action": "finish",
       "observation": {
         "ok": true,
-        "query": "火星 土壤 元素含量 检测",
+        "query": "火星 土壤 元素 成分 检测",
         "hits": [],
         "total_matches": 0,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 0
+        }
       },
       "observation_summary": "命中 0 个片段；本次返回 0 个",
       "next_action_source": "new_model_response_after_observation"
@@ -88,21 +103,21 @@
       "tool": "finish",
       "arguments": {
         "status": "insufficient_evidence",
-        "answer": "知识库中未检索到任何关于火星土壤成分或氦含量的资料，无法回答该问题。本 Agent 仅依据企业知识库资料作答，不提供外部或常识性数据。",
+        "answer": "知识库中未检索到任何关于火星土壤氦含量（或火星土壤成分）的资料，因此无法回答该问题。本知识库为企业制度类资料，该问题可能超出其收录范围。",
         "citations": [],
         "gaps": [
-          "知识库中没有火星土壤氦含量（或火星土壤成分）相关文档，两次检索（“火星土壤 氦含量”“火星 土壤 元素含量 检测”）均无结果。",
-          "若该问题属于某项内部研究或检测报告，请提供报告名称、编号或所属部门，以便进一步检索。"
+          "知识库中没有火星土壤氦含量相关的文档或数据",
+          "该问题属于行星科学领域，可能不在本企业知识库收录范围内，建议查阅相关科研文献或权威机构数据"
         ],
         "conflicts": []
       },
-      "decision_summary": "两次检索均无相关结果，无原文可引用，故返回证据不足。",
+      "decision_summary": "两次检索（原查询与同义改写）均无结果，无原文可引用，故返回证据不足",
       "model_metadata": {
-        "response_id": "68d3e008-1f3c-489e-979d-3454dc63d89a",
+        "response_id": "13b187e4-636a-4a37-abd9-47f43937e709",
         "usage": {
-          "input_tokens": 1799,
-          "output_tokens": 241,
-          "total_tokens": 2040
+          "input_tokens": 1933,
+          "output_tokens": 221,
+          "total_tokens": 2154
         }
       },
       "next_action": "stop:insufficient_evidence",

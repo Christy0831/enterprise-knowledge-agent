@@ -1,7 +1,7 @@
 {
-  "run_id": "ba4bcdbff36f44c6ad1d840d01915c4b",
-  "started_at_utc": "2026-10-29T12:07:42.708082+00:00",
-  "elapsed_seconds": 6.672,
+  "run_id": "c7c61ccb3b5b4cd794a4c6c3f657d83d",
+  "started_at_utc": "2026-10-29T12:28:55.180708+00:00",
+  "elapsed_seconds": 6.218,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,10 +13,11 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 3,
   "result": {
     "status": "answered",
-    "answer": "支持。根据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。该资料未提供效率提升比例或字幕识别准确率等信息。",
+    "answer": "支持。根据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。该资料未提供效率提升比例或字幕识别准确率等数据。",
     "citations": [
       {
         "doc_id": "D04",
@@ -40,11 +41,11 @@
       },
       "decision_summary": "检索影文桌面版字幕功能相关制度或产品资料",
       "model_metadata": {
-        "response_id": "2b6c5c46-6dba-4823-a778-408ea2bc877f",
+        "response_id": "cb51dfe1-333c-4434-9467-b682112ed7e5",
         "usage": {
-          "input_tokens": 1529,
+          "input_tokens": 1569,
           "output_tokens": 86,
-          "total_tokens": 1615
+          "total_tokens": 1655
         }
       },
       "next_action": "read_chunk",
@@ -59,12 +60,24 @@
             "scope": "影文桌面版",
             "priority": null,
             "chunk_id": "C01",
-            "score": 11.5423,
+            "score": 11.54232712,
+            "score_type": "bm25",
+            "bm25_score": 11.542327,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
           }
         ],
         "total_matches": 1,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 1
+        }
       },
       "observation_summary": "命中 1 个片段；本次返回 1 个",
       "next_action_source": "new_model_response_after_observation"
@@ -79,11 +92,11 @@
       },
       "decision_summary": "读取原文以确认字幕添加与编辑的支持情况",
       "model_metadata": {
-        "response_id": "b6432adc-7d20-4caf-a769-48b56696fa86",
+        "response_id": "b4fcf17b-20d9-447e-83aa-a4b2330ed171",
         "usage": {
-          "input_tokens": 1770,
+          "input_tokens": 1898,
           "output_tokens": 79,
-          "total_tokens": 1849
+          "total_tokens": 1977
         }
       },
       "next_action": "finish",
@@ -108,7 +121,7 @@
       "tool": "finish",
       "arguments": {
         "status": "answered",
-        "answer": "支持。根据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。该资料未提供效率提升比例或字幕识别准确率等信息。",
+        "answer": "支持。根据《影文产品字幕功能说明》（适用范围：影文桌面版），影文桌面版支持为视频添加字幕，并允许编辑字幕内容[D04/C01]。该资料未提供效率提升比例或字幕识别准确率等数据。",
         "citations": [
           {
             "doc_id": "D04",
@@ -120,13 +133,13 @@
         "gaps": [],
         "conflicts": []
       },
-      "decision_summary": "检索到唯一相关文档并读取原文，原文明确说明支持添加和编辑字幕",
+      "decision_summary": "检索到唯一相关文档并读取原文，原文明确支持添加与编辑字幕",
       "model_metadata": {
-        "response_id": "d2a9701d-a9bb-4159-a72b-3c3085ebda38",
+        "response_id": "da4d1405-f769-4087-87ac-3b5aeef1317a",
         "usage": {
-          "input_tokens": 1962,
+          "input_tokens": 2090,
           "output_tokens": 231,
-          "total_tokens": 2193
+          "total_tokens": 2321
         }
       },
       "next_action": "stop:answered",

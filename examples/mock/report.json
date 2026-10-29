@@ -1,8 +1,10 @@
 {
-  "generated_at_utc": "2026-10-29T12:04:23.962388+00:00",
+  "generated_at_utc": "2026-10-29T12:28:59.668441+00:00",
   "provider": "mock",
   "model": "offline-rules-v1",
   "evidence_kind": "mock_flow_only",
+  "retrieval_mode": "bm25",
+  "embedding_evidence_kind": null,
   "real_model_execution_recorded": false,
   "successful_model_steps": 0,
   "total": 11,

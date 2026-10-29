@@ -34,8 +34,26 @@ test_cli_offline_entrypoint_from_another_directory (test_config_cli.Configuratio
 test_deepseek_environment_defaults_and_missing_key (test_config_cli.ConfigurationTests.test_deepseek_environment_defaults_and_missing_key) ... ok
 test_env_file_is_data_not_executable_and_shell_wins (test_config_cli.ConfigurationTests.test_env_file_is_data_not_executable_and_shell_wins) ... ok
 test_env_parse_errors_do_not_echo_values (test_config_cli.ConfigurationTests.test_env_parse_errors_do_not_echo_values) ... ok
+test_batches_of_ten_reordering_and_text_types (test_hybrid.DashScopeTests.test_batches_of_ten_reordering_and_text_types) ... ok
+test_cli_hybrid_without_key_is_explicit_and_strict_mode_is_nonzero (test_hybrid.DashScopeTests.test_cli_hybrid_without_key_is_explicit_and_strict_mode_is_nonzero) ... ok
+test_configuration_and_cache_identity (test_hybrid.DashScopeTests.test_configuration_and_cache_identity) ... ok
+test_http_contract_without_a_real_dashscope_call (test_hybrid.DashScopeTests.test_http_contract_without_a_real_dashscope_call) ... ok
+test_legacy_text_index_is_supported (test_hybrid.DashScopeTests.test_legacy_text_index_is_supported) ... ok
+test_malformed_vectors_and_indices_are_rejected (test_hybrid.DashScopeTests.test_malformed_vectors_and_indices_are_rejected) ... ok
+test_network_errors_are_safe_and_missing_key_never_sends_a_request (test_hybrid.DashScopeTests.test_network_errors_are_safe_and_missing_key_never_sends_a_request) ... ok
+test_candidate_pool_truncation_remains_visible_even_if_top_k_is_full (test_hybrid.FusionTests.test_candidate_pool_truncation_remains_visible_even_if_top_k_is_full) ... ok
+test_corrupt_cache_is_rebuilt (test_hybrid.FusionTests.test_corrupt_cache_is_rebuilt) ... ok
+test_document_cache_reuses_vectors_and_invalidates_on_source_change (test_hybrid.FusionTests.test_document_cache_reuses_vectors_and_invalidates_on_source_change) ... ok
+test_embedding_failure_never_becomes_silent_hybrid_success (test_hybrid.FusionTests.test_embedding_failure_never_becomes_silent_hybrid_success) ... ok
+test_fusion_reports_both_scores_and_truncation (test_hybrid.FusionTests.test_fusion_reports_both_scores_and_truncation) ... ok
+test_low_similarity_is_filtered_but_lexical_candidates_survive (test_hybrid.FusionTests.test_low_similarity_is_filtered_but_lexical_candidates_survive) ... ok
+test_missing_key_explicitly_degrades_and_strict_mode_fails (test_hybrid.FusionTests.test_missing_key_explicitly_degrades_and_strict_mode_fails) ... ok
+test_model_observes_degradation_and_evaluation_does_not_count_it_as_hybrid (test_hybrid.FusionTests.test_model_observes_degradation_and_evaluation_does_not_count_it_as_hybrid) ... ok
+test_rrf_deduplicates_a_channel_and_breaks_ties_stably (test_hybrid.FusionTests.test_rrf_deduplicates_a_channel_and_breaks_ties_stably) ... ok
+test_rrf_uses_one_based_ranks_and_combines_both_channels (test_hybrid.FusionTests.test_rrf_uses_one_based_ranks_and_combines_both_channels) ... ok
+test_vector_only_candidate_is_recalled_without_keyword_overlap (test_hybrid.FusionTests.test_vector_only_candidate_is_recalled_without_keyword_overlap) ... ok
 
 ----------------------------------------------------------------------
-Ran 36 tests in 3.164s
+Ran 54 tests in 4.426s
 
 OK

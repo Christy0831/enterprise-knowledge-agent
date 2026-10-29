@@ -1,0 +1,76 @@
+{
+  "run_id": "5eb84092598d4e24b4f1961d212d6fa4",
+  "started_at_utc": "2026-10-29T12:35:11.461407+00:00",
+  "elapsed_seconds": 0.0,
+  "provider": "mock",
+  "model": "offline-rules-v1",
+  "evidence_kind": "mock_flow_only",
+  "input": {
+    "question": "报销期限多久？",
+    "history": []
+  },
+  "corpus_sha256": "535f11d461db15ad41433abc1380203936db5f0187b86520274ea12918f03c3b",
+  "limits": {
+    "max_steps": 12
+  },
+  "retrieval_mode": "hybrid",
+  "steps_used": 2,
+  "result": {
+    "status": "tool_error",
+    "answer": "必要工具不可用，当前无法可靠回答。",
+    "citations": [],
+    "gaps": [
+      "需要恢复工具服务后重试。"
+    ],
+    "conflicts": [],
+    "completed": false
+  },
+  "trace": [
+    {
+      "step": 1,
+      "decision_round": 1,
+      "tool": "search_docs",
+      "arguments": {
+        "query": "报销期限多久？",
+        "top_k": 8
+      },
+      "decision_summary": "离线规则：先按当前问题及必要历史检索。",
+      "model_metadata": {},
+      "next_action": "finish",
+      "observation": {
+        "ok": false,
+        "error": {
+          "code": "EMBEDDING_UNAVAILABLE",
+          "message": "未配置 DASHSCOPE_API_KEY，向量检索不可用",
+          "retryable": false
+        }
+      },
+      "observation_summary": "失败：EMBEDDING_UNAVAILABLE",
+      "next_action_source": "new_model_response_after_observation"
+    },
+    {
+      "step": 2,
+      "decision_round": 2,
+      "tool": "finish",
+      "arguments": {
+        "status": "tool_error",
+        "answer": "必要工具不可用，当前无法可靠回答。",
+        "citations": [],
+        "gaps": [
+          "需要恢复工具服务后重试。"
+        ],
+        "conflicts": []
+      },
+      "decision_summary": "离线规则：工具仍失败，停止并保留已有记录。",
+      "model_metadata": {},
+      "next_action": "stop:tool_error",
+      "observation": {
+        "ok": true,
+        "status": "tool_error"
+      },
+      "observation_summary": "最终结果通过结构与引用校验"
+    }
+  ],
+  "embedding_evidence_kind": "no_embedding_call_missing_key",
+  "command": "python scripts/demo_hybrid.py"
+}

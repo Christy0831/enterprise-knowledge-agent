@@ -2,9 +2,9 @@
 
 帮助员工查询企业制度及产品资料。回答附文档 ID、版本日期和原文引用；资料冲突时查证并追问，资料不足或工具失败时明确返回未完成。
 
-采用 **Python CLI + 本地 BM25 检索 + 模型工具调用循环**。真实模型优先使用 DeepSeek 官网 API，也保留 OpenAI Responses 接口。运行与测试均使用 Python 标准库，无第三方运行依赖。
+采用 **Python CLI + BM25/可选DashScope向量RRF混合检索 + 模型工具调用循环**。生成模型优先使用DeepSeek官网API；向量模型按用户选择使用DashScope `text-embedding-v4`。全部实现使用Python标准库，无第三方运行依赖。
 
-> 已保存真实DeepSeek与离线Mock的验收记录，最新完整通过轮次均为11/11；自动化测试36项通过。真实模型记录见 `examples/deepseek/`，Mock仅用于验证离线流程。开发中失败轮次和人工复核发现的问题均保留，不将一次通过等同于模型始终正确。
+> BM25基线已保存真实DeepSeek与离线Mock记录，最新完整通过轮次均为11/11；自动化测试54项通过。DashScope/RRF已验证接口与融合流程，真实向量召回效果待本机填写Key后验证，不将基线结果或人工向量算成混合检索效果证明。
 
 ## 评审入口
 
@@ -16,6 +16,7 @@
 6. [实际输入、输出、Trace 索引](examples/README.md) · [测试结果](examples/test-results.json)
 7. [GitHub 配置与提交步骤](docs/06-setup-and-delivery.md) · [提交信息](SUBMISSION.md)
 8. [真实模型答案与路径复核](examples/manual-review.md)
+9. [DashScope配置、RRF原理与题目范围说明](docs/07-hybrid-retrieval.md)
 
 ## 环境与安装
 
@@ -78,6 +79,20 @@ CLI 自动读取仓库根目录 `.env`，系统/终端中已有的环境变量�
 
 可选 OpenAI 后端：设置 `OPENAI_API_KEY`、`OPENAI_MODEL`，运行 `--provider openai`；默认地址 `https://api.openai.com/v1`。不需要同时配置两个服务。
 
+## 可选向量混合检索
+
+本机.env已预留 `DASHSCOPE_API_KEY`，后续在该字段填入向量API Key即可启用。正式模型名为 `text-embedding-v4`，默认1024维。Key与URL须属于同一地域；控制台如提供业务空间专属地址，填写完整的 `DASHSCOPE_EMBEDDING_URL`。详见 [配置说明](docs/07-hybrid-retrieval.md)。
+
+```powershell
+python run.py ask "垫的钱最迟啥时候能报账？" --provider deepseek --retrieval hybrid
+python run.py evaluate --provider deepseek --retrieval hybrid --require-vector
+python scripts/demo_hybrid.py
+```
+
+两路独立排名后按 `Σ1/(60+rank)` 融合。Trace记录BM25/余弦原分、各路排名、RRF分及降级状态。向量失败默认明确降级为BM25，`--require-vector`禁止降级；评估不会把降级算作hybrid通过。文档向量缓存位于被Git忽略的 `.cache/embeddings/`，知识内容、版本或模型配置变化后重建。
+
+混合验收默认写入 `examples/deepseek-hybrid/`，保留BM25历史记录。当前无真实向量Key，未测语义质量和阈值适用性；默认余弦阈值0.5可调，RRF分数不是答案置信度。
+
 ## 上下文、故障与上限
 
 ```powershell
@@ -122,4 +137,4 @@ scripts/check.py      测试及结果归档
 
 ## 已知限制
 
-检索是中文二元字符/英文词项 BM25，不是向量语义检索；泛化同义表达依赖真实模型改写。引用校验能验证“原文存在且本轮读过”，不能自动保证“原文在语义上支持答案”。冲突发现与相关性判断依赖真实模型，需用真实记录和人工复核证明。无权限系统、持久对话服务、UI 或线上部署；所有资料为合成数据。
+默认BM25基线使用中文二元字符/英文词项；可选DashScope向量/RRF已实现，但真实向量效果待配置Key后测量。引用校验能验证“原文存在且本轮读过”，不能自动保证“原文在语义上支持答案”。冲突发现与相关性判断仍需真实记录和人工复核。权限系统、持久对话服务、UI、线上部署均非题目必需项；现有CLI与可选history覆盖要求，所有资料为合成数据。

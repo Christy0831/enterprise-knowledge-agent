@@ -15,7 +15,10 @@ def summary(observation: dict) -> str:
     if not observation.get("ok"):
         return "失败：" + observation["error"]["code"]
     if "hits" in observation:
-        return f"命中 {observation['total_matches']} 个片段；本次返回 {len(observation['hits'])} 个"
+        description = f"命中 {observation['total_matches']} 个片段；本次返回 {len(observation['hits'])} 个"
+        if observation.get("retrieval", {}).get("degraded"):
+            description += "；向量检索不可用，已明确降级为BM25"
+        return description
     if "chunk" in observation:
         chunk = observation["chunk"]
         return f"读取 {chunk['doc_id']}/{chunk['chunk_id']}，版本 {chunk['version_date']}"
@@ -168,6 +171,7 @@ class Agent:
                 "provider": self.model.provider, "model": self.model.model,
                 "evidence_kind": self.model.evidence_kind, "input": request,
                 "corpus_sha256": self.knowledge.sha256, "limits": {"max_steps": self.max_steps},
+                "retrieval_mode": self.knowledge.retrieval,
                 "steps_used": len(trace), "result": result, "trace": trace}
 
     @staticmethod

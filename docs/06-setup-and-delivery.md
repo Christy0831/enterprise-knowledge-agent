@@ -22,6 +22,10 @@ python scripts/check.py
 
 模型默认值及Responses接口依据 [DeepSeek官方入门](https://api-docs.deepseek.com/) 与 [兼容说明](https://api-docs.deepseek.com/guides/responses_api/)，核对日期2026-10-29。具体可用模型和账户权限以平台实际返回为准。HTTP401先核对Key，402核对余额，429核对限流；不要通过改写验收结果掩盖API失败。
 
+## 可选DashScope配置
+
+向量检索的本机配置独立于DeepSeek生成模型。`.env`已预留空的 `DASHSCOPE_API_KEY`；后续按 [07-hybrid-retrieval.md](07-hybrid-retrieval.md) 填写后以 `--retrieval hybrid`启用。无需额外安装SDK。
+
 ## 创建仓库
 
 登录GitHub的 `Christy0831` 账号后，在 [新建仓库](https://github.com/new) 页面：

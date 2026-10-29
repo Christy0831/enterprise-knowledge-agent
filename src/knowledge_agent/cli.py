@@ -7,6 +7,7 @@ import sys
 
 from .agent import Agent
 from .config import load_env
+from .embeddings import DashScopeEmbedder
 from .evaluation import ROOT, evaluate, write_json
 from .knowledge import KnowledgeBase
 from .models import DeepSeekModel, MockModel, ResponsesModel
@@ -28,6 +29,13 @@ def parser() -> argparse.ArgumentParser:
     for item in (ask, evaluation):
         item.add_argument("--provider", choices=["mock", "deepseek", "openai"], default="mock")
         item.add_argument("--timeout", type=float, default=45, help="单次模型HTTP请求超时秒数")
+        item.add_argument("--retrieval", choices=["bm25", "hybrid"], default="bm25",
+                          help="hybrid=BM25+DashScope向量检索+RRF")
+        item.add_argument("--rrf-k", type=int, default=60)
+        item.add_argument("--candidate-k", type=int, default=20, help="每路融合前候选数，至少8")
+        item.add_argument("--vector-min-score", type=float, default=0.5, help="向量余弦候选阈值；不是答案置信度")
+        item.add_argument("--embedding-cache-dir", type=Path, default=ROOT / ".cache/embeddings")
+        item.add_argument("--require-vector", action="store_true", help="向量失败时返回工具错误，禁止降级")
     return command
 
 
@@ -38,14 +46,21 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.reconfigure(encoding="utf-8")
     args = parser().parse_args(argv)
     try:
-        if args.provider != "mock":
+        if args.provider != "mock" or args.retrieval == "hybrid":
             load_env(ROOT / ".env")
+        if args.require_vector and args.retrieval != "hybrid":
+            raise ValueError("--require-vector须与--retrieval hybrid配合使用")
+        retrieval_options = {"retrieval": args.retrieval, "rrf_k": args.rrf_k,
+                             "candidate_k": args.candidate_k, "vector_min_score": args.vector_min_score,
+                             "require_vector": args.require_vector}
+        if args.retrieval == "hybrid":
+            retrieval_options.update(embedder=DashScopeEmbedder.from_env(), cache_dir=args.embedding_cache_dir)
         model = (MockModel() if args.provider == "mock" else
                  DeepSeekModel.from_env(args.timeout) if args.provider == "deepseek" else
                  ResponsesModel.from_env(args.timeout))
         if args.command == "evaluate":
-            output = args.out_dir or ROOT / "examples" / args.provider
-            report = evaluate(model, output)
+            output = args.out_dir or ROOT / "examples" / (args.provider if args.retrieval == "bm25" else args.provider + "-hybrid")
+            report = evaluate(model, output, retrieval_options=retrieval_options)
             print(json.dumps({"provider": report["provider"], "passed": report["passed"],
                               "total": report["total"], "report": str(output / "report.json"),
                               "limitation": report["limitation"]}, ensure_ascii=False, indent=2))
@@ -54,7 +69,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.fail_count != -1 and args.fail_count < 1:
             raise ValueError("fail-count必须为正整数或-1")
         faults = {args.fail_tool: args.fail_count} if args.fail_tool else {}
-        knowledge = KnowledgeBase.from_path(args.corpus, faults)
+        knowledge = KnowledgeBase.from_path(args.corpus, faults, **retrieval_options)
         record = Agent(model, knowledge, args.max_steps).run(args.question, history)
         record["fixture"] = {"corpus": str(args.corpus), "faults": faults}
         if args.output:

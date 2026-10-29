@@ -10,6 +10,8 @@ python scripts/check.py
 
 - `mock/`：规则Mock实际执行产生的11组输入、输出和Trace。`evidence_kind=mock_flow_only`，不证明真实模型决策能力。
 - `deepseek/`：在本机配置Key后生成的真实模型运行文件；API失败同样记录。不能只看文件存在，须看结果、模型响应ID、观察后的新决策和人工语义审阅。
+- `deepseek/`为BM25基线；真实混合检索命令默认另写`deepseek-hybrid/`，当前未配置向量Key，没有真实混合结果。
+- `hybrid/`：4组融合/降级流程记录。前两组为人工指定向量，后两组明确缺Key；均不证明真实DashScope语义效果。可用`python scripts/demo_hybrid.py`复现。
 - `test-results.json`、`test-results.txt`：自动化测试实际结果。本机HTTP测试是假服务，不是真实模型效果。
 - `development/`：开发中保留的失败，反映修正依据。
 - `worklog.json`：实际时间检查点和未完成项。

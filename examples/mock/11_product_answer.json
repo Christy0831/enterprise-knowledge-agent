@@ -1,6 +1,6 @@
 {
-  "run_id": "39bbe3ccf9cd4e83b687d038a9b30ec7",
-  "started_at_utc": "2026-10-29T12:04:23.961385+00:00",
+  "run_id": "e17f60bd95874e3ea6c4c1eb3a0c2e87",
+  "started_at_utc": "2026-10-29T12:28:59.668441+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -13,6 +13,7 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 3,
   "result": {
     "status": "answered",
@@ -52,12 +53,24 @@
             "scope": "影文桌面版",
             "priority": null,
             "chunk_id": "C01",
-            "score": 15.661,
+            "score": 15.6610397,
+            "score_type": "bm25",
+            "bm25_score": 15.66104,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "影文桌面版支持为视频添加字幕，并允许编辑字幕内容。本资料没有提供效率提升比例或字幕识别准确率。"
           }
         ],
         "total_matches": 1,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 1
+        }
       },
       "observation_summary": "命中 1 个片段；本次返回 1 个",
       "next_action_source": "new_model_response_after_observation"

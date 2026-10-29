@@ -1,7 +1,7 @@
 {
-  "run_id": "ad6250f1518849d693ca1c55736af1e0",
-  "started_at_utc": "2026-10-29T12:07:21.930598+00:00",
-  "elapsed_seconds": 10.25,
+  "run_id": "b63aa727bc924541b463d6296d5d2600",
+  "started_at_utc": "2026-10-29T12:28:31.717566+00:00",
+  "elapsed_seconds": 10.625,
   "provider": "deepseek",
   "model": "deepseek-flash",
   "evidence_kind": "real_model",
@@ -13,14 +13,15 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 6,
   "result": {
     "status": "tool_error",
-    "answer": "无法给出结论：检索到《费用报销期限制度》（D01/C01）预览显示“报销期限为 30 天，自费用发生之日起计算”，但 read_chunk 工具连续三次返回 UNAVAILABLE（合成故障注入，可重试），未能读取原文，因此无法提供可引用的逐字证据，也不能据此确认期限。",
+    "answer": "无法给出结论：检索到候选文档《费用报销期限制度》（D01/C01，版本日期 2026-01-10），其预览显示“报销期限为 30 天，自费用发生之日起计算”，但 read_chunk 工具连续三次返回 UNAVAILABLE（合成故障注入，可重试），未能读取原文，因此无法提供可引用的逐字证据，也不能据此确认该期限。",
     "citations": [],
     "gaps": [
-      "read_chunk 工具不可用，未能读取 D01/C01 原文，无法核实报销期限及适用范围",
-      "未能读取 D03/C01 原文，无法确认材料清单是否涉及期限要求"
+      "read_chunk 工具不可用，未能读取 D01/C01 原文，无法核实报销期限条款及适用范围",
+      "D03《费用报销材料清单》原文亦未读取，无法确认其是否涉及期限规定"
     ],
     "conflicts": [],
     "completed": false
@@ -34,13 +35,13 @@
         "query": "报销期限",
         "top_k": 8
       },
-      "decision_summary": "检索报销期限相关制度原文",
+      "decision_summary": "用户询问报销期限，直接检索相关制度条款。",
       "model_metadata": {
-        "response_id": "c5cf2a1d-92e7-4c21-9b90-805740ddfef5",
+        "response_id": "7a297cd9-451d-450b-84f3-daf7f3741d6d",
         "usage": {
-          "input_tokens": 1523,
-          "output_tokens": 72,
-          "total_tokens": 1595
+          "input_tokens": 1563,
+          "output_tokens": 76,
+          "total_tokens": 1639
         }
       },
       "next_action": "read_chunk",
@@ -55,7 +56,12 @@
             "scope": null,
             "priority": null,
             "chunk_id": "C01",
-            "score": 2.1232,
+            "score": 2.12321408,
+            "score_type": "bm25",
+            "bm25_score": 2.123214,
+            "bm25_rank": 1,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
           },
           {
@@ -65,12 +71,24 @@
             "scope": "全体员工",
             "priority": null,
             "chunk_id": "C01",
-            "score": 0.2757,
+            "score": 0.27574056,
+            "score_type": "bm25",
+            "bm25_score": 0.275741,
+            "bm25_rank": 2,
+            "vector_rank": null,
+            "vector_score": null,
             "preview": "报销申请需提交电子发票、费用明细和审批单。"
           }
         ],
         "total_matches": 2,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 2
+        }
       },
       "observation_summary": "命中 2 个片段；本次返回 2 个",
       "next_action_source": "new_model_response_after_observation"
@@ -83,13 +101,13 @@
         "doc_id": "D01",
         "chunk_id": "C01"
       },
-      "decision_summary": "读取报销期限制度原文以确认期限与适用范围",
+      "decision_summary": "读取报销期限制度原文以确认期限与适用范围。",
       "model_metadata": {
-        "response_id": "24f8a0f6-75e7-4e53-83d6-8026f7f392d2",
+        "response_id": "0fdbfdb1-666d-4bfd-bec5-b4152e735cc4",
         "usage": {
-          "input_tokens": 1806,
-          "output_tokens": 156,
-          "total_tokens": 1962
+          "input_tokens": 1980,
+          "output_tokens": 154,
+          "total_tokens": 2134
         }
       },
       "next_action": "read_chunk",
@@ -112,9 +130,9 @@
         "doc_id": "D03",
         "chunk_id": "C01"
       },
-      "decision_summary": "读取同主题候选材料清单原文，确认是否涉及期限",
+      "decision_summary": "读取另一候选文档，确认是否涉及期限规定。",
       "model_metadata": {
-        "response_id": "24f8a0f6-75e7-4e53-83d6-8026f7f392d2",
+        "response_id": "0fdbfdb1-666d-4bfd-bec5-b4152e735cc4",
         "usage": {}
       },
       "next_action": "read_chunk",
@@ -137,13 +155,13 @@
         "doc_id": "D01",
         "chunk_id": "C01"
       },
-      "decision_summary": "工具报可重试故障，重试读取报销期限制度原文",
+      "decision_summary": "工具故障可重试，再次读取报销期限制度原文。",
       "model_metadata": {
-        "response_id": "6c7437ca-a788-4c50-80a2-b74ab154708c",
+        "response_id": "272e073e-42c6-42a0-8021-5e72bbdd9b72",
         "usage": {
-          "input_tokens": 2069,
-          "output_tokens": 83,
-          "total_tokens": 2152
+          "input_tokens": 2241,
+          "output_tokens": 81,
+          "total_tokens": 2322
         }
       },
       "next_action": "read_chunk",
@@ -166,13 +184,13 @@
         "doc_id": "D01",
         "chunk_id": "C01"
       },
-      "decision_summary": "再次重试读取原文，以取得可引用证据",
+      "decision_summary": "再次重试读取原文，若仍失败则按工具错误返回。",
       "model_metadata": {
-        "response_id": "2b14591d-02a8-428e-b308-890ce51cf6a9",
+        "response_id": "fe1f7c27-e79f-4e2e-a06f-78ea27c59ebd",
         "usage": {
-          "input_tokens": 2210,
-          "output_tokens": 80,
-          "total_tokens": 2290
+          "input_tokens": 2380,
+          "output_tokens": 83,
+          "total_tokens": 2463
         }
       },
       "next_action": "finish",
@@ -193,21 +211,21 @@
       "tool": "finish",
       "arguments": {
         "status": "tool_error",
-        "answer": "无法给出结论：检索到《费用报销期限制度》（D01/C01）预览显示“报销期限为 30 天，自费用发生之日起计算”，但 read_chunk 工具连续三次返回 UNAVAILABLE（合成故障注入，可重试），未能读取原文，因此无法提供可引用的逐字证据，也不能据此确认期限。",
+        "answer": "无法给出结论：检索到候选文档《费用报销期限制度》（D01/C01，版本日期 2026-01-10），其预览显示“报销期限为 30 天，自费用发生之日起计算”，但 read_chunk 工具连续三次返回 UNAVAILABLE（合成故障注入，可重试），未能读取原文，因此无法提供可引用的逐字证据，也不能据此确认该期限。",
         "citations": [],
         "gaps": [
-          "read_chunk 工具不可用，未能读取 D01/C01 原文，无法核实报销期限及适用范围",
-          "未能读取 D03/C01 原文，无法确认材料清单是否涉及期限要求"
+          "read_chunk 工具不可用，未能读取 D01/C01 原文，无法核实报销期限条款及适用范围",
+          "D03《费用报销材料清单》原文亦未读取，无法确认其是否涉及期限规定"
         ],
         "conflicts": []
       },
-      "decision_summary": "检索有候选但原文读取工具连续失败，无法取得可引用证据，按规则返回工具错误。",
+      "decision_summary": "检索有候选但原文读取工具连续失败，缺少可引用证据，按工具错误返回。",
       "model_metadata": {
-        "response_id": "f8f6cdc4-9377-44ab-a7ef-cab48ce74e87",
+        "response_id": "aa6c2f96-a3aa-4303-ae46-bca055d17398",
         "usage": {
-          "input_tokens": 2348,
-          "output_tokens": 252,
-          "total_tokens": 2600
+          "input_tokens": 2521,
+          "output_tokens": 268,
+          "total_tokens": 2789
         }
       },
       "next_action": "stop:tool_error",

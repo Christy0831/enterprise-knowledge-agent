@@ -1,6 +1,6 @@
 {
-  "run_id": "0d6b3ef87d7d49a29a5ad420b16643cb",
-  "started_at_utc": "2026-10-29T12:04:23.949983+00:00",
+  "run_id": "a32bb366d6aa4dc384d48b8e71d45b6e",
+  "started_at_utc": "2026-10-29T12:28:59.657460+00:00",
   "elapsed_seconds": 0.0,
   "provider": "mock",
   "model": "offline-rules-v1",
@@ -13,6 +13,7 @@
   "limits": {
     "max_steps": 12
   },
+  "retrieval_mode": "bm25",
   "steps_used": 3,
   "result": {
     "status": "insufficient_evidence",
@@ -41,7 +42,14 @@
         "query": "火星土壤里的氦含量是多少？",
         "hits": [],
         "total_matches": 0,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 0
+        }
       },
       "observation_summary": "命中 0 个片段；本次返回 0 个",
       "next_action_source": "new_model_response_after_observation"
@@ -62,7 +70,14 @@
         "query": "火星土壤里的氦含量是多少",
         "hits": [],
         "total_matches": 0,
-        "has_more": false
+        "has_more": false,
+        "retrieval": {
+          "requested_mode": "bm25",
+          "used_mode": "bm25",
+          "degraded": false,
+          "score_type": "bm25",
+          "bm25_matches": 0
+        }
       },
       "observation_summary": "命中 0 个片段；本次返回 0 个",
       "next_action_source": "new_model_response_after_observation"
