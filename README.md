@@ -19,6 +19,7 @@
 9. [DashScope配置、RRF原理与题目范围说明](docs/07-hybrid-retrieval.md)
 10. [等待、超时与Ctrl+C排查](docs/08-timeout-and-cancellation.md)
 11. [React界面、真实流式输出与验证](docs/09-react-ui-and-streaming.md)
+12. [提交报告、逐项验收与附件打包](docs/10-submission-report.md) · [网页提交说明](SUBMISSION.md)
 
 ## 启动React界面
 

@@ -1,25 +1,34 @@
-# 提交信息
+# 题目3 · 企业知识问答 Agent 提交入口
 
-- 题号：**3 · 企业知识问答 Agent**。
-- GitHub账号：`Christy0831`。
-- GitHub URL：[Christy0831/enterprise-knowledge-agent](https://github.com/Christy0831/enterprise-knowledge-agent)。用户创建的公开仓库，Git已验证可连接。
-- 最终commit SHA：待实际提交并推送后，通过 `git rev-parse HEAD` 获取，在最终提交消息中附完整SHA。
-- 评审入口：[README.md](README.md)。
+- 题号：**3**。
+- 项目：企业知识问答 Agent。
+- 公开仓库：https://github.com/Christy0831/enterprise-knowledge-agent
+- 最终 commit SHA：以提交框及附件中的完整40位SHA为准；通过 `git rev-parse HEAD` 获取。仓库内文件不能预写包含自身修改的commit SHA，提交后由打包脚本自动填入。
+- 完整提交报告：[docs/10-submission-report.md](docs/10-submission-report.md)。
+- 运行入口：[README.md](README.md)。
 
-## 当前状态
+## 上传方式
 
-- 已完成：CLI、真实模型工具循环接口、本地检索和读取、引用/状态校验、冲突及错误反馈、调用上限、合成数据、验收用例、测试及指定文档。
-- 已验证：BM25离线验收11/11；Python自动化测试74项通过。详见 [测试与限制](docs/03-evaluation.md)。
-- 真实模型：已使用DeepSeek官网API运行，最新完整通过轮次11/11；原始记录在examples/deepseek/，失败历史与人工复核发现的问题均保留。
-- 后续扩展：DashScope text-embedding-v4 + BM25/RRF真实严格验收11/11，见examples/deepseek-hybrid/；该阶段63项自动化测试通过。总时限、进度提示与Ctrl+C取消处理已修正。未将小规模用例或人工向量当成独立检索质量基准。
-- 远端交付：Git、远端连接、GitHub登录及提交身份已配置。最终commit与推送结果以交付消息和远端实际状态为准，不在此文件内硬编码自身commit的SHA。
-- 实际用时：[examples/worklog.json](examples/worklog.json)。
-- React扩展：本地界面与真实SSE已实现，入口 `python run.py serve --build`；Python74项、前端解析4项、浏览器8项通过，真实流式与页面证据在examples/ui/。不涉及线上部署。
+代码、文档、Trace、实际输出和测试记录都在本仓库。网页提交框的说明文字和附件由同一commit生成：
 
-## 提交前核对
+```powershell
+python scripts/package_submission.py
+```
 
-1. 真实模型记录至少包含两条根据不同工具结果调整动作的路径，核对正常、冲突、资料外、相似问题、上下文、工具失败与上限状态。
-2. 人工检查引用是否在语义上支持回答，尤其是冲突和资料外场景。
-3. 保留失败与限制，更新评估文档和本文件的实际状态。
-4. .env不进入Git；.env.example中不含真实Key。
-5. 推送最终commit，确认URL、SHA与评审访问权限；不宣称未执行的远端CI已经通过。
+将生成的 `submission-output/提交框填写内容.txt` 全文粘贴到网页文字框，选择 `submission-output/enterprise-knowledge-agent-题目3-<SHA前12位>.zip` 作为唯一附件。截图所示上限为6个附件、每个100MB；脚本会检查ZIP小于100MB。
+
+打包前须已提交全部修改；打包来源仅为该commit的Git快照，排除 `.env`、`.git`、缓存、依赖安装目录及本地构建产物。ZIP同时含完整源码、环境变量空模板、文档、验证材料、自动填入SHA的提交说明和文件哈希清单。生成文件保存在Git忽略目录，避免重复提交压缩包和SHA自引用。
+
+## 结果与边界
+
+- Python测试74项；前端解析4项；浏览器用例8项通过。
+- 真实DeepSeek + BM25基线11/11、真实DeepSeek + DashScope/RRF严格混合验收11/11，原始记录分别在 `examples/deepseek/` 和 `examples/deepseek-hybrid/`。
+- 已提供两种以上观察后动态决策路径，以及正常、资料不足、工具失败等实际输入/输出/Trace。详见提交报告的证据索引。
+- React与真实流式输出为追加扩展；本地启动 `python run.py serve --build`，不涉及线上部署。
+- 全部资料为合成数据；离线Mock仅证明流程。AI协助内容、实际用时及未完成边界均据实披露，不声称提交者已经独立手写或逐段审阅。
+
+## 提交者最后核对
+
+1. 亲自运行离线入口，阅读冲突回答、引用原文和工具失败Trace；个人修改/学习记录只按实际补充。
+2. 确认提交框中的40位SHA与附件说明一致、仓库公开可读。
+3. 在网页粘贴文字、选择ZIP，再由提交者点击最终提交。本脚本只整理材料，不访问或提交网页表单。

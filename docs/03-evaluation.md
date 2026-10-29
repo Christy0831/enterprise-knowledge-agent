@@ -10,7 +10,7 @@ python run.py evaluate --provider deepseek
 python scripts/check.py
 ```
 
-BM25离线验收 **11/11通过**，真实DeepSeek的BM25基线最新完整通过轮次 **11/11通过**，自动化测试 **63项通过，0失败、0错误**。原始记录见 [离线报告](../examples/mock/report.json)、[真实基线报告](../examples/deepseek/report.json)、[测试JSON](../examples/test-results.json) 和 [测试完整日志](../examples/test-results.txt)。时间戳和用时来自运行程序，不手写测试输出。
+BM25离线验收 **11/11通过**，真实DeepSeek的BM25基线最新完整通过轮次 **11/11通过**，当前Python自动化测试 **74项通过，0失败、0错误**（含React/SSE扩展后的11项回归）。原始记录见 [离线报告](../examples/mock/report.json)、[真实基线报告](../examples/deepseek/report.json)、[测试JSON](../examples/test-results.json) 和 [测试完整日志](../examples/test-results.txt)。时间戳和用时来自运行程序，不手写测试输出。
 
 用户配置向量Key后，真实DeepSeek + DashScope/RRF严格混合验收 **11/11通过**，见 [真实混合报告](../examples/deepseek-hybrid/report.json)。此前新增18项混合测试及 [4组离线流程记录](../examples/hybrid/) 验证融合、合同、缓存和降级；本次再新增9项总时限/取消回归测试，合计63项通过。人工向量、本机假服务与真实API记录分别保存，未测独立检索质量指标。验证边界见 [07](07-hybrid-retrieval.md)，等待问题修正见 [08](08-timeout-and-cancellation.md)。
 

@@ -53,6 +53,18 @@
         "Git push and GitHub CI verification"
       ],
       "scope": "UI, native SSE, cancellation, citation validation, responsive browser QA, documentation; excludes subsequent commit and CI wait. No deployment."
+    },
+    {
+      "request": "Prepare submission form text, requirement evidence index and SHA-pinned upload archive",
+      "started_at_first_record": "2026-10-30T01:43:09+08:00",
+      "local_verification_checkpoint": "2026-10-30T01:46:46.210254+08:00",
+      "elapsed_wall_minutes_to_checkpoint": 3.62,
+      "scope": "Requirements audit, report and reproducible packaging; excludes subsequent release validation and CI wait.",
+      "remaining_at_checkpoint": [
+        "Validate committed snapshot archive",
+        "Extract and run offline smoke",
+        "Push and check final commit CI"
+      ]
     }
   ]
 }
