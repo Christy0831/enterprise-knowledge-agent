@@ -2,9 +2,9 @@
 
 帮助员工查询企业制度及产品资料。回答附文档 ID、版本日期和原文引用；资料冲突时查证并追问，资料不足或工具失败时明确返回未完成。
 
-采用 **Python CLI + BM25/可选DashScope向量RRF混合检索 + 模型工具调用循环**。生成模型优先使用DeepSeek官网API；向量模型按用户选择使用DashScope `text-embedding-v4`。全部实现使用Python标准库，无第三方运行依赖。
+采用 **Python CLI + BM25/可选DashScope向量RRF混合检索 + 模型工具调用循环**。生成模型优先使用DeepSeek官网API；向量模型按用户选择使用DashScope `text-embedding-v4`。Python后端使用标准库，无第三方运行依赖；可选React界面的依赖由frontend/package-lock.json锁定。
 
-> BM25基线已保存真实DeepSeek与离线Mock记录，最新完整通过轮次均为11/11；自动化测试63项通过。已配置真实DashScope并跑通严格混合链路，完整混合结果见examples/deepseek-hybrid/report.json；不将小规模用例通过解释为检索质量必然提高。
+> BM25和真实混合验收均已有11/11记录。Python测试74项、前端解析测试4项、浏览器用例8项通过；另有真实DeepSeek SSE与浏览器流式验证。小规模通过不代表通用质量保证。
 
 ## 评审入口
 
@@ -18,10 +18,21 @@
 8. [真实模型答案与路径复核](examples/manual-review.md)
 9. [DashScope配置、RRF原理与题目范围说明](docs/07-hybrid-retrieval.md)
 10. [等待、超时与Ctrl+C排查](docs/08-timeout-and-cancellation.md)
+11. [React界面、真实流式输出与验证](docs/09-react-ui-and-streaming.md)
+
+## 启动React界面
+
+```powershell
+python run.py serve --build
+```
+
+打开 **http://127.0.0.1:8765**。页面支持问答与上下文追问、实时执行进度、模型流式草稿、引用原文、停止请求和运行记录下载。首次构建需要Node.js 22.12+或24及npm；本开发机已准备官方便携Node 24，命令会自动查找，无需修改全局PATH。已有构建时运行 `python run.py serve`即可。
+
+密钥继续保留在本机.env，由Python后端读取，不进入浏览器。草稿明确标为待核验，finish校验通过后再展示正式状态与引用；Mock不模拟Token流。构建、开发、测试和流式边界见 [界面说明](docs/09-react-ui-and-streaming.md)。
 
 ## 环境与安装
 
-要求 Python **3.11+**。本地已在 Windows / Python 3.12.4 验证。以下命令在仓库根目录执行。
+CLI与Python后端要求 **Python 3.11+**；React构建另需Node。已在Windows / Python 3.12.4、Node 24上验证。以下命令在仓库根目录执行。
 
 ```powershell
 python --version
@@ -126,6 +137,7 @@ python run.py ask "报销期限多久？" --provider mock --max-steps 1
 
 ```text
 src/knowledge_agent/   模型接入、工具循环、检索、校验与CLI
+frontend/             React界面、Vite构建与浏览器测试
 data/knowledge.json   含故意冲突的合成制度和产品资料
 data/fixtures/        无冲突快照、45天替换快照
 data/cases.json       11组验收输入与预期
@@ -140,4 +152,4 @@ scripts/check.py      测试及结果归档
 
 ## 已知限制
 
-默认BM25基线使用中文二元字符/英文词项；可选DashScope向量/RRF已进行小规模真实调用，未完成独立检索质量基准。引用校验能验证“原文存在且本轮读过”，不能自动保证“原文在语义上支持答案”。冲突发现与相关性判断仍需真实记录和人工复核。权限系统、持久对话服务、UI、线上部署均非题目必需项；现有CLI与可选history覆盖要求，所有资料为合成数据。
+默认BM25基线使用中文二元字符/英文词项；可选DashScope向量/RRF已进行小规模真实调用，未完成独立检索质量基准。引用校验能验证“原文存在且本轮读过”，不能自动保证语义支持。权限系统、持久对话服务、UI、线上部署均非题目必需项；现按后续需求增加本地React界面，但没有账号服务、持久会话或线上部署。所有资料为合成数据。

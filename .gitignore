@@ -10,3 +10,7 @@ dist/
 .coverage
 examples/local/
 .cache/
+node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/

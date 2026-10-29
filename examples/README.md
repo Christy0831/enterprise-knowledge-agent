@@ -17,6 +17,7 @@ python scripts/check.py
 - `worklog.json`：实际时间检查点和未完成项。
 - `manual-review.md`：开发侧对真实答案、原文和观察后决策的人工复核；不虚构提交者已亲自完成审阅。
 - `local/`：可选临时输出，Git忽略。
+- `ui/`：React布局截图、前端测试记录、真实DeepSeek SSE与真实浏览器验证；开发截图和受控分片测试明确区分，详见 [09](../docs/09-react-ui-and-streaming.md)。
 
 ## 验收文件
 

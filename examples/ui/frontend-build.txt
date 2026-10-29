@@ -1,0 +1,14 @@
+
+> knowledge-agent-ui@0.1.0 build
+> vite build
+
+vite v8.3.5 building client environment for production...
+transforming...
+✓ 175 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.55 kB │ gzip:   0.37 kB
+dist/assets/index-TjfXKjG1.css   15.15 kB │ gzip:   4.36 kB
+dist/assets/index-Cf9ZTpGJ.js   355.29 kB │ gzip: 110.41 kB
+
+✓ built in 164ms

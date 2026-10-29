@@ -1,0 +1,10 @@
+{
+  "browser": "Microsoft Edge",
+  "provider": "deepseek",
+  "retrieval": "hybrid",
+  "draft_visible_before_final": true,
+  "draft_characters": 210,
+  "final_status": "needs_clarification",
+  "citation_buttons": 2,
+  "page_errors": []
+}

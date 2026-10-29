@@ -1,0 +1,21 @@
+{
+  "node_version": "v24.22.2",
+  "checks": [
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "elapsed_seconds": 0.516
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "elapsed_seconds": 0.687
+    },
+    {
+      "command": "npm run test:e2e",
+      "exit_code": 0,
+      "elapsed_seconds": 8.719
+    }
+  ],
+  "passed": true
+}

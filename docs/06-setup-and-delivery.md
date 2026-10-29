@@ -24,6 +24,8 @@ python scripts/check.py
 
 ## 可选DashScope配置
 
+新增React界面可从根目录运行 `python run.py serve --build`，打开127.0.0.1:8765。首次需要Node 22.12+或24，本开发机已有自动可识别的便携Node；密钥仍在根目录.env。详见 [09](09-react-ui-and-streaming.md)。
+
 向量检索的本机配置独立于DeepSeek生成模型。`.env`已预留空的 `DASHSCOPE_API_KEY`；后续按 [07-hybrid-retrieval.md](07-hybrid-retrieval.md) 填写后以 `--retrieval hybrid`启用。无需额外安装SDK。
 
 ## 创建仓库

@@ -60,6 +60,7 @@ class DashScopeEmbedder:
         self.url, self.timeout = url, timeout
         self.transport = transport or self._post
         self.requests: list[dict] = []
+        self.cancel_event = None
         identity = json.dumps([self.provider, model, dimensions, url, "native-document-query-v1"])
         self.cache_key = hashlib.sha256(identity.encode()).hexdigest()
 
@@ -76,7 +77,7 @@ class DashScopeEmbedder:
                           headers={"Authorization": "Bearer " + self.api_key,
                                    "Content-Type": "application/json"}, method="POST")
         try:
-            return read_json(request, build_opener(NoRedirect()), self.timeout)
+            return read_json(request, build_opener(NoRedirect()), self.timeout, cancel_event=self.cancel_event)
         except HTTPError as exc:
             raise EmbeddingError("HTTP_" + str(exc.code), f"DashScope HTTP {exc.code}；请检查地域、权限、额度及配置",
                                  exc.code == 429 or exc.code >= 500) from None

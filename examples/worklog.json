@@ -37,6 +37,22 @@
         "Git push and CI verification"
       ],
       "scope": "Local coding, tests, live hybrid evaluation and documentation; server-side cancellation not claimed."
+    },
+    {
+      "request": "Local React UI and true model streaming output",
+      "started_at_first_record": "2026-10-30T00:58:30+08:00",
+      "local_verification_checkpoint": "2026-10-30T01:30:00.089550+08:00",
+      "elapsed_wall_minutes_to_checkpoint": 31.5,
+      "python_tests": 74,
+      "frontend_tests": 4,
+      "browser_tests": 8,
+      "live_deepseek_answer_delta_events": 182,
+      "live_browser_draft_before_final": true,
+      "remaining_at_checkpoint": [
+        "Final Python regression after request-type guard",
+        "Git push and GitHub CI verification"
+      ],
+      "scope": "UI, native SSE, cancellation, citation validation, responsive browser QA, documentation; excludes subsequent commit and CI wait. No deployment."
     }
   ]
 }

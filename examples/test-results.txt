@@ -61,8 +61,19 @@ test_model_observes_degradation_and_evaluation_does_not_count_it_as_hybrid (test
 test_rrf_deduplicates_a_channel_and_breaks_ties_stably (test_hybrid.FusionTests.test_rrf_deduplicates_a_channel_and_breaks_ties_stably) ... ok
 test_rrf_uses_one_based_ranks_and_combines_both_channels (test_hybrid.FusionTests.test_rrf_uses_one_based_ranks_and_combines_both_channels) ... ok
 test_vector_only_candidate_is_recalled_without_keyword_overlap (test_hybrid.FusionTests.test_vector_only_candidate_is_recalled_without_keyword_overlap) ... ok
+test_cancellation_is_observed_before_any_action (test_streaming_and_web.StreamingTests.test_cancellation_is_observed_before_any_action) ... ok
+test_only_finish_answer_is_emitted_not_reasoning_or_search_arguments (test_streaming_and_web.StreamingTests.test_only_finish_answer_is_emitted_not_reasoning_or_search_arguments) ... ok
+test_preview_only_matches_a_top_level_field (test_streaming_and_web.StreamingTests.test_preview_only_matches_a_top_level_field) ... ok
+test_preview_withholds_incomplete_escapes_and_surrogates (test_streaming_and_web.StreamingTests.test_preview_withholds_incomplete_escapes_and_surrogates) ... ok
+test_real_http_sse_function_arguments_reach_agent_and_validate (test_streaming_and_web.StreamingTests.test_real_http_sse_function_arguments_reach_agent_and_validate) ... ok
+test_sse_arbitrary_utf8_byte_boundaries_and_comments (test_streaming_and_web.StreamingTests.test_sse_arbitrary_utf8_byte_boundaries_and_comments) ... ok
+test_cancel_interrupts_a_running_model_and_returns_cancelled (test_streaming_and_web.WebTests.test_cancel_interrupts_a_running_model_and_returns_cancelled) ... ok
+test_failed_finish_invalidates_any_streamed_draft (test_streaming_and_web.WebTests.test_failed_finish_invalidates_any_streamed_draft) ... ok
+test_invalid_requests_and_cross_origin_are_rejected (test_streaming_and_web.WebTests.test_invalid_requests_and_cross_origin_are_rejected) ... ok
+test_post_sse_stream_has_progress_and_a_validated_result (test_streaming_and_web.WebTests.test_post_sse_stream_has_progress_and_a_validated_result) ... ok
+test_static_and_configuration_do_not_expose_credentials (test_streaming_and_web.WebTests.test_static_and_configuration_do_not_expose_credentials) ... ok
 
 ----------------------------------------------------------------------
-Ran 63 tests in 6.902s
+Ran 74 tests in 12.143s
 
 OK

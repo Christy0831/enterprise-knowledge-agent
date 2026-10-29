@@ -1,0 +1,21 @@
+
+> knowledge-agent-ui@0.1.0 test:e2e
+> playwright test
+
+
+Running 8 tests using 1 worker
+
+  ok 1 e2e\chat.spec.js:16:1 › desktop welcome, normal answer, original citation and record download (1.5s)
+  ok 2 e2e\chat.spec.js:34:1 › conflicts remain unresolved and do not become a confident answer (626ms)
+  ok 3 e2e\chat.spec.js:44:1 › follow-up carries conversation history to the API (717ms)
+  ok 4 e2e\chat.spec.js:53:1 › mobile layout has no horizontal overflow and citations remain accessible (729ms)
+  ok 5 e2e\chat.spec.js:71:3 › controlled HTTP chunk fixtures (not model-quality evidence) › unvalidated text appears before final response, then validated citations replace it (607ms)
+  ok 6 e2e\chat.spec.js:84:3 › controlled HTTP chunk fixtures (not model-quality evidence) › stop clears unvalidated text and does not label it completed (596ms)
+  ok 7 e2e\chat.spec.js:96:3 › controlled HTTP chunk fixtures (not model-quality evidence) › rejected draft is replaced by the corrected validated answer (551ms)
+  ok 8 e2e\chat.spec.js:107:3 › controlled HTTP chunk fixtures (not model-quality evidence) › early disconnect does not turn a partial draft into a completed answer (526ms)
+
+  8 passed (7.9s)
+[WebServer] (node:29892) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+(node:29908) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

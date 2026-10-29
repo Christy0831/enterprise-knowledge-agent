@@ -26,11 +26,16 @@ def summary(observation: dict) -> str:
 
 
 class Agent:
-    def __init__(self, model, knowledge: KnowledgeBase, max_steps: int = 12, *, progress=None):
+    def __init__(self, model, knowledge: KnowledgeBase, max_steps: int = 12, *, progress=None, cancel_event=None):
         if type(max_steps) is not int or not 1 <= max_steps <= 50:
             raise ValueError("max_steps must be an integer between 1 and 50")
         self.model, self.knowledge, self.max_steps = model, knowledge, max_steps
         self.progress = progress
+        self.cancel_event = cancel_event
+
+    def _check_cancel(self):
+        if self.cancel_event is not None and self.cancel_event.is_set():
+            raise KeyboardInterrupt
 
     def _notify(self, event: str, **fields) -> None:
         if self.progress is not None:
@@ -96,6 +101,7 @@ class Agent:
             decision_started = time.monotonic()
             self._notify("model_start", decision_round=decision_round, remaining=self.max_steps - len(trace))
             try:
+                self._check_cancel()
                 chosen = self.model.decide(conversation, self.max_steps - len(trace))
             except (ModelError, KeyboardInterrupt) as exc:
                 cancelled = isinstance(exc, KeyboardInterrupt)
@@ -138,6 +144,7 @@ class Agent:
                 action_started = time.monotonic()
                 self._notify("tool_start", decision_round=decision_round, tool=action.name)
                 try:
+                    self._check_cancel()
                     if action.name not in TOOL_MAP:
                         raise ValueError("unknown tool")
                     validate(action.arguments, TOOL_MAP[action.name]["parameters"])
@@ -178,7 +185,8 @@ class Agent:
                 entry["tool_elapsed_seconds"] = round(time.monotonic() - action_started, 4)
                 entry["observation_summary"] = summary(observation)
                 self._notify("tool_done", decision_round=decision_round, tool=action.name,
-                             elapsed_seconds=entry["tool_elapsed_seconds"], summary=entry["observation_summary"])
+                             elapsed_seconds=entry["tool_elapsed_seconds"], summary=entry["observation_summary"],
+                             ok=observation.get("ok", False))
                 trace.append(entry)
                 conversation.append({"type": "function_call_output", "call_id": action.call_id,
                                      "output": json.dumps(observation, ensure_ascii=False)})

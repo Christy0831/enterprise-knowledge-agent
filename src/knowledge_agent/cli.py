@@ -27,6 +27,11 @@ def parser() -> argparse.ArgumentParser:
     ask.add_argument("--fail-count", type=int, default=1, help="故障次数，-1表示持续故障")
     evaluation = sub.add_parser("evaluate", help="运行全部验收用例并写入记录")
     evaluation.add_argument("--out-dir", type=Path)
+    web = sub.add_parser("serve", help="启动React界面与流式API，仅监听本机")
+    web.add_argument("--host", choices=["127.0.0.1", "localhost"], default="127.0.0.1")
+    web.add_argument("--port", type=int, default=8765)
+    web.add_argument("--timeout", type=float, default=45)
+    web.add_argument("--build", action="store_true", help="先安装前端依赖并构建React")
     for item in (ask, evaluation):
         item.add_argument("--provider", choices=["mock", "deepseek", "openai"], default="mock")
         item.add_argument("--timeout", type=float, default=45, help="单次模型HTTP总时限秒数（连接和完整响应合计）")
@@ -48,6 +53,13 @@ def main(argv: list[str] | None = None) -> int:
         sys.stderr.reconfigure(encoding="utf-8")
     args = parser().parse_args(argv)
     try:
+        if args.command == "serve":
+            from .web import build_frontend, serve
+            if args.build:
+                build_frontend()
+            load_env(ROOT / ".env")
+            serve(args.host, args.port, args.timeout)
+            return 0
         if args.provider != "mock" or args.retrieval == "hybrid":
             load_env(ROOT / ".env")
         if args.require_vector and args.retrieval != "hybrid":

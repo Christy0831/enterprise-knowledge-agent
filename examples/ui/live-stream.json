@@ -1,0 +1,2052 @@
+{
+  "evidence_kind": "real_deepseek_and_dashscope_stream",
+  "question": "报销期限多久？",
+  "first_answer_delta_ms": 9387,
+  "completed_ms": 11233,
+  "answer_delta_events": 182,
+  "preview_matches_validated_answer": true,
+  "record": {
+    "run_id": "5ce0c8060ec94133b1e607f1c6cabfcc",
+    "started_at_utc": "2026-10-29T17:15:57.931424+00:00",
+    "elapsed_seconds": 11.203,
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "evidence_kind": "real_model",
+    "input": {
+      "question": "报销期限多久？",
+      "history": []
+    },
+    "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+    "limits": {
+      "max_steps": 12
+    },
+    "retrieval_mode": "hybrid",
+    "steps_used": 5,
+    "result": {
+      "status": "needs_clarification",
+      "answer": "现有资料对报销期限存在冲突，无法确定唯一口径：\n\n- 《费用报销期限制度》（D01，版本日期 2026-01-10）规定：“报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D01/C01]\n- 《费用报销期限补充说明》（D02，版本日期 2026-02-20）规定：“报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D02/C01]\n\n两份资料均未标明适用范围和优先级，补查后也未找到关于适用范围、替代关系或优先级的独立裁决说明；日期较新本身不能证明优先级。因此不能擅自认定适用 15 天或 30 天。请告知您所属部门/适用的制度口径，或向制度发布方确认适用版本。",
+      "citations": [
+        {
+          "doc_id": "D01",
+          "chunk_id": "C01",
+          "version_date": "2026-01-10",
+          "quote": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        },
+        {
+          "doc_id": "D02",
+          "chunk_id": "C01",
+          "version_date": "2026-02-20",
+          "quote": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+        }
+      ],
+      "gaps": [
+        "两份资料分别规定 30 天与 15 天，且均未标明适用范围和优先级，缺少可判定适用口径的裁决说明",
+        "需用户提供所属部门或适用的制度版本，或向制度发布方确认"
+      ],
+      "conflicts": [
+        {
+          "description": "报销期限规定不一致：D01 规定 30 天，D02 规定 15 天，均自费用发生之日起计算，且均未标明适用范围和优先级",
+          "doc_ids": [
+            "D01",
+            "D02"
+          ]
+        }
+      ],
+      "completed": false
+    },
+    "trace": [
+      {
+        "step": 1,
+        "decision_round": 1,
+        "tool": "search_docs",
+        "arguments": {
+          "query": "报销期限",
+          "top_k": 8
+        },
+        "decision_summary": "用户询问报销期限，直接检索相关制度条款。",
+        "model_request_seconds": 1.875,
+        "model_metadata": {
+          "response_id": "814b85a2-49a2-4593-becb-85d08c316e5a",
+          "usage": {
+            "input_tokens": 1562,
+            "output_tokens": 76,
+            "total_tokens": 1638
+          },
+          "streaming": true,
+          "provider_events": 36,
+          "answer_delta_events": 0
+        },
+        "next_action": "read_chunk",
+        "observation": {
+          "ok": true,
+          "query": "报销期限",
+          "hits": [
+            {
+              "doc_id": "D01",
+              "title": "费用报销期限制度",
+              "version_date": "2026-01-10",
+              "scope": null,
+              "priority": null,
+              "chunk_id": "C01",
+              "score": 0.03252247,
+              "score_type": "rrf",
+              "bm25_score": 4.111159,
+              "bm25_rank": 1,
+              "vector_rank": 2,
+              "vector_score": 0.636398,
+              "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            },
+            {
+              "doc_id": "D02",
+              "title": "费用报销期限补充说明",
+              "version_date": "2026-02-20",
+              "scope": null,
+              "priority": null,
+              "chunk_id": "C01",
+              "score": 0.03252247,
+              "score_type": "rrf",
+              "bm25_score": 4.042085,
+              "bm25_rank": 2,
+              "vector_rank": 1,
+              "vector_score": 0.65216,
+              "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            },
+            {
+              "doc_id": "D03",
+              "title": "费用报销材料清单",
+              "version_date": "2026-01-12",
+              "scope": "全体员工",
+              "priority": null,
+              "chunk_id": "C01",
+              "score": 0.01587302,
+              "score_type": "rrf",
+              "bm25_score": 1.13206,
+              "bm25_rank": 3,
+              "vector_rank": null,
+              "vector_score": null,
+              "preview": "报销申请需提交电子发票、费用明细和审批单。"
+            }
+          ],
+          "total_matches": 3,
+          "has_more": false,
+          "retrieval": {
+            "requested_mode": "hybrid",
+            "used_mode": "hybrid",
+            "degraded": false,
+            "score_type": "rrf",
+            "bm25_matches": 3,
+            "rrf_k": 60,
+            "candidate_k": 20,
+            "vector_min_score": 0.5,
+            "vector_matches": 2,
+            "embedding": {
+              "provider": "dashscope",
+              "model": "text-embedding-v4",
+              "dimensions": 1024,
+              "evidence_kind": "remote_embedding_api",
+              "index_fingerprint": "e4244592df0a6069d37607a62c307d9bb715058bd8da92be6c4d0baf498ac144",
+              "document_cache": "disk_hit",
+              "requests": [
+                {
+                  "request_id": "56dd317a-22e0-94b4-9502-226429ca771f",
+                  "text_type": "query",
+                  "batch_size": 1,
+                  "total_tokens": 3
+                }
+              ]
+            },
+            "candidate_pool_truncated": false
+          }
+        },
+        "tool_elapsed_seconds": 1.281,
+        "observation_summary": "命中 3 个片段；本次返回 3 个",
+        "next_action_source": "new_model_response_after_observation"
+      },
+      {
+        "step": 2,
+        "decision_round": 2,
+        "tool": "read_chunk",
+        "arguments": {
+          "doc_id": "D01",
+          "chunk_id": "C01"
+        },
+        "decision_summary": "读取30天规定的原文与元数据。",
+        "model_request_seconds": 2.156,
+        "model_metadata": {
+          "response_id": "6287991b-2cc0-45bd-aca4-8e5237840a10",
+          "usage": {
+            "input_tokens": 2312,
+            "output_tokens": 156,
+            "total_tokens": 2468
+          },
+          "streaming": true,
+          "provider_events": 79,
+          "answer_delta_events": 0
+        },
+        "next_action": "read_chunk",
+        "observation": {
+          "ok": true,
+          "chunk": {
+            "doc_id": "D01",
+            "title": "费用报销期限制度",
+            "version_date": "2026-01-10",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        },
+        "tool_elapsed_seconds": 0,
+        "observation_summary": "读取 D01/C01，版本 2026-01-10",
+        "next_action_source": "same_model_response"
+      },
+      {
+        "step": 3,
+        "decision_round": 2,
+        "tool": "read_chunk",
+        "arguments": {
+          "doc_id": "D02",
+          "chunk_id": "C01"
+        },
+        "decision_summary": "读取15天规定的原文与元数据，确认与D01冲突。",
+        "model_request_seconds": 0,
+        "model_metadata": {
+          "response_id": "6287991b-2cc0-45bd-aca4-8e5237840a10",
+          "usage": {},
+          "streaming": true,
+          "provider_events": 79,
+          "answer_delta_events": 0
+        },
+        "next_action": "search_docs",
+        "observation": {
+          "ok": true,
+          "chunk": {
+            "doc_id": "D02",
+            "title": "费用报销期限补充说明",
+            "version_date": "2026-02-20",
+            "scope": null,
+            "priority": null,
+            "chunk_id": "C01",
+            "text": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+          }
+        },
+        "tool_elapsed_seconds": 0,
+        "observation_summary": "读取 D02/C01，版本 2026-02-20",
+        "next_action_source": "new_model_response_after_observation"
+      },
+      {
+        "step": 4,
+        "decision_round": 3,
+        "tool": "search_docs",
+        "arguments": {
+          "query": "报销期限 15天 30天 适用范围 优先级 替代关系",
+          "top_k": 8
+        },
+        "decision_summary": "两份资料期限冲突，补查适用范围、替代关系或优先级裁决说明。",
+        "model_request_seconds": 1.516,
+        "model_metadata": {
+          "response_id": "6c5a015a-76ae-4e16-b71c-1097ffb1613b",
+          "usage": {
+            "input_tokens": 2660,
+            "output_tokens": 94,
+            "total_tokens": 2754
+          },
+          "streaming": true,
+          "provider_events": 54,
+          "answer_delta_events": 0
+        },
+        "next_action": "finish",
+        "observation": {
+          "ok": true,
+          "query": "报销期限 15天 30天 适用范围 优先级 替代关系",
+          "hits": [
+            {
+              "doc_id": "D01",
+              "title": "费用报销期限制度",
+              "version_date": "2026-01-10",
+              "scope": null,
+              "priority": null,
+              "chunk_id": "C01",
+              "score": 0.03252247,
+              "score_type": "rrf",
+              "bm25_score": 11.234335,
+              "bm25_rank": 1,
+              "vector_rank": 2,
+              "vector_score": 0.689574,
+              "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            },
+            {
+              "doc_id": "D02",
+              "title": "费用报销期限补充说明",
+              "version_date": "2026-02-20",
+              "scope": null,
+              "priority": null,
+              "chunk_id": "C01",
+              "score": 0.03252247,
+              "score_type": "rrf",
+              "bm25_score": 10.995812,
+              "bm25_rank": 2,
+              "vector_rank": 1,
+              "vector_score": 0.689694,
+              "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            },
+            {
+              "doc_id": "D03",
+              "title": "费用报销材料清单",
+              "version_date": "2026-01-12",
+              "scope": "全体员工",
+              "priority": null,
+              "chunk_id": "C01",
+              "score": 0.01587302,
+              "score_type": "rrf",
+              "bm25_score": 1.13206,
+              "bm25_rank": 3,
+              "vector_rank": null,
+              "vector_score": null,
+              "preview": "报销申请需提交电子发票、费用明细和审批单。"
+            }
+          ],
+          "total_matches": 3,
+          "has_more": false,
+          "retrieval": {
+            "requested_mode": "hybrid",
+            "used_mode": "hybrid",
+            "degraded": false,
+            "score_type": "rrf",
+            "bm25_matches": 3,
+            "rrf_k": 60,
+            "candidate_k": 20,
+            "vector_min_score": 0.5,
+            "vector_matches": 2,
+            "embedding": {
+              "provider": "dashscope",
+              "model": "text-embedding-v4",
+              "dimensions": 1024,
+              "evidence_kind": "remote_embedding_api",
+              "index_fingerprint": "e4244592df0a6069d37607a62c307d9bb715058bd8da92be6c4d0baf498ac144",
+              "document_cache": "memory_hit",
+              "requests": [
+                {
+                  "request_id": "121c2503-5771-92e4-b799-9b58c3b12ce3",
+                  "text_type": "query",
+                  "batch_size": 1,
+                  "total_tokens": 21
+                }
+              ]
+            },
+            "candidate_pool_truncated": false
+          }
+        },
+        "tool_elapsed_seconds": 1.094,
+        "observation_summary": "命中 3 个片段；本次返回 3 个",
+        "next_action_source": "new_model_response_after_observation"
+      },
+      {
+        "step": 5,
+        "decision_round": 4,
+        "tool": "finish",
+        "arguments": {
+          "status": "needs_clarification",
+          "answer": "现有资料对报销期限存在冲突，无法确定唯一口径：\n\n- 《费用报销期限制度》（D01，版本日期 2026-01-10）规定：“报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D01/C01]\n- 《费用报销期限补充说明》（D02，版本日期 2026-02-20）规定：“报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D02/C01]\n\n两份资料均未标明适用范围和优先级，补查后也未找到关于适用范围、替代关系或优先级的独立裁决说明；日期较新本身不能证明优先级。因此不能擅自认定适用 15 天或 30 天。请告知您所属部门/适用的制度口径，或向制度发布方确认适用版本。",
+          "citations": [
+            {
+              "doc_id": "D01",
+              "chunk_id": "C01",
+              "version_date": "2026-01-10",
+              "quote": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            },
+            {
+              "doc_id": "D02",
+              "chunk_id": "C01",
+              "version_date": "2026-02-20",
+              "quote": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            }
+          ],
+          "gaps": [
+            "两份资料分别规定 30 天与 15 天，且均未标明适用范围和优先级，缺少可判定适用口径的裁决说明",
+            "需用户提供所属部门或适用的制度版本，或向制度发布方确认"
+          ],
+          "conflicts": [
+            {
+              "description": "报销期限规定不一致：D01 规定 30 天，D02 规定 15 天，均自费用发生之日起计算，且均未标明适用范围和优先级",
+              "doc_ids": [
+                "D01",
+                "D02"
+              ]
+            }
+          ]
+        },
+        "decision_summary": "两份同主题资料期限冲突，已读取原文并补查适用范围与优先级，仍无法消解，需用户澄清适用口径。",
+        "model_request_seconds": 3.281,
+        "model_metadata": {
+          "response_id": "b30efc46-78ce-42cc-972d-7fb0c6992774",
+          "usage": {
+            "input_tokens": 3443,
+            "output_tokens": 541,
+            "total_tokens": 3984
+          },
+          "streaming": true,
+          "provider_events": 471,
+          "answer_delta_events": 182
+        },
+        "next_action": "stop:needs_clarification",
+        "observation": {
+          "ok": true,
+          "status": "needs_clarification"
+        },
+        "tool_elapsed_seconds": 0,
+        "observation_summary": "最终结果通过结构与引用校验"
+      }
+    ]
+  },
+  "events": [
+    {
+      "at_ms": 42,
+      "event": "run_start",
+      "request_id": "376bc69f864146f89365fc0573b6f52f",
+      "provider": "deepseek"
+    },
+    {
+      "at_ms": 42,
+      "event": "progress",
+      "decision_round": 1,
+      "remaining": 12,
+      "phase": "model_start"
+    },
+    {
+      "at_ms": 1911,
+      "event": "progress",
+      "decision_round": 1,
+      "elapsed_seconds": 1.875,
+      "phase": "model_done"
+    },
+    {
+      "at_ms": 1911,
+      "event": "progress",
+      "decision_round": 1,
+      "tool": "search_docs",
+      "phase": "tool_start"
+    },
+    {
+      "at_ms": 3181,
+      "event": "progress",
+      "decision_round": 1,
+      "tool": "search_docs",
+      "elapsed_seconds": 1.281,
+      "summary": "命中 3 个片段；本次返回 3 个",
+      "ok": true,
+      "phase": "tool_done"
+    },
+    {
+      "at_ms": 3181,
+      "event": "progress",
+      "decision_round": 2,
+      "remaining": 11,
+      "phase": "model_start"
+    },
+    {
+      "at_ms": 5344,
+      "event": "progress",
+      "decision_round": 2,
+      "elapsed_seconds": 2.156,
+      "phase": "model_done"
+    },
+    {
+      "at_ms": 5344,
+      "event": "progress",
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "phase": "tool_start"
+    },
+    {
+      "at_ms": 5344,
+      "event": "progress",
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "elapsed_seconds": 0,
+      "summary": "读取 D01/C01，版本 2026-01-10",
+      "ok": true,
+      "phase": "tool_done"
+    },
+    {
+      "at_ms": 5344,
+      "event": "progress",
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "phase": "tool_start"
+    },
+    {
+      "at_ms": 5344,
+      "event": "progress",
+      "decision_round": 2,
+      "tool": "read_chunk",
+      "elapsed_seconds": 0,
+      "summary": "读取 D02/C01，版本 2026-02-20",
+      "ok": true,
+      "phase": "tool_done"
+    },
+    {
+      "at_ms": 5344,
+      "event": "progress",
+      "decision_round": 3,
+      "remaining": 9,
+      "phase": "model_start"
+    },
+    {
+      "at_ms": 6865,
+      "event": "progress",
+      "decision_round": 3,
+      "elapsed_seconds": 1.516,
+      "phase": "model_done"
+    },
+    {
+      "at_ms": 6865,
+      "event": "progress",
+      "decision_round": 3,
+      "tool": "search_docs",
+      "phase": "tool_start"
+    },
+    {
+      "at_ms": 7948,
+      "event": "progress",
+      "decision_round": 3,
+      "tool": "search_docs",
+      "elapsed_seconds": 1.094,
+      "summary": "命中 3 个片段；本次返回 3 个",
+      "ok": true,
+      "phase": "tool_done"
+    },
+    {
+      "at_ms": 7949,
+      "event": "progress",
+      "decision_round": 4,
+      "remaining": 8,
+      "phase": "model_start"
+    },
+    {
+      "at_ms": 9387,
+      "event": "answer_start",
+      "validated": false
+    },
+    {
+      "at_ms": 9387,
+      "event": "answer_delta",
+      "delta": "现有",
+      "validated": false
+    },
+    {
+      "at_ms": 9387,
+      "event": "answer_delta",
+      "delta": "资料",
+      "validated": false
+    },
+    {
+      "at_ms": 9387,
+      "event": "answer_delta",
+      "delta": "对",
+      "validated": false
+    },
+    {
+      "at_ms": 9401,
+      "event": "answer_delta",
+      "delta": "报销",
+      "validated": false
+    },
+    {
+      "at_ms": 9401,
+      "event": "answer_delta",
+      "delta": "期限",
+      "validated": false
+    },
+    {
+      "at_ms": 9401,
+      "event": "answer_delta",
+      "delta": "存在",
+      "validated": false
+    },
+    {
+      "at_ms": 9401,
+      "event": "answer_delta",
+      "delta": "冲突",
+      "validated": false
+    },
+    {
+      "at_ms": 9422,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 9423,
+      "event": "answer_delta",
+      "delta": "无法",
+      "validated": false
+    },
+    {
+      "at_ms": 9423,
+      "event": "answer_delta",
+      "delta": "确定",
+      "validated": false
+    },
+    {
+      "at_ms": 9437,
+      "event": "answer_delta",
+      "delta": "唯一",
+      "validated": false
+    },
+    {
+      "at_ms": 9450,
+      "event": "answer_delta",
+      "delta": "口径",
+      "validated": false
+    },
+    {
+      "at_ms": 9450,
+      "event": "answer_delta",
+      "delta": "：\n\n",
+      "validated": false
+    },
+    {
+      "at_ms": 9450,
+      "event": "answer_delta",
+      "delta": "-",
+      "validated": false
+    },
+    {
+      "at_ms": 9450,
+      "event": "answer_delta",
+      "delta": " 《",
+      "validated": false
+    },
+    {
+      "at_ms": 9471,
+      "event": "answer_delta",
+      "delta": "费用",
+      "validated": false
+    },
+    {
+      "at_ms": 9471,
+      "event": "answer_delta",
+      "delta": "报销",
+      "validated": false
+    },
+    {
+      "at_ms": 9471,
+      "event": "answer_delta",
+      "delta": "期限",
+      "validated": false
+    },
+    {
+      "at_ms": 9478,
+      "event": "answer_delta",
+      "delta": "制度",
+      "validated": false
+    },
+    {
+      "at_ms": 9478,
+      "event": "answer_delta",
+      "delta": "》（",
+      "validated": false
+    },
+    {
+      "at_ms": 9478,
+      "event": "answer_delta",
+      "delta": "D",
+      "validated": false
+    },
+    {
+      "at_ms": 9478,
+      "event": "answer_delta",
+      "delta": "01",
+      "validated": false
+    },
+    {
+      "at_ms": 9498,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 9498,
+      "event": "answer_delta",
+      "delta": "版本",
+      "validated": false
+    },
+    {
+      "at_ms": 9509,
+      "event": "answer_delta",
+      "delta": "日期",
+      "validated": false
+    },
+    {
+      "at_ms": 9509,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9509,
+      "event": "answer_delta",
+      "delta": "202",
+      "validated": false
+    },
+    {
+      "at_ms": 9509,
+      "event": "answer_delta",
+      "delta": "6",
+      "validated": false
+    },
+    {
+      "at_ms": 9509,
+      "event": "answer_delta",
+      "delta": "-",
+      "validated": false
+    },
+    {
+      "at_ms": 9509,
+      "event": "answer_delta",
+      "delta": "01",
+      "validated": false
+    },
+    {
+      "at_ms": 9524,
+      "event": "answer_delta",
+      "delta": "-",
+      "validated": false
+    },
+    {
+      "at_ms": 9524,
+      "event": "answer_delta",
+      "delta": "10",
+      "validated": false
+    },
+    {
+      "at_ms": 9524,
+      "event": "answer_delta",
+      "delta": "）",
+      "validated": false
+    },
+    {
+      "at_ms": 9524,
+      "event": "answer_delta",
+      "delta": "规定",
+      "validated": false
+    },
+    {
+      "at_ms": 9539,
+      "event": "answer_delta",
+      "delta": "：“",
+      "validated": false
+    },
+    {
+      "at_ms": 9556,
+      "event": "answer_delta",
+      "delta": "报销",
+      "validated": false
+    },
+    {
+      "at_ms": 9556,
+      "event": "answer_delta",
+      "delta": "期限",
+      "validated": false
+    },
+    {
+      "at_ms": 9556,
+      "event": "answer_delta",
+      "delta": "为",
+      "validated": false
+    },
+    {
+      "at_ms": 9556,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9572,
+      "event": "answer_delta",
+      "delta": "30",
+      "validated": false
+    },
+    {
+      "at_ms": 9573,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9573,
+      "event": "answer_delta",
+      "delta": "天",
+      "validated": false
+    },
+    {
+      "at_ms": 9573,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 9573,
+      "event": "answer_delta",
+      "delta": "自",
+      "validated": false
+    },
+    {
+      "at_ms": 9573,
+      "event": "answer_delta",
+      "delta": "费用",
+      "validated": false
+    },
+    {
+      "at_ms": 9589,
+      "event": "answer_delta",
+      "delta": "发生",
+      "validated": false
+    },
+    {
+      "at_ms": 9589,
+      "event": "answer_delta",
+      "delta": "之日起",
+      "validated": false
+    },
+    {
+      "at_ms": 9589,
+      "event": "answer_delta",
+      "delta": "计算",
+      "validated": false
+    },
+    {
+      "at_ms": 9589,
+      "event": "answer_delta",
+      "delta": "。",
+      "validated": false
+    },
+    {
+      "at_ms": 9589,
+      "event": "answer_delta",
+      "delta": "本",
+      "validated": false
+    },
+    {
+      "at_ms": 9601,
+      "event": "answer_delta",
+      "delta": "资料",
+      "validated": false
+    },
+    {
+      "at_ms": 9601,
+      "event": "answer_delta",
+      "delta": "未",
+      "validated": false
+    },
+    {
+      "at_ms": 9601,
+      "event": "answer_delta",
+      "delta": "标明",
+      "validated": false
+    },
+    {
+      "at_ms": 9601,
+      "event": "answer_delta",
+      "delta": "适用范围",
+      "validated": false
+    },
+    {
+      "at_ms": 9601,
+      "event": "answer_delta",
+      "delta": "和",
+      "validated": false
+    },
+    {
+      "at_ms": 9620,
+      "event": "answer_delta",
+      "delta": "优先级",
+      "validated": false
+    },
+    {
+      "at_ms": 9620,
+      "event": "answer_delta",
+      "delta": "。”",
+      "validated": false
+    },
+    {
+      "at_ms": 9620,
+      "event": "answer_delta",
+      "delta": "[",
+      "validated": false
+    },
+    {
+      "at_ms": 9620,
+      "event": "answer_delta",
+      "delta": "D",
+      "validated": false
+    },
+    {
+      "at_ms": 9620,
+      "event": "answer_delta",
+      "delta": "01",
+      "validated": false
+    },
+    {
+      "at_ms": 9620,
+      "event": "answer_delta",
+      "delta": "/C",
+      "validated": false
+    },
+    {
+      "at_ms": 9630,
+      "event": "answer_delta",
+      "delta": "01",
+      "validated": false
+    },
+    {
+      "at_ms": 9630,
+      "event": "answer_delta",
+      "delta": "]\n",
+      "validated": false
+    },
+    {
+      "at_ms": 9630,
+      "event": "answer_delta",
+      "delta": "-",
+      "validated": false
+    },
+    {
+      "at_ms": 9630,
+      "event": "answer_delta",
+      "delta": " 《",
+      "validated": false
+    },
+    {
+      "at_ms": 9630,
+      "event": "answer_delta",
+      "delta": "费用",
+      "validated": false
+    },
+    {
+      "at_ms": 9630,
+      "event": "answer_delta",
+      "delta": "报销",
+      "validated": false
+    },
+    {
+      "at_ms": 9645,
+      "event": "answer_delta",
+      "delta": "期限",
+      "validated": false
+    },
+    {
+      "at_ms": 9645,
+      "event": "answer_delta",
+      "delta": "补充",
+      "validated": false
+    },
+    {
+      "at_ms": 9645,
+      "event": "answer_delta",
+      "delta": "说明",
+      "validated": false
+    },
+    {
+      "at_ms": 9645,
+      "event": "answer_delta",
+      "delta": "》（",
+      "validated": false
+    },
+    {
+      "at_ms": 9645,
+      "event": "answer_delta",
+      "delta": "D",
+      "validated": false
+    },
+    {
+      "at_ms": 9645,
+      "event": "answer_delta",
+      "delta": "02",
+      "validated": false
+    },
+    {
+      "at_ms": 9668,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 9668,
+      "event": "answer_delta",
+      "delta": "版本",
+      "validated": false
+    },
+    {
+      "at_ms": 9668,
+      "event": "answer_delta",
+      "delta": "日期",
+      "validated": false
+    },
+    {
+      "at_ms": 9668,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9668,
+      "event": "answer_delta",
+      "delta": "202",
+      "validated": false
+    },
+    {
+      "at_ms": 9668,
+      "event": "answer_delta",
+      "delta": "6",
+      "validated": false
+    },
+    {
+      "at_ms": 9677,
+      "event": "answer_delta",
+      "delta": "-",
+      "validated": false
+    },
+    {
+      "at_ms": 9678,
+      "event": "answer_delta",
+      "delta": "02",
+      "validated": false
+    },
+    {
+      "at_ms": 9678,
+      "event": "answer_delta",
+      "delta": "-",
+      "validated": false
+    },
+    {
+      "at_ms": 9678,
+      "event": "answer_delta",
+      "delta": "20",
+      "validated": false
+    },
+    {
+      "at_ms": 9678,
+      "event": "answer_delta",
+      "delta": "）",
+      "validated": false
+    },
+    {
+      "at_ms": 9678,
+      "event": "answer_delta",
+      "delta": "规定",
+      "validated": false
+    },
+    {
+      "at_ms": 9691,
+      "event": "answer_delta",
+      "delta": "：“",
+      "validated": false
+    },
+    {
+      "at_ms": 9691,
+      "event": "answer_delta",
+      "delta": "报销",
+      "validated": false
+    },
+    {
+      "at_ms": 9691,
+      "event": "answer_delta",
+      "delta": "期限",
+      "validated": false
+    },
+    {
+      "at_ms": 9691,
+      "event": "answer_delta",
+      "delta": "为",
+      "validated": false
+    },
+    {
+      "at_ms": 9691,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9691,
+      "event": "answer_delta",
+      "delta": "15",
+      "validated": false
+    },
+    {
+      "at_ms": 9706,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9706,
+      "event": "answer_delta",
+      "delta": "天",
+      "validated": false
+    },
+    {
+      "at_ms": 9706,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 9706,
+      "event": "answer_delta",
+      "delta": "自",
+      "validated": false
+    },
+    {
+      "at_ms": 9706,
+      "event": "answer_delta",
+      "delta": "费用",
+      "validated": false
+    },
+    {
+      "at_ms": 9707,
+      "event": "answer_delta",
+      "delta": "发生",
+      "validated": false
+    },
+    {
+      "at_ms": 9724,
+      "event": "answer_delta",
+      "delta": "之日起",
+      "validated": false
+    },
+    {
+      "at_ms": 9724,
+      "event": "answer_delta",
+      "delta": "计算",
+      "validated": false
+    },
+    {
+      "at_ms": 9724,
+      "event": "answer_delta",
+      "delta": "。",
+      "validated": false
+    },
+    {
+      "at_ms": 9724,
+      "event": "answer_delta",
+      "delta": "本",
+      "validated": false
+    },
+    {
+      "at_ms": 9724,
+      "event": "answer_delta",
+      "delta": "资料",
+      "validated": false
+    },
+    {
+      "at_ms": 9724,
+      "event": "answer_delta",
+      "delta": "未",
+      "validated": false
+    },
+    {
+      "at_ms": 9737,
+      "event": "answer_delta",
+      "delta": "标明",
+      "validated": false
+    },
+    {
+      "at_ms": 9737,
+      "event": "answer_delta",
+      "delta": "适用范围",
+      "validated": false
+    },
+    {
+      "at_ms": 9737,
+      "event": "answer_delta",
+      "delta": "和",
+      "validated": false
+    },
+    {
+      "at_ms": 9737,
+      "event": "answer_delta",
+      "delta": "优先级",
+      "validated": false
+    },
+    {
+      "at_ms": 9737,
+      "event": "answer_delta",
+      "delta": "。”",
+      "validated": false
+    },
+    {
+      "at_ms": 9737,
+      "event": "answer_delta",
+      "delta": "[",
+      "validated": false
+    },
+    {
+      "at_ms": 9751,
+      "event": "answer_delta",
+      "delta": "D",
+      "validated": false
+    },
+    {
+      "at_ms": 9751,
+      "event": "answer_delta",
+      "delta": "02",
+      "validated": false
+    },
+    {
+      "at_ms": 9751,
+      "event": "answer_delta",
+      "delta": "/C",
+      "validated": false
+    },
+    {
+      "at_ms": 9751,
+      "event": "answer_delta",
+      "delta": "01",
+      "validated": false
+    },
+    {
+      "at_ms": 9751,
+      "event": "answer_delta",
+      "delta": "]\n\n",
+      "validated": false
+    },
+    {
+      "at_ms": 9751,
+      "event": "answer_delta",
+      "delta": "两份",
+      "validated": false
+    },
+    {
+      "at_ms": 9767,
+      "event": "answer_delta",
+      "delta": "资料",
+      "validated": false
+    },
+    {
+      "at_ms": 9767,
+      "event": "answer_delta",
+      "delta": "均",
+      "validated": false
+    },
+    {
+      "at_ms": 9767,
+      "event": "answer_delta",
+      "delta": "未",
+      "validated": false
+    },
+    {
+      "at_ms": 9767,
+      "event": "answer_delta",
+      "delta": "标明",
+      "validated": false
+    },
+    {
+      "at_ms": 9767,
+      "event": "answer_delta",
+      "delta": "适用范围",
+      "validated": false
+    },
+    {
+      "at_ms": 9786,
+      "event": "answer_delta",
+      "delta": "和",
+      "validated": false
+    },
+    {
+      "at_ms": 9786,
+      "event": "answer_delta",
+      "delta": "优先级",
+      "validated": false
+    },
+    {
+      "at_ms": 9786,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 9786,
+      "event": "answer_delta",
+      "delta": "补",
+      "validated": false
+    },
+    {
+      "at_ms": 9801,
+      "event": "answer_delta",
+      "delta": "查",
+      "validated": false
+    },
+    {
+      "at_ms": 9802,
+      "event": "answer_delta",
+      "delta": "后",
+      "validated": false
+    },
+    {
+      "at_ms": 9802,
+      "event": "answer_delta",
+      "delta": "也未",
+      "validated": false
+    },
+    {
+      "at_ms": 9812,
+      "event": "answer_delta",
+      "delta": "找到",
+      "validated": false
+    },
+    {
+      "at_ms": 9826,
+      "event": "answer_delta",
+      "delta": "关于",
+      "validated": false
+    },
+    {
+      "at_ms": 9844,
+      "event": "answer_delta",
+      "delta": "适用范围",
+      "validated": false
+    },
+    {
+      "at_ms": 9857,
+      "event": "answer_delta",
+      "delta": "、",
+      "validated": false
+    },
+    {
+      "at_ms": 9857,
+      "event": "answer_delta",
+      "delta": "替代",
+      "validated": false
+    },
+    {
+      "at_ms": 9857,
+      "event": "answer_delta",
+      "delta": "关系",
+      "validated": false
+    },
+    {
+      "at_ms": 9873,
+      "event": "answer_delta",
+      "delta": "或",
+      "validated": false
+    },
+    {
+      "at_ms": 9873,
+      "event": "answer_delta",
+      "delta": "优先",
+      "validated": false
+    },
+    {
+      "at_ms": 9873,
+      "event": "answer_delta",
+      "delta": "级的",
+      "validated": false
+    },
+    {
+      "at_ms": 9873,
+      "event": "answer_delta",
+      "delta": "独立",
+      "validated": false
+    },
+    {
+      "at_ms": 9873,
+      "event": "answer_delta",
+      "delta": "裁决",
+      "validated": false
+    },
+    {
+      "at_ms": 9890,
+      "event": "answer_delta",
+      "delta": "说明",
+      "validated": false
+    },
+    {
+      "at_ms": 9890,
+      "event": "answer_delta",
+      "delta": "；",
+      "validated": false
+    },
+    {
+      "at_ms": 9903,
+      "event": "answer_delta",
+      "delta": "日期",
+      "validated": false
+    },
+    {
+      "at_ms": 9903,
+      "event": "answer_delta",
+      "delta": "较",
+      "validated": false
+    },
+    {
+      "at_ms": 9918,
+      "event": "answer_delta",
+      "delta": "新",
+      "validated": false
+    },
+    {
+      "at_ms": 9919,
+      "event": "answer_delta",
+      "delta": "本身",
+      "validated": false
+    },
+    {
+      "at_ms": 9919,
+      "event": "answer_delta",
+      "delta": "不能",
+      "validated": false
+    },
+    {
+      "at_ms": 9939,
+      "event": "answer_delta",
+      "delta": "证明",
+      "validated": false
+    },
+    {
+      "at_ms": 9939,
+      "event": "answer_delta",
+      "delta": "优先级",
+      "validated": false
+    },
+    {
+      "at_ms": 9958,
+      "event": "answer_delta",
+      "delta": "。",
+      "validated": false
+    },
+    {
+      "at_ms": 9958,
+      "event": "answer_delta",
+      "delta": "因此",
+      "validated": false
+    },
+    {
+      "at_ms": 9958,
+      "event": "answer_delta",
+      "delta": "不能",
+      "validated": false
+    },
+    {
+      "at_ms": 9964,
+      "event": "answer_delta",
+      "delta": "擅自",
+      "validated": false
+    },
+    {
+      "at_ms": 9964,
+      "event": "answer_delta",
+      "delta": "认定",
+      "validated": false
+    },
+    {
+      "at_ms": 9989,
+      "event": "answer_delta",
+      "delta": "适用",
+      "validated": false
+    },
+    {
+      "at_ms": 9995,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9996,
+      "event": "answer_delta",
+      "delta": "15",
+      "validated": false
+    },
+    {
+      "at_ms": 9996,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 9996,
+      "event": "answer_delta",
+      "delta": "天",
+      "validated": false
+    },
+    {
+      "at_ms": 9996,
+      "event": "answer_delta",
+      "delta": "或",
+      "validated": false
+    },
+    {
+      "at_ms": 9996,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 10010,
+      "event": "answer_delta",
+      "delta": "30",
+      "validated": false
+    },
+    {
+      "at_ms": 10010,
+      "event": "answer_delta",
+      "delta": " ",
+      "validated": false
+    },
+    {
+      "at_ms": 10010,
+      "event": "answer_delta",
+      "delta": "天",
+      "validated": false
+    },
+    {
+      "at_ms": 10010,
+      "event": "answer_delta",
+      "delta": "。",
+      "validated": false
+    },
+    {
+      "at_ms": 10038,
+      "event": "answer_delta",
+      "delta": "请",
+      "validated": false
+    },
+    {
+      "at_ms": 10038,
+      "event": "answer_delta",
+      "delta": "告知",
+      "validated": false
+    },
+    {
+      "at_ms": 10038,
+      "event": "answer_delta",
+      "delta": "您",
+      "validated": false
+    },
+    {
+      "at_ms": 10038,
+      "event": "answer_delta",
+      "delta": "所属",
+      "validated": false
+    },
+    {
+      "at_ms": 10047,
+      "event": "answer_delta",
+      "delta": "部门",
+      "validated": false
+    },
+    {
+      "at_ms": 10047,
+      "event": "answer_delta",
+      "delta": "/",
+      "validated": false
+    },
+    {
+      "at_ms": 10047,
+      "event": "answer_delta",
+      "delta": "适用的",
+      "validated": false
+    },
+    {
+      "at_ms": 10055,
+      "event": "answer_delta",
+      "delta": "制度",
+      "validated": false
+    },
+    {
+      "at_ms": 10055,
+      "event": "answer_delta",
+      "delta": "口径",
+      "validated": false
+    },
+    {
+      "at_ms": 10076,
+      "event": "answer_delta",
+      "delta": "，",
+      "validated": false
+    },
+    {
+      "at_ms": 10096,
+      "event": "answer_delta",
+      "delta": "或",
+      "validated": false
+    },
+    {
+      "at_ms": 10096,
+      "event": "answer_delta",
+      "delta": "向",
+      "validated": false
+    },
+    {
+      "at_ms": 10100,
+      "event": "answer_delta",
+      "delta": "制度",
+      "validated": false
+    },
+    {
+      "at_ms": 10100,
+      "event": "answer_delta",
+      "delta": "发布",
+      "validated": false
+    },
+    {
+      "at_ms": 10101,
+      "event": "answer_delta",
+      "delta": "方",
+      "validated": false
+    },
+    {
+      "at_ms": 10116,
+      "event": "answer_delta",
+      "delta": "确认",
+      "validated": false
+    },
+    {
+      "at_ms": 10116,
+      "event": "answer_delta",
+      "delta": "适用",
+      "validated": false
+    },
+    {
+      "at_ms": 10134,
+      "event": "answer_delta",
+      "delta": "版本",
+      "validated": false
+    },
+    {
+      "at_ms": 10148,
+      "event": "answer_delta",
+      "delta": "。",
+      "validated": false
+    },
+    {
+      "at_ms": 11230,
+      "event": "progress",
+      "decision_round": 4,
+      "elapsed_seconds": 3.281,
+      "phase": "model_done"
+    },
+    {
+      "at_ms": 11230,
+      "event": "progress",
+      "decision_round": 4,
+      "tool": "finish",
+      "phase": "tool_start"
+    },
+    {
+      "at_ms": 11230,
+      "event": "progress",
+      "decision_round": 4,
+      "tool": "finish",
+      "elapsed_seconds": 0,
+      "summary": "最终结果通过结构与引用校验",
+      "ok": true,
+      "phase": "tool_done"
+    },
+    {
+      "at_ms": 11230,
+      "event": "progress",
+      "status": "needs_clarification",
+      "phase": "finished"
+    },
+    {
+      "at_ms": 11230,
+      "event": "result",
+      "record": {
+        "run_id": "5ce0c8060ec94133b1e607f1c6cabfcc",
+        "started_at_utc": "2026-10-29T17:15:57.931424+00:00",
+        "elapsed_seconds": 11.203,
+        "provider": "deepseek",
+        "model": "deepseek-flash",
+        "evidence_kind": "real_model",
+        "input": {
+          "question": "报销期限多久？",
+          "history": []
+        },
+        "corpus_sha256": "c01788e3d60ace27a946440a3351d8da614a435fd0c8d0e924a4b09e25dc7fb3",
+        "limits": {
+          "max_steps": 12
+        },
+        "retrieval_mode": "hybrid",
+        "steps_used": 5,
+        "result": {
+          "status": "needs_clarification",
+          "answer": "现有资料对报销期限存在冲突，无法确定唯一口径：\n\n- 《费用报销期限制度》（D01，版本日期 2026-01-10）规定：“报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D01/C01]\n- 《费用报销期限补充说明》（D02，版本日期 2026-02-20）规定：“报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D02/C01]\n\n两份资料均未标明适用范围和优先级，补查后也未找到关于适用范围、替代关系或优先级的独立裁决说明；日期较新本身不能证明优先级。因此不能擅自认定适用 15 天或 30 天。请告知您所属部门/适用的制度口径，或向制度发布方确认适用版本。",
+          "citations": [
+            {
+              "doc_id": "D01",
+              "chunk_id": "C01",
+              "version_date": "2026-01-10",
+              "quote": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            },
+            {
+              "doc_id": "D02",
+              "chunk_id": "C01",
+              "version_date": "2026-02-20",
+              "quote": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+            }
+          ],
+          "gaps": [
+            "两份资料分别规定 30 天与 15 天，且均未标明适用范围和优先级，缺少可判定适用口径的裁决说明",
+            "需用户提供所属部门或适用的制度版本，或向制度发布方确认"
+          ],
+          "conflicts": [
+            {
+              "description": "报销期限规定不一致：D01 规定 30 天，D02 规定 15 天，均自费用发生之日起计算，且均未标明适用范围和优先级",
+              "doc_ids": [
+                "D01",
+                "D02"
+              ]
+            }
+          ],
+          "completed": false
+        },
+        "trace": [
+          {
+            "step": 1,
+            "decision_round": 1,
+            "tool": "search_docs",
+            "arguments": {
+              "query": "报销期限",
+              "top_k": 8
+            },
+            "decision_summary": "用户询问报销期限，直接检索相关制度条款。",
+            "model_request_seconds": 1.875,
+            "model_metadata": {
+              "response_id": "814b85a2-49a2-4593-becb-85d08c316e5a",
+              "usage": {
+                "input_tokens": 1562,
+                "output_tokens": 76,
+                "total_tokens": 1638
+              },
+              "streaming": true,
+              "provider_events": 36,
+              "answer_delta_events": 0
+            },
+            "next_action": "read_chunk",
+            "observation": {
+              "ok": true,
+              "query": "报销期限",
+              "hits": [
+                {
+                  "doc_id": "D01",
+                  "title": "费用报销期限制度",
+                  "version_date": "2026-01-10",
+                  "scope": null,
+                  "priority": null,
+                  "chunk_id": "C01",
+                  "score": 0.03252247,
+                  "score_type": "rrf",
+                  "bm25_score": 4.111159,
+                  "bm25_rank": 1,
+                  "vector_rank": 2,
+                  "vector_score": 0.636398,
+                  "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+                },
+                {
+                  "doc_id": "D02",
+                  "title": "费用报销期限补充说明",
+                  "version_date": "2026-02-20",
+                  "scope": null,
+                  "priority": null,
+                  "chunk_id": "C01",
+                  "score": 0.03252247,
+                  "score_type": "rrf",
+                  "bm25_score": 4.042085,
+                  "bm25_rank": 2,
+                  "vector_rank": 1,
+                  "vector_score": 0.65216,
+                  "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+                },
+                {
+                  "doc_id": "D03",
+                  "title": "费用报销材料清单",
+                  "version_date": "2026-01-12",
+                  "scope": "全体员工",
+                  "priority": null,
+                  "chunk_id": "C01",
+                  "score": 0.01587302,
+                  "score_type": "rrf",
+                  "bm25_score": 1.13206,
+                  "bm25_rank": 3,
+                  "vector_rank": null,
+                  "vector_score": null,
+                  "preview": "报销申请需提交电子发票、费用明细和审批单。"
+                }
+              ],
+              "total_matches": 3,
+              "has_more": false,
+              "retrieval": {
+                "requested_mode": "hybrid",
+                "used_mode": "hybrid",
+                "degraded": false,
+                "score_type": "rrf",
+                "bm25_matches": 3,
+                "rrf_k": 60,
+                "candidate_k": 20,
+                "vector_min_score": 0.5,
+                "vector_matches": 2,
+                "embedding": {
+                  "provider": "dashscope",
+                  "model": "text-embedding-v4",
+                  "dimensions": 1024,
+                  "evidence_kind": "remote_embedding_api",
+                  "index_fingerprint": "e4244592df0a6069d37607a62c307d9bb715058bd8da92be6c4d0baf498ac144",
+                  "document_cache": "disk_hit",
+                  "requests": [
+                    {
+                      "request_id": "56dd317a-22e0-94b4-9502-226429ca771f",
+                      "text_type": "query",
+                      "batch_size": 1,
+                      "total_tokens": 3
+                    }
+                  ]
+                },
+                "candidate_pool_truncated": false
+              }
+            },
+            "tool_elapsed_seconds": 1.281,
+            "observation_summary": "命中 3 个片段；本次返回 3 个",
+            "next_action_source": "new_model_response_after_observation"
+          },
+          {
+            "step": 2,
+            "decision_round": 2,
+            "tool": "read_chunk",
+            "arguments": {
+              "doc_id": "D01",
+              "chunk_id": "C01"
+            },
+            "decision_summary": "读取30天规定的原文与元数据。",
+            "model_request_seconds": 2.156,
+            "model_metadata": {
+              "response_id": "6287991b-2cc0-45bd-aca4-8e5237840a10",
+              "usage": {
+                "input_tokens": 2312,
+                "output_tokens": 156,
+                "total_tokens": 2468
+              },
+              "streaming": true,
+              "provider_events": 79,
+              "answer_delta_events": 0
+            },
+            "next_action": "read_chunk",
+            "observation": {
+              "ok": true,
+              "chunk": {
+                "doc_id": "D01",
+                "title": "费用报销期限制度",
+                "version_date": "2026-01-10",
+                "scope": null,
+                "priority": null,
+                "chunk_id": "C01",
+                "text": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+              }
+            },
+            "tool_elapsed_seconds": 0,
+            "observation_summary": "读取 D01/C01，版本 2026-01-10",
+            "next_action_source": "same_model_response"
+          },
+          {
+            "step": 3,
+            "decision_round": 2,
+            "tool": "read_chunk",
+            "arguments": {
+              "doc_id": "D02",
+              "chunk_id": "C01"
+            },
+            "decision_summary": "读取15天规定的原文与元数据，确认与D01冲突。",
+            "model_request_seconds": 0,
+            "model_metadata": {
+              "response_id": "6287991b-2cc0-45bd-aca4-8e5237840a10",
+              "usage": {},
+              "streaming": true,
+              "provider_events": 79,
+              "answer_delta_events": 0
+            },
+            "next_action": "search_docs",
+            "observation": {
+              "ok": true,
+              "chunk": {
+                "doc_id": "D02",
+                "title": "费用报销期限补充说明",
+                "version_date": "2026-02-20",
+                "scope": null,
+                "priority": null,
+                "chunk_id": "C01",
+                "text": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+              }
+            },
+            "tool_elapsed_seconds": 0,
+            "observation_summary": "读取 D02/C01，版本 2026-02-20",
+            "next_action_source": "new_model_response_after_observation"
+          },
+          {
+            "step": 4,
+            "decision_round": 3,
+            "tool": "search_docs",
+            "arguments": {
+              "query": "报销期限 15天 30天 适用范围 优先级 替代关系",
+              "top_k": 8
+            },
+            "decision_summary": "两份资料期限冲突，补查适用范围、替代关系或优先级裁决说明。",
+            "model_request_seconds": 1.516,
+            "model_metadata": {
+              "response_id": "6c5a015a-76ae-4e16-b71c-1097ffb1613b",
+              "usage": {
+                "input_tokens": 2660,
+                "output_tokens": 94,
+                "total_tokens": 2754
+              },
+              "streaming": true,
+              "provider_events": 54,
+              "answer_delta_events": 0
+            },
+            "next_action": "finish",
+            "observation": {
+              "ok": true,
+              "query": "报销期限 15天 30天 适用范围 优先级 替代关系",
+              "hits": [
+                {
+                  "doc_id": "D01",
+                  "title": "费用报销期限制度",
+                  "version_date": "2026-01-10",
+                  "scope": null,
+                  "priority": null,
+                  "chunk_id": "C01",
+                  "score": 0.03252247,
+                  "score_type": "rrf",
+                  "bm25_score": 11.234335,
+                  "bm25_rank": 1,
+                  "vector_rank": 2,
+                  "vector_score": 0.689574,
+                  "preview": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+                },
+                {
+                  "doc_id": "D02",
+                  "title": "费用报销期限补充说明",
+                  "version_date": "2026-02-20",
+                  "scope": null,
+                  "priority": null,
+                  "chunk_id": "C01",
+                  "score": 0.03252247,
+                  "score_type": "rrf",
+                  "bm25_score": 10.995812,
+                  "bm25_rank": 2,
+                  "vector_rank": 1,
+                  "vector_score": 0.689694,
+                  "preview": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+                },
+                {
+                  "doc_id": "D03",
+                  "title": "费用报销材料清单",
+                  "version_date": "2026-01-12",
+                  "scope": "全体员工",
+                  "priority": null,
+                  "chunk_id": "C01",
+                  "score": 0.01587302,
+                  "score_type": "rrf",
+                  "bm25_score": 1.13206,
+                  "bm25_rank": 3,
+                  "vector_rank": null,
+                  "vector_score": null,
+                  "preview": "报销申请需提交电子发票、费用明细和审批单。"
+                }
+              ],
+              "total_matches": 3,
+              "has_more": false,
+              "retrieval": {
+                "requested_mode": "hybrid",
+                "used_mode": "hybrid",
+                "degraded": false,
+                "score_type": "rrf",
+                "bm25_matches": 3,
+                "rrf_k": 60,
+                "candidate_k": 20,
+                "vector_min_score": 0.5,
+                "vector_matches": 2,
+                "embedding": {
+                  "provider": "dashscope",
+                  "model": "text-embedding-v4",
+                  "dimensions": 1024,
+                  "evidence_kind": "remote_embedding_api",
+                  "index_fingerprint": "e4244592df0a6069d37607a62c307d9bb715058bd8da92be6c4d0baf498ac144",
+                  "document_cache": "memory_hit",
+                  "requests": [
+                    {
+                      "request_id": "121c2503-5771-92e4-b799-9b58c3b12ce3",
+                      "text_type": "query",
+                      "batch_size": 1,
+                      "total_tokens": 21
+                    }
+                  ]
+                },
+                "candidate_pool_truncated": false
+              }
+            },
+            "tool_elapsed_seconds": 1.094,
+            "observation_summary": "命中 3 个片段；本次返回 3 个",
+            "next_action_source": "new_model_response_after_observation"
+          },
+          {
+            "step": 5,
+            "decision_round": 4,
+            "tool": "finish",
+            "arguments": {
+              "status": "needs_clarification",
+              "answer": "现有资料对报销期限存在冲突，无法确定唯一口径：\n\n- 《费用报销期限制度》（D01，版本日期 2026-01-10）规定：“报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D01/C01]\n- 《费用报销期限补充说明》（D02，版本日期 2026-02-20）规定：“报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。”[D02/C01]\n\n两份资料均未标明适用范围和优先级，补查后也未找到关于适用范围、替代关系或优先级的独立裁决说明；日期较新本身不能证明优先级。因此不能擅自认定适用 15 天或 30 天。请告知您所属部门/适用的制度口径，或向制度发布方确认适用版本。",
+              "citations": [
+                {
+                  "doc_id": "D01",
+                  "chunk_id": "C01",
+                  "version_date": "2026-01-10",
+                  "quote": "报销期限为 30 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+                },
+                {
+                  "doc_id": "D02",
+                  "chunk_id": "C01",
+                  "version_date": "2026-02-20",
+                  "quote": "报销期限为 15 天，自费用发生之日起计算。本资料未标明适用范围和优先级。"
+                }
+              ],
+              "gaps": [
+                "两份资料分别规定 30 天与 15 天，且均未标明适用范围和优先级，缺少可判定适用口径的裁决说明",
+                "需用户提供所属部门或适用的制度版本，或向制度发布方确认"
+              ],
+              "conflicts": [
+                {
+                  "description": "报销期限规定不一致：D01 规定 30 天，D02 规定 15 天，均自费用发生之日起计算，且均未标明适用范围和优先级",
+                  "doc_ids": [
+                    "D01",
+                    "D02"
+                  ]
+                }
+              ]
+            },
+            "decision_summary": "两份同主题资料期限冲突，已读取原文并补查适用范围与优先级，仍无法消解，需用户澄清适用口径。",
+            "model_request_seconds": 3.281,
+            "model_metadata": {
+              "response_id": "b30efc46-78ce-42cc-972d-7fb0c6992774",
+              "usage": {
+                "input_tokens": 3443,
+                "output_tokens": 541,
+                "total_tokens": 3984
+              },
+              "streaming": true,
+              "provider_events": 471,
+              "answer_delta_events": 182
+            },
+            "next_action": "stop:needs_clarification",
+            "observation": {
+              "ok": true,
+              "status": "needs_clarification"
+            },
+            "tool_elapsed_seconds": 0,
+            "observation_summary": "最终结果通过结构与引用校验"
+          }
+        ]
+      }
+    }
+  ]
+}

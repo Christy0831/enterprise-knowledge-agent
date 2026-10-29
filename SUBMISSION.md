@@ -9,11 +9,12 @@
 ## 当前状态
 
 - 已完成：CLI、真实模型工具循环接口、本地检索和读取、引用/状态校验、冲突及错误反馈、调用上限、合成数据、验收用例、测试及指定文档。
-- 已验证：BM25离线验收11/11；自动化测试63项通过。详见 [测试与限制](docs/03-evaluation.md)。
+- 已验证：BM25离线验收11/11；Python自动化测试74项通过。详见 [测试与限制](docs/03-evaluation.md)。
 - 真实模型：已使用DeepSeek官网API运行，最新完整通过轮次11/11；原始记录在examples/deepseek/，失败历史与人工复核发现的问题均保留。
-- 后续扩展：DashScope text-embedding-v4 + BM25/RRF真实严格验收11/11，见examples/deepseek-hybrid/；63项自动化测试通过。总时限、进度提示与Ctrl+C取消处理已修正。未将小规模用例或人工向量当成独立检索质量基准。
+- 后续扩展：DashScope text-embedding-v4 + BM25/RRF真实严格验收11/11，见examples/deepseek-hybrid/；该阶段63项自动化测试通过。总时限、进度提示与Ctrl+C取消处理已修正。未将小规模用例或人工向量当成独立检索质量基准。
 - 远端交付：Git、远端连接、GitHub登录及提交身份已配置。最终commit与推送结果以交付消息和远端实际状态为准，不在此文件内硬编码自身commit的SHA。
 - 实际用时：[examples/worklog.json](examples/worklog.json)。
+- React扩展：本地界面与真实SSE已实现，入口 `python run.py serve --build`；Python74项、前端解析4项、浏览器8项通过，真实流式与页面证据在examples/ui/。不涉及线上部署。
 
 ## 提交前核对
 

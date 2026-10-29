@@ -1,0 +1,16 @@
+
+> knowledge-agent-ui@0.1.0 test
+> node --test tests/*.test.mjs
+
+✔ parse Unicode and multiple SSE events across arbitrary byte boundaries (27.9887ms)
+✔ server errors are displayed without trying to parse a stream (1.6035ms)
+✔ non-stream responses are rejected (0.3738ms)
+✔ events are delivered before the response is complete (3.9248ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 153.3815

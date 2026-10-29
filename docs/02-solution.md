@@ -80,4 +80,6 @@ RRF使用1起始排名，`Σ1/(60+rank)`，按片段ID合并；每路候选池�
 
 ## 配置与复现
 
+后续React扩展使用Python本地HTTP服务：POST SSE回传真实执行进度及DeepSeek finish参数中的answer增量。中间内容为待核验草稿；校验失败清除草稿，校验通过才提交引用与正式状态。取消事件贯穿页面、Agent和HTTP等待，Key仍只在后端。原CLI非流式JSON兼容保留。详见 [09](09-react-ui-and-streaming.md)。
+
 `.env`只读取白名单配置，外部环境变量优先；不执行shell、不展开变量。网络仅向配置的API端点发起请求；禁止把Authorization转发到重定向目标。默认只允许HTTPS，本机假服务测试允许localhost HTTP。全部知识库为合成资料，无真实员工隐私。

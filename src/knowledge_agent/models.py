@@ -13,7 +13,8 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from .prompts import SYSTEM_PROMPT
 from .schema import Action, ModelError, TOOLS
-from .http_json import read_json, RequestDeadlineExceeded
+from .http_json import read_json, read_sse, RequestDeadlineExceeded
+from .streaming import AnswerStream
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -43,6 +44,9 @@ class ResponsesModel:
         self.api_key, self.model = api_key, model
         self.url, self.timeout = base_url.rstrip("/") + "/responses", timeout
         self.transport = transport or self._post
+        self.streaming = False
+        self.on_stream = lambda event: None
+        self.cancel_event = None
 
     @classmethod
     def from_env(cls, timeout: float = 45) -> "ResponsesModel":
@@ -50,11 +54,16 @@ class ResponsesModel:
                    os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1"), timeout)
 
     def _post(self, payload: dict) -> dict:
+        return self._http_request(payload)
+
+    def _http_request(self, payload: dict, on_event=None) -> dict:
         request = Request(self.url, data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
                           headers={"Authorization": "Bearer " + self.api_key,
                                    "Content-Type": "application/json"}, method="POST")
         try:
-            return read_json(request, build_opener(NoRedirect()), self.timeout)
+            if on_event is not None:
+                return read_sse(request, build_opener(NoRedirect()), self.timeout, on_event, cancel_event=self.cancel_event)
+            return read_json(request, build_opener(NoRedirect()), self.timeout, cancel_event=self.cancel_event)
         except HTTPError as exc:
             # Provider error bodies may echo the key, request or sensitive source text.
             raise ModelError(f"模型 HTTP {exc.code}；请检查模型权限、额度及 API 配置") from None
@@ -63,7 +72,7 @@ class ResponsesModel:
         except (URLError, TimeoutError, socket.timeout, OSError, HTTPException):
             raise ModelError("模型网络错误或超时；未取得可用模型动作") from None
         except (ValueError, UnicodeError):
-            raise ModelError("模型端点返回了无效 JSON") from None
+            raise ModelError("模型端点返回了无效 JSON 或 SSE 事件") from None
 
     def build_payload(self, conversation: list[dict], remaining: int) -> dict:
         return {"model": self.model, "instructions": SYSTEM_PROMPT +
@@ -72,7 +81,14 @@ class ResponsesModel:
                    "parallel_tool_calls": False, "store": False,
                    "include": ["reasoning.encrypted_content"], "max_output_tokens": 3000}
     def decide(self, conversation: list[dict], remaining: int) -> Action | list[Action]:
-        response = self.transport(self.build_payload(conversation, remaining))
+        payload = self.build_payload(conversation, remaining)
+        stream = None
+        if self.streaming:
+            payload["stream"] = True
+            stream = AnswerStream(self.on_stream)
+            response = self._http_request(payload, stream.accept)
+        else:
+            response = self.transport(payload)
         try:
             if not isinstance(response, dict) or response.get("status") != "completed":
                 raise ValueError
@@ -97,7 +113,9 @@ class ResponsesModel:
                 call_ids.add(call["call_id"])
                 actions.append(Action(call["name"], arguments, call["call_id"], items if index == 0 else [],
                                       {"response_id": response.get("id"),
-                                       "usage": safe_usage if index == 0 else {}}))
+                                       "usage": safe_usage if index == 0 else {},
+                                       **({"streaming": True, "provider_events": stream.event_count,
+                                           "answer_delta_events": stream.delta_count} if stream is not None else {})}))
             return actions[0] if len(actions) == 1 else actions
         except (ValueError, TypeError, KeyError, AttributeError):
             raise ModelError("模型协议错误：预期 completed 响应、有效工具调用和唯一 call_id") from None
