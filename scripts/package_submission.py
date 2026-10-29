@@ -60,7 +60,7 @@ def main():
     for name, content in files.items():
         if any(secret in content for secret in secrets):
             raise SystemExit("Local API key found in committed file: " + name)
-    form = files["submission/form-text.template.txt"].decode("utf-8").replace("{{COMMIT_SHA}}", sha)
+    form = files["submission/form-text.template.txt"].decode("utf-8").replace("\r\n", "\n").replace("{{COMMIT_SHA}}", sha)
     if "{{" in form:
         raise SystemExit("Unresolved placeholder in form text.")
     manifest = {"commit_sha": sha, "repository": REPOSITORY, "source": "git archive HEAD",
@@ -84,7 +84,7 @@ def main():
             if hashlib.sha256(bundle.read(name)).hexdigest() != digest:
                 raise SystemExit("Archive hash mismatch: " + name)
     text_file = output / "提交框填写内容.txt"
-    text_file.write_text(form, encoding="utf-8")
+    text_file.write_bytes(form.encode("utf-8"))
     print(json.dumps({"commit_sha": sha, "archive": str(archive), "form_text": str(text_file),
                       "archive_bytes": archive.stat().st_size, "source_files": len(files),
                       "archive_sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
