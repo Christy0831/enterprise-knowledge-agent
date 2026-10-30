@@ -2,9 +2,9 @@
 
 ## 范围与当前证据
 
-按用户要求增加可选混合检索：**BM25 + DashScope `text-embedding-v4` + RRF**。默认仍为BM25，保持无密钥的离线复现入口。全部实现使用Python标准库，无需安装DashScope SDK、NumPy、本地embedding模型或向量数据库。
+混合检索采用 **BM25 + DashScope `text-embedding-v4` + RRF**。CLI默认BM25，可无密钥离线运行。检索后端使用Python标准库，无需安装DashScope SDK、NumPy、本地embedding模型或向量数据库。
 
-已验证HTTP合同、向量合法性、融合、缓存、降级及严格失败路径。用户配置本机向量Key后，真实DeepSeek + DashScope严格混合验收11/11通过，原始记录见 [report.json](../examples/deepseek-hybrid/report.json)。`examples/deepseek/`仍是BM25基线。小规模任务通过不等于已经证明独立问题集的召回率或语义质量提升，当前未报告此类未测指标。
+测试覆盖HTTP合同、向量合法性、融合、缓存、降级及严格失败路径。DeepSeek + DashScope严格混合验收11/11通过，见 [report.json](../examples/deepseek-hybrid/report.json)；BM25基线位于 `examples/deepseek/`。当前评估以任务完成情况为主，独立问题集的召回率与排序指标待补充。
 
 ## 填写本机配置
 
@@ -18,7 +18,7 @@ DASHSCOPE_EMBEDDING_URL=https://dashscope.aliyuncs.com/api/v1/services/embedding
 DASHSCOPE_TIMEOUT=15
 ```
 
-用户所称embedding-v4的正式API模型标识为 `text-embedding-v4`，与DeepSeek生成模型是两套独立配置。默认URL为北京兼容域名；如果控制台提供业务空间专属地址，替换为完整原生HTTP端点，例如：
+API模型标识为 `text-embedding-v4`，与DeepSeek生成模型分别配置。默认URL为北京兼容域名；如控制台提供业务空间专属地址，替换为完整原生HTTP端点，例如：
 
 ```text
 https://你的WorkspaceId.cn-beijing.maas.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding
@@ -88,9 +88,9 @@ rank从1开始，只对实际出现的渠道求和，不把未命中项当作第
 
 缺Key、网络故障、限流、鉴权失败或无效向量默认降级为BM25，并在观察结果和摘要标注原因。`--require-vector`将其转为 `EMBEDDING_UNAVAILABLE` 工具错误，由模型决定下一步。不会静默调用本地伪向量或把失败当作向量无匹配。
 
-混合批量评估额外检查 `hybrid_not_degraded`，避免仅BM25回答正确就宣称混合检索通过。一次搜索成功使用hybrid不证明质量提升；严格模式失败记录也不会被算成真实向量能力证据。
+混合批量评估额外检查 `hybrid_not_degraded`，要求成功检索使用hybrid且没有降级。检索质量后续通过独立问题集对比。
 
-4组离线流程记录位于 [examples/hybrid/](../examples/hybrid/)。前两组是显式标记的人工向量；后两组模拟未配置Key，分别验证降级和严格失败。API合同测试使用本机假服务；真实混合记录另外保存在 [examples/deepseek-hybrid/](../examples/deepseek-hybrid/)，严格模式11/11通过。未来应在独立问题集上比较BM25、向量、RRF的Recall@k/MRR和资料外误召回率；当前不报告未测指标。请求等待、总时限与取消处理见 [08](08-timeout-and-cancellation.md)。
+4组离线流程记录位于 [examples/hybrid/](../examples/hybrid/)：前两组使用固定向量验证融合，后两组模拟缺少Key，验证降级与严格失败。API合同测试使用本机HTTP服务；实际混合记录在 [examples/deepseek-hybrid/](../examples/deepseek-hybrid/)，严格模式11/11通过。下一步在独立问题集上比较BM25、向量和RRF的Recall@k、MRR与资料外误召回率。请求总时限和取消处理见 [08](08-timeout-and-cancellation.md)。
 
 ## 题目是否要求权限、持久对话、UI或部署
 

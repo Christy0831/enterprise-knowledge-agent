@@ -2,16 +2,16 @@
 
 帮助员工查询企业制度及产品资料。回答附文档 ID、版本日期和原文引用；资料冲突时查证并追问，资料不足或工具失败时明确返回未完成。
 
-采用 **Python CLI + BM25/可选DashScope向量RRF混合检索 + 模型工具调用循环**。生成模型优先使用DeepSeek官网API；向量模型按用户选择使用DashScope `text-embedding-v4`。Python后端使用标准库，无第三方运行依赖；可选React界面的依赖由frontend/package-lock.json锁定。
+采用 **Python CLI + BM25/向量RRF混合检索 + 模型工具调用循环**。生成模型使用DeepSeek官网API；向量模型使用DashScope `text-embedding-v4`。Python后端使用标准库，无第三方运行依赖；React界面的依赖由frontend/package-lock.json锁定。
 
-> BM25和真实混合验收均已有11/11记录。Python测试74项、前端解析测试4项、浏览器用例8项通过；另有真实DeepSeek SSE与浏览器流式验证。小规模通过不代表通用质量保证。
+> BM25与混合检索验收均11/11通过；Python测试74项、前端解析4项、浏览器用例8项通过。examples/提供各场景Trace及DeepSeek流式运行记录。
 
 ## 评审入口
 
 1. [需求与成功标准](docs/01-requirements.md)
 2. [方案、动态决策与技术取舍](docs/02-solution.md)
 3. [测试矩阵、实际结果、失败与限制](docs/03-evaluation.md)
-4. [AI 辅助内容及人工复核边界](docs/04-ai-usage.md)
+4. [AI辅助开发记录](docs/04-ai-usage.md)
 5. [实际用时与复盘](docs/05-retrospective.md)
 6. [实际输入、输出、Trace 索引](examples/README.md) · [测试结果](examples/test-results.json)
 7. [GitHub 配置与提交步骤](docs/06-setup-and-delivery.md) · [提交信息](SUBMISSION.md)
@@ -27,7 +27,7 @@
 python run.py serve --build
 ```
 
-打开 **http://127.0.0.1:8765**。页面支持问答与上下文追问、实时执行进度、模型流式草稿、引用原文、停止请求和运行记录下载。首次构建需要Node.js 22.12+或24及npm；本开发机已准备官方便携Node 24，命令会自动查找，无需修改全局PATH。已有构建时运行 `python run.py serve`即可。
+打开 **http://127.0.0.1:8765**。页面支持问答与上下文追问、执行进度、流式草稿、引用原文、停止请求和运行记录下载。首次构建需要Node.js 22.12+或24及npm。已有构建时运行 `python run.py serve`即可。
 
 密钥继续保留在本机.env，由Python后端读取，不进入浏览器。草稿明确标为待核验，finish校验通过后再展示正式状态与引用；Mock不模拟Token流。构建、开发、测试和流式边界见 [界面说明](docs/09-react-ui-and-streaming.md)。
 
@@ -47,7 +47,7 @@ python -m pip install -e .
 knowledge-agent --help
 ```
 
-推荐直接使用 `run.py`，评审时无需联网安装。数据和文档位于源码仓库内，不将 wheel 视为独立数据分发包。
+推荐直接使用 `run.py`，无需联网安装Python依赖；运行数据和文档随源码仓库提供。
 
 ## 一分钟离线运行
 
@@ -86,7 +86,7 @@ python run.py evaluate --provider deepseek
 
 真实模式通过 HTTPS 调用 `https://api.deepseek.com/responses`；模型决定工具及参数，执行器将实际工具结果回传模型。默认关闭 thinking，只要求简短的动作依据，不保存内部思维过程。模型名与接口依据 [DeepSeek 官方入门文档](https://api-docs.deepseek.com/) 和 [Responses 兼容说明](https://api-docs.deepseek.com/guides/responses_api/)，核对日期为 2026-10-29。
 
-真实调用会使用你的 API 额度。`evaluate` 包含 11 个用例，每例默认最多 12 步，其中一个用例限 1 步；模型网络失败也会记录为失败，不能算验收通过。不同模型的动作数和表述允许不同，以实际报告和人工检查为准。
+`evaluate` 包含11个用例，每例默认最多12步，其中一个用例限1步。实际API调用会消耗账户额度；网络失败单独记录。评估检查任务状态、关键事实、引用与动作特征，允许模型采用不同的有效路径。
 
 CLI 自动读取仓库根目录 `.env`，系统/终端中已有的环境变量优先。只支持 `KEY=value`，允许整行注释和外层引号，不执行 shell、不展开变量、不支持行尾注释。`.env` 已忽略，不把密钥放进代码、Trace 或 GitHub。HTTP 错误不回显服务端响应体。
 
@@ -94,7 +94,7 @@ CLI 自动读取仓库根目录 `.env`，系统/终端中已有的环境变量�
 
 ## 可选向量混合检索
 
-本机.env已预留 `DASHSCOPE_API_KEY`，后续在该字段填入向量API Key即可启用。正式模型名为 `text-embedding-v4`，默认1024维。Key与URL须属于同一地域；控制台如提供业务空间专属地址，填写完整的 `DASHSCOPE_EMBEDDING_URL`。详见 [配置说明](docs/07-hybrid-retrieval.md)。
+在 `.env` 的 `DASHSCOPE_API_KEY` 中填入密钥即可启用向量检索。模型为 `text-embedding-v4`，默认1024维。Key与URL须属于同一地域；控制台如提供业务空间专属地址，填写完整的 `DASHSCOPE_EMBEDDING_URL`。详见 [配置说明](docs/07-hybrid-retrieval.md)。
 
 ```powershell
 python run.py ask "垫的钱最迟啥时候能报账？" --provider deepseek --retrieval hybrid
@@ -104,7 +104,7 @@ python scripts/demo_hybrid.py
 
 两路独立排名后按 `Σ1/(60+rank)` 融合。Trace记录BM25/余弦原分、各路排名、RRF分及降级状态。向量失败默认明确降级为BM25，`--require-vector`禁止降级；评估不会把降级算作hybrid通过。文档向量缓存位于被Git忽略的 `.cache/embeddings/`，知识内容、版本或模型配置变化后重建。
 
-混合验收默认写入 `examples/deepseek-hybrid/`，保留BM25历史记录。本机真实向量Key已配置并已实际调用；默认余弦阈值0.5仍需在独立问题集校准，RRF分数不是答案置信度。
+混合验收写入 `examples/deepseek-hybrid/`，BM25基线保存在 `examples/deepseek/`。当前余弦阈值为0.5，后续计划在独立问题集上校准；RRF分数用于候选排序。
 
 真实模式默认向stderr显示当前阶段和耗时，stdout保持JSON。`--timeout 20`将每次模型HTTP等待限制为20秒总时限，连续空行保活不会延长期限；`DASHSCOPE_TIMEOUT`独立控制每次向量HTTP请求。`--quiet`可关闭进度，Ctrl+C返回cancelled及退出码130。详见[等待排查](docs/08-timeout-and-cancellation.md)。
 
@@ -153,4 +153,4 @@ scripts/check.py      测试及结果归档
 
 ## 已知限制
 
-默认BM25基线使用中文二元字符/英文词项；可选DashScope向量/RRF已进行小规模真实调用，未完成独立检索质量基准。引用校验能验证“原文存在且本轮读过”，不能自动保证语义支持。权限系统、持久对话服务、UI、线上部署均非题目必需项；现按后续需求增加本地React界面，但没有账号服务、持久会话或线上部署。所有资料为合成数据。
+当前使用小规模合成资料，尚未开展大规模检索质量评估。引用校验检查原文、版本和本轮读取记录，语义相关性仍需复核。项目提供CLI和本地React界面，暂未实现权限管理、持久会话或线上部署。

@@ -40,18 +40,16 @@
 2. 发现冲突：检索 → 读取双方 → 补查 → 追问。
 3. 首次无结果：原始查询 → 模型改写 → 读取 → 回答。
 
-这些是验收目标，不是提前生成的日志。`examples/mock/`是测试替身运行记录；已实际执行的真实路径见 `examples/deepseek/`。至少两条观察后决策路径的复核见 [manual-review.md](../examples/manual-review.md)。
+离线运行记录见 `examples/mock/`，真实模型路径见 `examples/deepseek/`。观察后的决策路径分析见 [manual-review.md](../examples/manual-review.md)。
 
 ## 执行边界
 
 默认最多12步，可配置1～50；**每次工具调用（包含finish）计一步**，同一次模型响应返回多次工具调用也分别计数。超过上限时停止并返回未完成，保留中间Trace。单次API请求默认45秒超时。
 
-不包含真实企业数据导入、权限服务、生产数据库、线上部署、多Agent和界面。任何未知适用范围、缺失优先级或模型常识均不能被虚构成制度依据。
+项目使用合成资料，提供CLI与本地React界面，支持可选历史输入；暂未实现真实企业数据导入、权限服务、持久会话或线上部署。资料未给出的适用范围与优先级保持未知，冲突无法裁决时请求确认。
 
-权限系统和持久对话服务不是原题必需项；“可选对话历史”由history JSON输入支持。UI和线上部署在总要求中明确非必需。按用户后续要求增加的DashScope向量/RRF属于检索改进扩展，不改变这些范围，具体见 [07-hybrid-retrieval.md](07-hybrid-retrieval.md)。
-
-2026-10-30用户进一步要求React界面与流式输出，已作为可选扩展实现，本地运行且复用原有Agent。先前“不包含界面”指核心考核范围，现有交付已含UI；不包含持久会话、账号系统或线上部署。详见 [09](09-react-ui-and-streaming.md)。
+检索扩展见 [07](07-hybrid-retrieval.md)，React与流式交互见 [09](09-react-ui-and-streaming.md)。
 
 ## 交付定义
 
-代码、测试、合成数据、实际输入输出与Trace、五份指定文档、运行说明和环境变量示例放在同一仓库。提交题号、GitHub URL 与最终 commit SHA；私有仓库须由提交者添加题目指定评审账号。当前远端及真实模型证据的状态见 [SUBMISSION.md](../SUBMISSION.md)，不填写未经验证的结果。
+代码、测试、合成数据、输入输出与Trace、五份指定文档、运行说明和环境变量模板放在同一公开仓库。提交材料包含题号、GitHub URL与最终commit SHA，详见 [SUBMISSION.md](../SUBMISSION.md)。

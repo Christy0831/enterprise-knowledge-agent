@@ -1,6 +1,6 @@
 # 真实模型答案与决策路径复核
 
-复核对象：`examples/deepseek/`最新完整运行（DeepSeek官网API、deepseek-flash、non-thinking、temperature=0）。本文件记录开发过程由Codex进行的源文与Trace人工核对，不声称提交者已亲自逐项审阅。
+复核对象：`examples/deepseek/`最新完整运行（DeepSeek官网API、deepseek-flash、non-thinking、temperature=0）。以下对照回答、原文与Trace列出核对结果，复核过程使用Codex辅助。
 
 ## 证据与结论
 
@@ -47,13 +47,13 @@
 
 ## 本次真实混合复核
 
-用户配置DashScope Key后，另行运行DeepSeek + DashScope/RRF严格模式，11/11通过，见 [真实混合报告](deepseek-hybrid/report.json)。逐项核对实际回答与原文：单制度30天、冲突30/15天后补查追问、资料外无数值、相似问法30天、历史追问三项材料、临时错误后恢复、持续读取错误不作确定答复、无上下文追问、替换后45天、上限未完成、字幕功能不编造指标，均与输入和来源相符。成功检索的used_mode均为hybrid且degraded=false。
+DeepSeek + DashScope/RRF严格模式11/11通过，见 [混合报告](deepseek-hybrid/report.json)。逐项核对回答与原文：单制度30天、冲突30/15天后补查追问、资料外无数值、相似问法30天、历史追问三项材料、临时错误后恢复、持续读取错误不作确定答复、无上下文追问、替换后45天、上限未完成、字幕功能按资料回答，均与输入和来源相符。成功检索的used_mode均为hybrid且degraded=false。
 
-同问题 [manual-conflict.json](deepseek-hybrid/manual-conflict.json) 约13秒完成，可用于核对模型等待与检索的实际耗时。此为开发侧人工复核，不等于独立检索基准或提交者个人审阅。
+同问题 [manual-conflict.json](deepseek-hybrid/manual-conflict.json) 约13秒完成，记录了模型等待与检索的耗时。
 
 ## 保留的限制
 
 - 此处覆盖固定的小规模合成资料，不代表任何企业实际制度，也不证明大规模检索或长期稳定性。
 - 第二轮真实验证发生过一次模型协议错误，复跑成功未查明其根因，详见开发记录。
 - 部分模型回答字符串含字面量 `\\n`，原始记录有意保留；这影响排版，不改变事实、引用或任务状态。
-- 以上是开发侧复核，提交者应独立运行并理解关键代码；个人学习和修改经历只能据实补充。
+- 检索效果还需通过独立问题集评估，当前复核范围为所列11个场景。

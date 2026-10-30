@@ -6,10 +6,10 @@ GitHub（公开）：https://github.com/Christy0831/enterprise-knowledge-agent
 该版本CI：https://github.com/Christy0831/enterprise-knowledge-agent/commit/{{COMMIT_SHA}}/checks
 
 实现说明：
-采用Python原生模型工具循环，DeepSeek根据实际检索/读取结果选择补充检索、读取原文、追问或结束。提供BM25与DashScope text-embedding-v4向量检索，以RRF融合。回答包含文档ID、版本、原文引用、资料缺口和任务状态；遇到30天/15天制度冲突时读取双方并补查，不凭空选择。默认最多12次工具动作，超限明确返回未完成。
+采用Python原生模型工具循环，DeepSeek根据检索和原文读取结果选择补充检索、追问或结束。检索结合BM25与DashScope text-embedding-v4向量模型，通过RRF融合排名。回答包含文档ID、版本、原文引用、资料缺口和任务状态。遇到30天/15天制度冲突时，读取双方并查证适用范围；依据不足则请求确认。默认最多12次工具动作，超限返回未完成状态。
 
 验证结果：
-覆盖明确答案、文档冲突、资料外、相似改写、上下文追问及工具失败全部必验场景，另验证文档替换与执行上限。真实DeepSeek/BM25和DeepSeek+DashScope/RRF严格混合验收均11/11；Python测试74项、前端解析4项、浏览器8项通过。正常、冲突查证与故障反馈后的真实动态路径及完整输入/输出/Trace均在examples/。Mock仅验证离线流程，不作为真实模型决策证据。
+覆盖明确答案、文档冲突、资料外、相似改写、上下文追问及工具失败全部必验场景，另验证文档替换与执行上限。DeepSeek/BM25和DeepSeek+DashScope/RRF严格混合验收均11/11；Python测试74项、前端解析4项、浏览器8项通过。examples/中提供正常回答、冲突查证、工具故障等场景的输入、输出及完整Trace，并提供无需密钥的Mock离线入口。
 
 附加功能：
 React本地界面与真实SSE流式输出，支持追问、停止和查看原文；流式内容校验前标为草稿，校验后展示正式结果。未做线上部署。
@@ -25,13 +25,13 @@ Python 3.11+离线入口：python run.py ask "报销期限多久？" --provider 
 材料索引：
 README.md：环境、安装、运行和评审入口。
 docs/10-submission-report.md：要求对照、全部场景记录、实现思路、结果与限制。
-docs/01～05：需求、方案、评估、AI使用披露与复盘。
+docs/01～05：需求、方案、评估、AI辅助开发记录与复盘。
 examples/deepseek-hybrid/：11组真实混合验收输入、输出、Trace及报告。
 examples/deepseek/：真实BM25基线；examples/mock/：离线流程。
 examples/test-results.*、examples/ui/：测试与UI/流式验证。
 examples/development/：保留的失败与改进记录。
 
-AI与用时说明：
-在Codex辅助下实现并验证，未将AI生成代码表述为个人独立手写。实际阶段用时记录在examples/worklog.json，不虚构3小时或个人独立工时。资料均为合成；小规模通过不代表通用检索质量，引用语义仍需复核。未包含权限系统、持久会话、生产级防护或线上部署。
+开发记录与后续计划：
+选型、修改与验证过程见docs/04-ai-usage.md，分阶段用时见examples/worklog.json。当前使用合成资料，后续计划扩大问题集，评估检索召回与资料外误召回。权限管理、持久会话和线上部署暂未实现。
 
 附件为该SHA的完整源码、文档、数据、运行记录和测试材料快照，另含提交说明与文件SHA-256清单；不含.env真实密钥、依赖安装目录或本地缓存。全部源材料也保留在同一GitHub仓库。

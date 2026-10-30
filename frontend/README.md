@@ -12,4 +12,4 @@ npm run build
 npm run test:e2e  # 会启动测试后端；Windows使用Edge，Linux使用Chromium
 ```
 
-详见 [界面、流式边界与实际验证](../docs/09-react-ui-and-streaming.md)。模型真实流式片段在finish校验前为草稿；校验通过后显示正式状态及引用。Mock仅演示流程，不伪造Token流。
+详见 [界面、流式处理与验证](../docs/09-react-ui-and-streaming.md)。模型增量在finish校验前显示为草稿，通过后展示正式状态及引用。Mock返回执行进度和最终结果。

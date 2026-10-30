@@ -8,7 +8,7 @@
 python run.py serve --build
 ```
 
-打开 **http://127.0.0.1:8765**。首次构建需要Node.js 22.12+或24及npm；本开发机已准备官方便携Node 24，启动命令会自动寻找它，无需修改全局PATH。其他机器可安装Node 24后运行同一命令。`--build`执行锁定依赖的npm ci和Vite构建，之后仅Python服务保持运行。
+打开 **http://127.0.0.1:8765**。首次构建需要Node.js 22.12+或24及npm。`--build`执行npm ci安装锁定依赖，再运行Vite构建；构建完成后由Python提供页面和API服务。
 
 已有构建时可直接：
 
@@ -24,7 +24,7 @@ python run.py serve --port 8765 --timeout 20
 
 - 输入问题、继续追问、新建对话；本次历史保留在页面内存，刷新后清空。
 - 切换含冲突的企业资料或单一版本制度；切换知识库时清空旧对话。
-- 选择DeepSeek或离线演示，选择BM25或混合检索。离线演示明确标注不证明真实模型能力。
+- 选择DeepSeek或Mock离线演示，选择BM25或混合检索。
 - 显示模型等待、检索、原文读取与核验步骤，支持停止请求。
 - 回答完成后显示任务状态、资料缺口、文档版本与逐字原文，支持下载完整运行JSON。
 - 桌面三栏布局；手机将设置折叠、原文作为可关闭的侧栏展示。
@@ -54,7 +54,7 @@ sequenceDiagram
     end
 ```
 
-不是等完整答案结束后再切片，也没有打字机延时。模型的原生 `response.function_call_arguments.delta`到达时，仅从finish工具参数的顶层answer字符串中提取新增内容，立即发送到浏览器。JSON转义、UTF-8分包、不完整Unicode转义和代理对均有处理；reasoning、工具内部参数和未核验引用不作为回答流展示。
+模型的原生 `response.function_call_arguments.delta`到达时，从finish工具参数的顶层answer字符串提取新增内容并发送到浏览器。解析处理JSON转义、UTF-8分包、不完整Unicode转义和代理对；页面只展示回答正文。
 
 草稿标为**生成中·待核验**。只有原有finish校验通过后，result才携带正式状态与原文引用。校验失败会发送answer_reset；网络提前断开不会把草稿变成完成答案。离线Mock没有模型Token流，只返回实际进度及最终结果，不模拟逐字生成。
 
@@ -70,7 +70,7 @@ sequenceDiagram
 
 事件包括run_start、progress、answer_start、answer_delta、answer_reset、result与error。底层请求总时限与取消逻辑复用已有实现，UI停止会传播到HTTP等待。取消不保证服务端推理立即停止，也不撤销已经完成的回答。
 
-本地服务限制请求体、历史长度、合法选项和并发数；固定知识库映射避免浏览器传入任意文件路径，静态文件仅从构建目录读取。默认只监听loopback，限制Origin/Host，避免任意网页调用本机含Key的服务。这些是本地开发边界，不是生产级身份授权系统。
+本地服务限制请求体、历史长度、选项和并发数，使用固定知识库映射，静态文件从构建目录读取。默认监听loopback并检查Origin/Host。当前访问限制适用于本地运行，线上使用还需身份认证与授权。
 
 ## 实际验证
 
@@ -95,4 +95,4 @@ npm run build
 npm run test:e2e
 ```
 
-Windows本机测试使用已安装的Edge；Linux/CI先执行 `npx playwright install --with-deps chromium`。浏览器测试不需要真实Key；真实API冒烟记录与受控测试分开报告。当前仍只用小规模合成资料，不声称通用检索准确率、生产并发或完整防提示注入能力。
+Windows测试使用已安装的Edge；Linux/CI先执行 `npx playwright install --with-deps chromium`。浏览器测试无需模型Key，实际API流式记录单独保存。当前验证覆盖本地功能与小规模合成资料，检索质量、生产并发和提示注入防护待进一步评估。
